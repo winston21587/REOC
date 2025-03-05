@@ -82,99 +82,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" type="text/css" href="./css/login1.css">
     <link rel="stylesheet" type="text/css" href="./css/login2.css">
     <link rel="icon" type="image/x-icon" href="./img/reoclogo1.jpg">
+    <link rel="stylesheet" href="./css/LoginPhp.css">
+
 </head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-.container-login100 {
-    width: 100%;
-    min-height: 100vh;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    position: relative;
-    overflow: hidden;
-}
-
-.container-login100::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-
-    background-image:
-        linear-gradient(rgba(8, 8, 8, 0.8), rgba(88, 33, 33, 0.8)),
-        url('./img/reocpic.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(2px);
-
-
-}
-
-.txt1 {
-    font-family: Poppins-Regular;
-    position: relative;
-    left: 270px;
-    font-size: 14px;
-    line-height: 1.7;
-    color: #666666;
-    margin: 0px;
-    transition: all 0.4s;
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-}
-
-
-
-.txt2 {
-    font-family: Poppins-Regular;
-    position: relative;
-    top: 40px;
-    left: 90px;
-    font-size: 14px;
-    line-height: 1.7;
-    color: #666666;
-    margin: 0px;
-    transition: all 0.4s;
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-}
-
-.txt1:focus {
-    outline: none !important;
-}
-
-.txt1:hover {
-    text-decoration: none;
-    color: #802c2c;
-}
-
-
-.txt2:focus {
-    outline: none !important;
-}
-
-.txt2:hover {
-    text-decoration: none;
-    color: #802c2c;
-}
-</style>
 </head>
 
 <body>
@@ -204,13 +115,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-
-
-
-
-
-
-
                 <form class="login100-form validate-form" method="POST" action="login.php">
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                         <span class="label-input100">Email Address</span>
@@ -225,22 +129,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <span class="focus-input100"></span>
                     </div>
 
-                    <div class="flex-sb-m w-full p-b-30">
-
-
+                    <div class=" p-b-30 resetP">
                         <div>
-
-
-
-                            <div>
                                 <a href="forgotPasswordRequest.php" class="txt1">
                                     Forgot Password
                                 </a>
-                            </div>
-
-
-
-
                         </div>
                     </div>
 
@@ -248,8 +141,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <button class="login100-form-btn2" type="submit">
                             Log In
                         </button>
-                    </div>
-                    <div>
                         <a href="Signup.php" class="txt2">
                             Create Account
                         </a>
