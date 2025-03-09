@@ -42,17 +42,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $mail = new PHPMailer(true);
                     try {
                         // Server settings
-                        $mail->isSMTP();
-                        $mail->Host = 'smtp.gmail.com';
-                        $mail->SMTPAuth = true;
-                        $mail->Username = ''; // Replace with your email
-                        $mail->Password = ''; // Replace with your email password
-                        $mail->SMTPSecure = 'tls';
-                        $mail->Port = 587;
+                            $mail->isSMTP();
+                            $mail->Host = 'smtp.gmail.com';
+                            $mail->SMTPAuth = true;
+                            $mail->Username = 'wbtester33@gmail.com'; // Replace with your email
+                            $mail->Password = 'heumouwydaqlmpso'; // Replace with your email password
+                            $mail->SMTPSecure = 'ssl';
+                            $mail->Port = 465;
 
-                        // Recipients
-                        $mail->setFrom('', '');
-                        $mail->addAddress($email);
+                            // Recipients
+                            $mail->setFrom('wmsuREOC@gmail.com', 'Research Ethics Online Committee');
+                            $mail->addAddress($email);
 
                         // Content
                         $mail->isHTML(true);
@@ -92,72 +92,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	<link rel="stylesheet" type="text/css" href="./css/login1.css">
 	<link rel="stylesheet" type="text/css" href="./css/login2.css">
     <link rel="icon" type="image/x-icon" href="./img/reoclogo1.jpg">
+    <link rel="stylesheet" href="./css/ForgotPassPhp.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
-<style>
-      
-      .container {
-          background-color: white;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          text-align: center;
-          width: 300px;
-      }
-      button {
-          padding: 10px 20px;
-          margin-top: 10px;
-          border: none;
-          border-radius: 5px;
-          background-color: #007bff;
-          color: white;
-          cursor: pointer;
-      }
-      button:hover {
-          background-color: #0056b3;
-      }
 
-      
-.container-login100 {
-  width: 100%;  
-  min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  position: relative; 
-  overflow: hidden;
-}
-
-.container-login100::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
- 
-  background-image: 
-      linear-gradient(rgba(8, 8, 8, 0.8), rgba(88, 33, 33, 0.8)), 
-      url('./img/reocpic.jpg'); 
-  background-size: cover; 
-  background-position: center; 
-  filter: blur(2px); 
-}
-  
-  </style>
 
 <div>
  

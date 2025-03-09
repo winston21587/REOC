@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
                             $mail->Username = 'wbtester33@gmail.com'; // Replace with your email
-                            $mail->Password = 'heumouwydaqlmpso'; // Replace with your email password
+                            $mail->Password = 'opqsqyhllizjjymc'; // Replace with your email password
                             $mail->SMTPSecure = 'ssl';
                             $mail->Port = 465;
 
@@ -143,179 +143,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" type="text/css" href="./css/login1.css">
     <link rel="stylesheet" type="text/css" href="./css/login2.css">
     <link rel="icon" type="image/x-icon" href="./img/reoclogo1.jpg">
-    <style>
-    .login100-form {
-        width: 100%;
-
-        top: 20px;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 43px 88px 93px 190px;
-    }
-
-    .container-login100 {
-        width: 100%;
-        min-height: 80vh;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -moz-box;
-        display: -ms-flexbox;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .container-login100::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-
-        background-image:
-            linear-gradient(rgba(8, 8, 8, 0.8), rgba(88, 33, 33, 0.8)),
-            url('./img/reocpic.jpg');
-        background-size: cover;
-        background-position: center;
-        filter: blur(2px);
-
-
-    }
-
-    .txt1 {
-        font-family: Poppins-Regular;
-        position: relative;
-        left: 270px;
-        font-size: 14px;
-        line-height: 1.7;
-        color: #666666;
-        margin: 0px;
-        transition: all 0.4s;
-        -webkit-transition: all 0.4s;
-        -o-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-    }
-
-
-
-    .txt2 {
-        font-family: Poppins-Regular;
-        position: relative;
-        top: 40px;
-        left: 90px;
-        font-size: 14px;
-        line-height: 1.7;
-        color: #666666;
-        margin: 0px;
-        transition: all 0.4s;
-        -webkit-transition: all 0.4s;
-        -o-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-    }
-
-
-
-
-
-
-    .txt1:focus {
-        outline: none !important;
-    }
-
-    .txt1:hover {
-        text-decoration: none;
-        color: #802c2c;
-    }
-
-
-    .txt2:focus {
-        outline: none !important;
-    }
-
-    .txt2:hover {
-        text-decoration: none;
-        color: #802c2c;
-    }
-
-    button {
-        padding: 10px 20px;
-        margin-top: 10px;
-        border: none;
-        border-radius: 5px;
-        background-color: #007bff;
-        color: white;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
-
-    .error {
-        color: red;
-    }
-
-    .password-rules {
-        font-size: 0.9em;
-        color: #666;
-    }
-
-    .invalid {
-        color: red;
-    }
-
-    .valid {
-        color: green;
-    }
-
-    .mobile-rules {
-        font-size: 0.9em;
-        color: #666;
-    }
-
-
-
-
-    .login100-form-btn2 {
-        position: relative;
-        left: 40px;
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        align-items: center;
-        padding: 20 20px;
-        min-width: 160px;
-        height: 50px;
-        background-color: #751111;
-        border-radius: 25px;
-
-        font-family: Poppins-Regular;
-        font-size: 16px;
-        color: #fff;
-        line-height: 1.2;
-
-        -webkit-transition: all 0.4s;
-        -o-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-        transition: all 0.4s;
-    }
-    </style>
+   <link rel="stylesheet" href="./css/SignupPhp.css">
+   
 </head>
 
 <body>
@@ -344,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
                 <form method="POST" action="" class="login100-form validate-form">
-                    <div class="wrap-input100 validate-input m-b-26" data-validate="Email Address is required">
+                    <div class="wrap-input100 validate-input m-b-15" data-validate="Email Address is required">
                         <input type="hidden" name="csrf_token"
                             value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                         <span class="label-input100">Email Address</span>
@@ -355,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-                    <div class="wrap-input100 validate-input m-b-26" data-validate="Contact Number is required">
+                    <div class="wrap-input100 validate-input m-b-15" data-validate="Contact Number is required">
                         <span class="label-input100">Contact Number</span>
                         <input class="input100" type="tel" id="mobile" name="mobile" required
                             placeholder="Enter your mobile number" pattern="(\+639\d{9}|0\d{10})"
@@ -369,7 +198,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     <!-- Mobile number validation rules -->
                     <div class="mobile-rules">
-                        Mobile number must:
+                        <p class="Input_rules " >Mobile number must:</p>
                         <ul>
                             <li id="mobile-length" class="invalid">Be exactly 11 digits long (without country code) or
                                 13 characters long (with +63)</li>
@@ -377,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </ul>
                     </div>
 
-                    <div class="wrap-input100 validate-input m-b-26" data-validate="Contact Number is required">
+                    <div class="wrap-input100 validate-input m-b-15" data-validate="Contact Number is required">
                         <span class="label-input100">Password</span>
                         <input class="input100" type="password" id="password" name="password" required
                             placeholder="Enter your password">
@@ -386,7 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-                    <div class="wrap-input100 validate-input m-b-26" data-validate="Contact Number is required">
+                    <div class="wrap-input100 validate-input m-b-15" data-validate="Contact Number is required">
                         <span class="label-input100">Re-enter Password</span>
                         <input class="input100" type="password" id="re_password" name="re_password" required
                             placeholder="Re-enter your password">
@@ -395,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     <!-- Password rules message -->
                     <div class="password-rules">
-                        Password must be at least 6 characters long, and include:
+                        <p class="Input_rules" >Password must be at least 6 characters long, and include:</p>
                         <ul>
                             <li id="length" class="invalid">At least 6 characters long</li>
                             <li id="uppercase" class="invalid">At least one uppercase letter (A-Z)</li>
@@ -405,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </ul>
                     </div>
 
-                    <div class="flex-sb-m w-full p-b-30">
+                    <div class="flex-sb-m w-full p-b-15">
                         <div class="contact100-form-checkbox">
                         </div>
                     </div>

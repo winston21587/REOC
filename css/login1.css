@@ -235,9 +235,8 @@
   [ Input ]*/
   
   .wrap-input100 {
-    top: 20px;
     width: 100%;
-    position: relative;
+
     border-bottom: 1px solid #b2b2b2;
   }
 

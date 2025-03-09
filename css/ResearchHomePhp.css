@@ -1,0 +1,261 @@
+
+
+   .image {
+
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f4f4f4;
+      }
+      .image-container {
+        position: relative;
+        margin-left: 450px;
+        width: 1000px;
+        height: 1000px;
+      
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 50px;
+    }
+      .image-container img {
+        position: relative;
+          max-width: 100%;
+          max-height: 100%;
+         
+          object-fit:contain;
+      }
+
+
+      .gallery-item {
+  position: relative;
+  display: flex;          /* Enable flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center;    /* Center vertically */
+  height: 100%;           /* Ensure the container has a defined height */
+  width: 100%;            /* Ensure the container has a defined width */
+}
+
+
+header {
+    z-index: 999;
+   
+    position: sticky; 
+    top: 0; 
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    transition: 0.5s ease;
+    background-color: #ffffff; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo{
+    position: relative;
+    height: 43px;
+    margin-right: 10px; 
+    top:12px;
+    width: 19%;
+}
+
+header .brand{
+ margin-bottom: 10px;
+
+   color: #a14242;
+
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+
+}
+.navigation-items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.reoc{
+    position: relative;
+    top: 14px;
+}
+
+header .brand:hover{
+    color: #990101;
+}
+
+header .navigation{
+    position: relative;
+}
+
+header .navigation .navigation-items a{
+    position: relative;
+    top: 5px;
+    color : #a14242;
+    font-size: 1em;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 30px;
+    transition: 0.3s ease;
+}
+
+header .navigation .navigation-items a:before{
+    content: '';
+    position: absolute;
+    background: #990101;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s ease;
+}
+
+header .navigation .navigation-items a:hover:before{
+    width: 100%;
+    background: #990101;
+}
+     
+        .logout-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 20px; /* Space between navbar and logout button */
+        }
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+       
+         /* Calendar Styling */
+         #calendar {
+            max-width: 600px; /* Adjust the width of the calendar */
+            margin: 0 auto; /* Center the calendar */
+            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .fc-header-toolbar {
+            font-size: 14px; /* Reduce header font size */
+        }
+        .fc-day {
+            font-size: 12px; /* Reduce day cell font size */
+        }
+        .fc-title {
+            font-size: 10px; /* Reduce event title font size */
+        }
+        .titles-appointments {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.titles-appointments h3 {
+    color: #800000; /* Use the same color as header for consistency */
+    margin-top: 0;
+}
+
+.titles-appointments ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.titles-appointments li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.titles-appointments li:last-child {
+    border-bottom: none;
+}
+
+.title, .appointment {
+    display: block; /* Makes it easier to read on separate lines */
+    font-weight: bold;
+}
+
+.appointment {
+    margin-top: 5px;
+    font-weight: normal;
+    color: #555;
+}
+
+
+.faculty-img{
+    width: 50%;
+    height: 100%;
+    padding-bottom: 50px;
+    padding-top: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.office-schedule{
+    position: relative;
+    left: 200px;
+}
+
+
+   .image {
+
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f4f4f4;
+      }
+      .image-container {
+        position: relative;
+        margin-left: 450px;
+        width: 1000px;
+        height: 1000px;
+      
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0);
+        margin-bottom: 50px;
+    }
+      .image-container img {
+        position: relative;
+          max-width: 100%;
+          max-height: 100%;
+         
+          object-fit:contain;
+      }
+
+
+
+      .gallery-item {
+  position: relative;
+  display: flex;          /* Enable flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center;    /* Center vertically */
+  height: 100%;           /* Ensure the container has a defined height */
+  width: 100%;            /* Ensure the container has a defined width */
+}

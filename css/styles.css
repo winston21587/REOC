@@ -306,12 +306,12 @@ section{
         box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
     }
     .menu-btn{
-        background: url("img/menuu.png")no-repeat;
+        background: url("../img/burger-menu-svgrepo-com.svg")no-repeat;
         color: #09a6d4;
         background-size: 30px;
         background-position: center;
         width: 20px;
-        height: 20px;
+        height: 50px;
         cursor: pointer;
         transition: 0.3s ease;
     }
