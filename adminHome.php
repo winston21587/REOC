@@ -1,3 +1,7 @@
+<?php include 'Website Loading Screen/loader.php'; ?> <!-- call these for website loading animation -->
+<link rel="stylesheet" href="Website Loading Screen/loader.css"> <!-- call these for website loading animation -->
+<script src="Website Loading Screen/loader.js"></script> <!-- call these for website loading animation -->
+<?php
 <?php
 session_start();
 include('updateAppointments.php');
