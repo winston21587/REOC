@@ -1,6 +1,9 @@
 <?php
 session_start();
-require 'dbConnCode.php'; // Database connection
+// require 'dbConnCode.php';  Database connection
+require './class/loginClass.php';
+require_once './class/loginClass.php';
+$login = new Login();
 
 $error = ''; // To store error messages
 $login_success = false; // Flag to trigger SweetAlert in HTML
@@ -16,57 +19,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Trim password input
         $password = trim($_POST['password']);
 
-        // Fetch the user by email
-        $stmt = $conn->prepare("SELECT id, password, isActive FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+//  function old_login_func(){ 
+//         Fetch the user by email
+        // $stmt = $conn->prepare("SELECT id, password, isActive FROM users WHERE email = ?");
+        // $stmt->bind_param("s", $email);
+        // $stmt->execute();
+        // $result = $stmt->get_result();
 
-        if ($result && $result->num_rows > 0) {
-            $user = $result->fetch_assoc();
+        // if ($result && $result->num_rows > 0) {
+        //     $user = $result->fetch_assoc();
 
-            // Check if the account is active
-            if ($user['isActive'] == 1) {
-                // Verify the password
-                if (password_verify($password, $user['password'])) {
-                    // Fetch the user's role
+        //     // Check if the account is active
+        //     if ($user['isActive'] == 1) {
+        //         // Verify the password
+        //         if (password_verify($password, $user['password'])) {
+        //             // Fetch the user's role
+        //             $userId = $user['id'];
+        //             $roleStmt = $conn->prepare("SELECT roles.name FROM user_roles 
+        //                                         JOIN roles ON user_roles.role_id = roles.id 
+        //                                         WHERE user_roles.user_id = ?");
+        //             $roleStmt->bind_param("i", $userId);
+        //             $roleStmt->execute();
+        //             $roleResult = $roleStmt->get_result();
+
+        //             if ($roleResult && $roleResult->num_rows > 0) {
+        //                 $role = $roleResult->fetch_assoc()['name'];
+
+        //                 // Set session variables
+        //                 $_SESSION['user_id'] = $userId;
+        //                 $_SESSION['role'] = $role;
+
+        //                  // Mark login as successful and set redirect page based on role
+        //                  $login_success = true;
+        //                  if ($role == 'Admin') {
+        //                      $redirect_page = 'adminHome.php';
+        //                  } elseif ($role == 'Reviewer') {
+        //                      $redirect_page = 'reviewerHome.php';
+        //                  } else {
+        //                      $redirect_page = 'researcherHome.php';
+        //                  }
+        //             } else {
+        //                 $error = 'No role assigned to this user.';
+        //             }
+        //         } else {
+        //             $error = 'Incorrect password.';
+        //         }
+        //     } else {
+        //         // Account is inactive
+        //         $error = 'Your account is not yet activated. Please contact the REOC admin for account activation.';
+        //     }
+        // } else {
+        //     $error = 'No user found with this email.';
+        // }
+        // }
+        
+      
+      
+        if($login->fetchUser($email) != false){
+            $user = $login->fetchUser($email);
+            if($user['isActive'] == 1){
+                if(password_verify($password, $user['password'])){
                     $userId = $user['id'];
-                    $roleStmt = $conn->prepare("SELECT roles.name FROM user_roles 
-                                                JOIN roles ON user_roles.role_id = roles.id 
-                                                WHERE user_roles.user_id = ?");
-                    $roleStmt->bind_param("i", $userId);
-                    $roleStmt->execute();
-                    $roleResult = $roleStmt->get_result();
+                    $role = $login->FindRole($userId);
+                    if($role != false){
 
-                    if ($roleResult && $roleResult->num_rows > 0) {
-                        $role = $roleResult->fetch_assoc()['name'];
-
-                        // Set session variables
                         $_SESSION['user_id'] = $userId;
                         $_SESSION['role'] = $role;
-
-                         // Mark login as successful and set redirect page based on role
-                         $login_success = true;
-                         if ($role == 'Admin') {
-                             $redirect_page = 'adminHome.php';
-                         } elseif ($role == 'Reviewer') {
-                             $redirect_page = 'reviewerHome.php';
-                         } else {
-                             $redirect_page = 'researcherHome.php';
-                         }
-                    } else {
-                        $error = 'No role assigned to this user.';
+                        $login_success = true;
+                        if($role == 'Admin'){
+                            $redirect_page = 'adminHome.php';
+                        }elseif($role == 'Reviewer'){
+                            $redirect_page = 'reviewerHome.php';
+                        }else{
+                            $redirect_page = 'researcherHome.php';
+                        }
                     }
-                } else {
+
+
+                }else {
                     $error = 'Incorrect password.';
                 }
-            } else {
-                // Account is inactive
+            }else {
                 $error = 'Your account is not yet activated. Please contact the REOC admin for account activation.';
             }
+
         } else {
             $error = 'No user found with this email.';
         }
+
+
+
+
     }
 }
 ?>
