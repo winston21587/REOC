@@ -1,4 +1,7 @@
 <?php
+require_once './class/clean.php';
+require_once './class/Submit.php';
+$submit = new Submit();
 session_start();
 // Default value for success is false
 $success = false;
@@ -30,37 +33,50 @@ if (isset($_POST['logout'])) {
         echo "<script>alert('Invalid CSRF token.');</script>";
     }
 }
-// Fetch application status from the database
-$query = "SELECT status FROM application_status WHERE id = 1";  // Assuming status is stored in row with id 1
-$result = mysqli_query($conn, $query);
 
-// Check if query was successful
-if (!$result) {
-    die("Query failed: " . mysqli_error($conn));
-}
 
-$row = mysqli_fetch_assoc($result);
-$application_status = $row['status']; // Get the status (open or closed)
-// Fetch all colleges from the database
-$query = "SELECT college_name_and_color FROM colleges";
-$result = mysqli_query($conn, $query);
-
-// Check if the query was successful
-if (!$result) {
-    die("Query failed: " . mysqli_error($conn));
-}
-// Get user_id from session
 $user_id = $_SESSION['user_id'];  // Get the current user's ID
 
+$result = $submit->ApplicationStatus(1);
+if ($result == false) {
+    die("failed to get Application Status");
+}
 
+
+// Fetch application status from the database
+// $query = "SELECT status FROM application_status WHERE id = 1";  // Assuming status is stored in row with id 1
+// $result = mysqli_query($conn, $query);
+
+// // Check if query was successful
+// if (!$result) {
+//     die("Query failed: " . mysqli_error($conn));
+// }
+// $row = mysqli_fetch_assoc($result);
+
+// $query = "SELECT college_name_and_color FROM colleges";
+// $result = mysqli_query($conn, $query);
+
+$application_status = $result['status']; // Get the status (open or closed)
+
+// Fetch all colleges from the database
+$collegeList = $submit->GetColleges();
+
+
+// Check if the query was successful
+if ($result == false) {
+    die("Query failed to get college list ");
+}
+// Get user_id from session
 
 // Fetch user email from the database
-$stmt = $conn->prepare("SELECT email FROM users WHERE id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$stmt->bind_result($email);
-$stmt->fetch();
-$stmt->close();
+// $stmt = $conn->prepare("SELECT email FROM users WHERE id = ?");
+// $stmt->bind_param("i", $user_id);
+// $stmt->execute();
+// $stmt->bind_result($email);
+// $stmt->fetch();
+// $stmt->close();
+
+$useremail = $submit->fetchUserEmail($user_id);
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -100,33 +116,47 @@ if (strpos($research_category, '&#39;') !== false) {
 }
 
     // Insert into Researcher_title_informations
-    $stmt = $conn->prepare("INSERT INTO Researcher_title_informations (user_id, study_protocol_title, college, research_category, adviser_name) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("issss", $user_id, $study_protocol_title, $college, $research_category, $adviser_name);
-    $stmt->execute();
+    // $stmt = $conn->prepare("INSERT INTO Researcher_title_informations
+    //  (user_id, study_protocol_title, college, research_category, adviser_name) VALUES (?, ?, ?, ?, ?)");
+    // $stmt->bind_param("issss", $user_id, $study_protocol_title, $college, $research_category, $adviser_name);
+    // $stmt->execute();
+
+    $submit->researchTitleInfo($user_id, $study_protocol_title, $college, $research_category, $adviser_name);
 
     // Get the ID of the inserted researcher title information
-    $researcher_title_id = $conn->insert_id;
+    // $researcher_title_id = $conn->insert_id; // questionable(fixed)
 
+    $researcher_title_id = $submit->getTitleID($user_id, $study_protocol_title);
+    
     // Handle insertion of researcher names (including co-researchers)
     $researcher_first_names = $_POST['researcher_first_name'];
     $researcher_last_names = $_POST['researcher_last_name'];
     $researcher_middle_initials = $_POST['researcher_middle_initial'];
   
 
-    for ($i = 0; $i < count($researcher_first_names); $i++) {
-        $first_name = filter_var($researcher_first_names[$i], FILTER_SANITIZE_STRING);
-        $last_name = filter_var($researcher_last_names[$i], FILTER_SANITIZE_STRING);
-        $middle_initial = !empty($researcher_middle_initials[$i]) ? filter_var($researcher_middle_initials[$i], FILTER_SANITIZE_STRING) : null;
+    // for ($i = 0; $i < count($researcher_first_names); $i++) {
+    //     $first_name = filter_var($researcher_first_names[$i], FILTER_SANITIZE_STRING);
+    //     $last_name = filter_var($researcher_last_names[$i], FILTER_SANITIZE_STRING);
+    //     $middle_initial = !empty($researcher_middle_initials[$i]) ? filter_var($researcher_middle_initials[$i], FILTER_SANITIZE_STRING) : null;
     
 
-        // Insert into Researcher_involved
-        $stmt = $conn->prepare("INSERT INTO Researcher_involved (researcher_title_id, first_name, last_name, middle_initial ) VALUES (?, ?, ?, ? )");
-        $stmt->bind_param("isss", $researcher_title_id, $first_name, $last_name, $middle_initial, );
-        $stmt->execute();
-    }
+    // }
+    
+    // // Insert into Researcher_involved
+    // $stmt = $conn->prepare("INSERT INTO Researcher_involved (researcher_title_id, first_name, last_name, middle_initial ) VALUES (?, ?, ?, ? )");
+    // $stmt->bind_param("isss", $researcher_title_id, $first_name, $last_name, $middle_initial, );
+                                                                                          //  ^ T.T
+    // $stmt->execute();          
 
- 
-
+    // ig this adds all the co-researcher -winston
+    for ($i = 0; $i < count($researcher_first_names); $i++) {
+        $first_name = clean($researcher_first_names[$i]);
+        $last_name = clean($researcher_last_names[$i]);
+        $middle_initial = !empty($researcher_middle_initials[$i]) ? clean($researcher_middle_initials[$i]) : null;
+        $submit->researchInvolved( $researcher_title_id, $first_name, $last_name, $middle_initial);
+    }  
+        
+        
 
 
 $upload_dir = 'uploads/';  
@@ -172,10 +202,11 @@ foreach ($files as $file) {
 
         // Move uploaded file
         if (move_uploaded_file($_FILES[$file]['tmp_name'], $file_path)) {
-            $stmt = $conn->prepare("INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path) VALUES (?, ?, ?, ?)");
-            $file_type = ucfirst(str_replace('_', ' ', $file));
-            $stmt->bind_param("isss", $researcher_title_id, $file_type, $file_name, $file_path);
-            $stmt->execute();
+            // $stmt = $conn->prepare("INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path) VALUES (?, ?, ?, ?)");
+            // $file_type = ucfirst(str_replace('_', ' ', $file));
+            // $stmt->bind_param("isss", $researcher_title_id, $file_type, $file_name, $file_path);
+            // $stmt->execute();
+            $submit->UploadFile($researcher_title_id, $file_type, $file_name, $file_path);
         }
     }
 }
@@ -201,9 +232,11 @@ if (!empty($_FILES['other_files']['name'][0])) {
 
             // Move uploaded file
             if (move_uploaded_file($_FILES['other_files']['tmp_name'][$key], $file_path)) {
-                $stmt = $conn->prepare("INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path) VALUES (?, 'Other', ?, ?)");
-                $stmt->bind_param("iss", $researcher_title_id, $unique_other_file_name, $file_path);
-                $stmt->execute();
+                // $stmt = $conn->prepare("INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path) VALUES (?, 'Other', ?, ?)");
+                // $stmt->bind_param("iss", $researcher_title_id, $unique_other_file_name, $file_path);
+                // $stmt->execute();
+
+                $submit->moveUploadFiles($researcher_title_id, $unique_other_file_name, $file_path);
             }
         }
     }
@@ -262,9 +295,11 @@ function addCoResearcher() {
             `;
     container.appendChild(div);
 }
+
 function removeCoResearcher(button) {
     button.parentElement.remove();
 }
+
 function toggleOtherInput(selectElement, otherInputId) {
     var otherInput = document.getElementById(otherInputId);
     if (selectElement.value === 'Other') {
@@ -501,12 +536,10 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
 
                             <?php
-
-
-
     // Fetch each row and create an option for each college
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo '<option value="' . htmlspecialchars($row['college_name_and_color']) . '">' . htmlspecialchars($row['college_name_and_color']) . '</option>';
+    foreach ($collegeList as $college) {
+        echo '<option value="' . htmlspecialchars($college['college_name_and_color']) . '">'
+         . htmlspecialchars($college['college_name_and_color']) . '</option>';
     }
     ?>
                             <option value="Other">Other (Please specify)</option>
@@ -514,10 +547,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                             <input type="text" id="other_college_input" name="other_college"
                                 placeholder="Specify Other College" style="display:none;"><br>
-
-
-
-
 
                             <div class="wrap-input100 validate-input m-b-26">
                                 <span class="label-input100">Name of Adviser</span>
@@ -688,17 +717,6 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                                             More</button>
 
                                                                                     </div>
-
-
-
-
-
-
-
-
-
-
-
                                                                             </form>
 
                                                                             <div class="container-login100-form-btn"
@@ -721,9 +739,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-                </form>
+                                                        </form>
             </div>
-        </div>
+        </div>       
     </div>
 
 
@@ -734,21 +752,12 @@ document.addEventListener("DOMContentLoaded", function() {
     </form>
 
     </div>
+                                                  <!-- bro wtf -->
 
     </form>
-
-
-
-
-
-
-
-
-
 
     </div>
     </li>
-
     </form>
     </div>
 
