@@ -382,23 +382,56 @@ $fresult = $conn->query($sql);
  <div class="office-schedule">
  
 <!-- Display Schedules -->
-<?php
-    // Display Schedules
-    $sqlSchedule = "SELECT id, name, picture FROM Schedule";
-    $resultSchedule = $conn->query($sqlSchedule);
+<!-- if u want with a no image and empty space warning use this: <?php
+/*
+if (!isset($conn)) {
+    die("Database connection error.");
+}
 
-    if ($resultSchedule->num_rows > 0) {
-        echo "<div class='gallery'>"; // Change <ul> to <div> with a class for styling
-        while ($row = $resultSchedule->fetch_assoc()) {
-            $picturePath = "Schedules/" . $row['picture'];
+$sqlSchedule = "SELECT id, name, picture FROM Schedule";
+$resultSchedule = $conn->query($sqlSchedule);
+
+if ($resultSchedule && $resultSchedule->num_rows > 0) {
+    echo "<div class='gallery'>";
+    while ($row = $resultSchedule->fetch_assoc()) {
+        $name = htmlspecialchars($row['name']);
+        $picturePath = "Schedules/" . htmlspecialchars($row['picture']);
+
+        if (!empty($row['picture']) && file_exists($picturePath)) {
             echo "<div class='gallery-item'>
-                    <img src='" . $picturePath . "' alt='" . htmlspecialchars($row['name']) . "' class='schedule-img'>
+                    <img src='$picturePath' alt='$name' class='schedule-img'>
                   </div>";
         }
-        echo "</div>";
-    } else {
-        echo "<p>No schedules found.</p>";
     }
+    echo "</div>";
+}
+*/
+?> -->
+
+<!-- else use this code on the bottom -->     
+<?php
+
+if (!isset($conn)) {
+    die("Database connection error.");
+}
+
+$sqlSchedule = "SELECT id, name, picture FROM Schedule";
+$resultSchedule = $conn->query($sqlSchedule);
+
+if ($resultSchedule && $resultSchedule->num_rows > 0) {
+    echo "<div class='gallery'>";
+    while ($row = $resultSchedule->fetch_assoc()) {
+        $name = htmlspecialchars($row['name']);
+        $picturePath = "Schedules/" . htmlspecialchars($row['picture']);
+
+        if (!empty($row['picture']) && file_exists($picturePath)) {
+            echo "<div class='gallery-item'>
+                    <img src='$picturePath' alt='$name' class='schedule-img'>
+                  </div>";
+        }
+    }
+    echo "</div>";
+}
 ?>
 
 </div>
