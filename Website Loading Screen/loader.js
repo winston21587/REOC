@@ -1,7 +1,7 @@
 const loaderStartTime = Date.now();
 
 window.addEventListener("load", () => {
-  const minDisplayTime = 3000;
+  const minDisplayTime = 4000;
   const elapsedTime = Date.now() - loaderStartTime;
   const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
   
@@ -9,7 +9,6 @@ window.addEventListener("load", () => {
   
   setTimeout(() => {
     if (loaderContainer) {
-   
       loaderContainer.style.opacity = "0";
       loaderContainer.style.transition = "opacity 0.5s ease-out";
       
