@@ -265,15 +265,10 @@ if (!empty($_FILES['other_files']['name'][0])) {
     <link rel="stylesheet" type="text/css" href="./css/login2.css">
     <link rel="icon" type="image/x-icon" href="./img/reoclogo1.jpg">
     <link rel="stylesheet" type="text/css" href="./css/SubmitFilesPhp.css">
-</head>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-
-
-
-
 
 <script>
 function addOtherFile() {
@@ -357,8 +352,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-
 </head>
+
 
 <body>
 
