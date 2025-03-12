@@ -1,0 +1,105 @@
+
+    // After successful insertions into the researcher and file tables
+    // Handle automatic appointment scheduling
+
+
+    // Commented for Backup 
+
+/*
+    // Get the current date and add 5 days to set the minimum appointment date
+    // Get the current date and add 5 days to set the minimum appointment date
+$start_date = date('Y-m-d', strtotime('+5 days'));
+
+// Function to check if the date is valid (Monday to Friday)
+function isValidAppointmentDate($date) {
+    $day_of_week = date('N', strtotime($date)); // 1 = Monday, 7 = Sunday
+    return $day_of_week >= 1 && $day_of_week <= 5; // Monday to Friday
+}
+
+// Loop through the dates until an available one is found with less than appointment_capacity
+$appointment_date = $start_date;
+while (true) {
+    // Fetch the appointment capacity from the reoc_dynamic_data table
+    $capacity_query = "SELECT appointment_capacity FROM reoc_dynamic_data LIMIT 1";
+    $capacity_result = $conn->query($capacity_query);
+
+    // Check if the query was successful and retrieve the appointment capacity
+    if ($capacity_result && $row = $capacity_result->fetch_assoc()) {
+        $appointment_capacity = (int)$row['appointment_capacity'];
+    } else {
+        $appointment_capacity = 20; // Fallback to 20 if the query fails
+    }
+
+    // Check if the date is a valid appointment day (Monday to Friday)
+    if (isValidAppointmentDate($appointment_date)) {
+        // Check if the appointment date is unavailable (exists in notavail_appointment table)
+        $unavailable_query = "SELECT DISTINCT unavailable_date FROM notavail_appointment WHERE unavailable_date = ?";
+        $stmt = $conn->prepare($unavailable_query);
+        $stmt->bind_param("s", $appointment_date);
+        $stmt->execute();
+        $stmt->bind_result($unavailable_count);
+        $stmt->fetch();
+        $stmt->close();
+
+        // If the date is unavailable, skip it and move to the next day
+        if ($unavailable_count > 0) {
+            $appointment_date = date('Y-m-d', strtotime($appointment_date . ' +1 day'));
+            continue;
+        }
+
+        // Query to count the number of appointments for this date
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM appointments WHERE appointment_date = ?");
+        $stmt->bind_param("s", $appointment_date);
+        $stmt->execute();
+        $stmt->bind_result($appointment_count);
+        $stmt->fetch();
+        $stmt->close();
+
+        // If the number of appointments is less than appointment_capacity, assign this date
+        if ($appointment_count < $appointment_capacity) {
+            // Insert the appointment for the user
+            $stmt = $conn->prepare("INSERT INTO appointments (researcher_title_id, appointment_date) VALUES (?, ?)");
+            $stmt->bind_param("is", $researcher_title_id, $appointment_date);
+            $stmt->execute();
+            $stmt->close();
+            
+            // Appointment successfully assigned
+            break;
+        }
+    }
+    
+    // Move to the next day
+    $appointment_date = date('Y-m-d', strtotime($appointment_date . ' +1 day'));
+}
+*/
+  
+    //Client requested to remove this feature
+    //Commented for backup 2025
+    /*
+    // Send appointment confirmation email
+    $mail = new PHPMailer(true);
+    try {
+        // Server settings (ensure this is set up correctly)
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com'; // Replace with your email host
+        $mail->SMTPAuth = true;
+        $mail->Username = ''; // Replace with your email
+        $mail->Password = ''; // Replace with your email password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        // Recipients
+        $mail->setFrom('', '');
+        $mail->addAddress($email); // Add the recipient's email
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Appointment Confirmation';
+        $mail->Body    = "Your appointment has been scheduled for <strong>$appointment_date</strong>.";
+        
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+$success = true; // Set success variable to true
+*/
