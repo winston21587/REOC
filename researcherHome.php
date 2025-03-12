@@ -106,64 +106,92 @@ $fresult = $conn->query($sql);
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/interaction/main.min.js'></script>
 
 </head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuBtn.addEventListener("click", function () {
+        mobileMenu.classList.toggle("active");
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!menuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+            mobileMenu.classList.remove("active");
+        }
+    });
+});
+
+</script>
 <body>
 
 <!-- Header Section -->
 
-<header>
-  <a href="#" class="brand">
-    <img src="img/logos.png" class="logo">
-    <span class="reoc">Research Ethics Oversite Committee Portal</span>
-  </a>
+<header class="desktop-navbar">
+    <a href="#" class="brand">
+        <img src="img/logos.png" class="logo">
+        <span class="reoc">Research Ethics Oversite Committee Portal</span>
+    </a>
 
-  <div class="menu-btn">     
-    <span class="burger" ></span>
     <div class="navigation">
-      <div class="navigation-items">
-        <div class="dropdown1">
-          <a href="#">Applications</a>
-          <div class="dropdown-content1">
-            <div class="file-item1">
-              <a href="SubmitFiles.php">Submit Application</a>
+        <div class="navigation-items">
+            <div class="dropdown1">
+                <a href="#">Applications</a>
+                <div class="dropdown-content1">
+                    <div class="file-item1"><a href="SubmitFiles.php">Submit Application</a></div>
+                    <div class="file-item1"><a href="viewApplications.php">View Applications</a></div>
+                </div>
             </div>
-            <div class="file-item1">
-              <a href="viewApplications.php">View Applications</a>
-            </div>
-          </div>
-        </div>
 
-        <div class="dropdown">
-          <a href="#">Downloadables</a>
-          <div class="dropdown-content">
-            <div class="file-item">
-              <span><strong>Application Form (WMSU-REOC-FR-001)</strong></span>
-              <a href="./files/2-FR.002-Application-Form.doc" download>Download</a>
+            <div class="dropdown">
+                <a href="#">Downloadables</a>
+                <div class="dropdown-content">
+                    <div class="file-item">
+                        <span><strong>Application Form</strong></span>
+                        <a href="./files/2-FR.002-Application-Form.doc" download>Download</a>
+                    </div>
+                    <div class="file-item">
+                        <span><strong>Study Protocol Assessment</strong></span>
+                        <a href="./files/4-FR.004-Study-Protocol-Assessment-Form-Copy.docx" download>Download</a>
+                    </div>
+                </div>
             </div>
-            <div class="file-item">
-              <span><strong>Study Protocol Assessment Form (WMSU-REOC-FR-004)</strong></span>
-              <a href="./files/4-FR.004-Study-Protocol-Assessment-Form-Copy.docx" download>Download</a>
-            </div>
-            <div class="file-item">
-              <span><strong>Informed Consent Assessment Form (WMSU-REOC-FR-005)</strong></span>
-              <a href="./files/5-FR.005-Informed-Consent-Assessment-Form (1).docx" download>Download</a>
-            </div>
-            <div class="file-item">
-              <span><strong>Exempt Review Assessment Form (WMSU-REOC-FR-006)</strong></span>
-              <a href="./files/6-FR.006-EXEMPT-REVIEW-ASSESSMENT-FORM (1).docx" download>Download</a>
-            </div>
-          </div>
-        </div>
 
-        <a href="./instructions.html">Instructions</a>
-      
-        <!-- Logout Button -->
-        <form method="POST" action="researcherHome.php" style="display: inline;">
-          <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-          <button type="submit" name="logout" class="logout-button">Logout</button>
-        </form>
-      </div>
+            <a href="./instructions.html">Instructions</a>
+
+            <form method="POST" action="researcherHome.php" style="display: inline;">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                <button type="submit" name="logout" class="logout-button">Logout</button>
+            </form>
+        </div>
     </div>
-  </div>
+</header>
+
+<header class="mobile-navbar">
+    <a href="#" class="brand">
+        <span class="reoc">REOC Portal</span>
+    </a>
+    
+    <div class="menu-btn" id="mobile-menu-btn">
+        <span class="burger"></span>
+    </div>
+
+    <nav class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="SubmitFiles.php">Submit Application</a></li>
+            <li><a href="viewApplications.php">View Applications</a></li>
+            <li><a href="./files/2-FR.002-Application-Form.doc" download>Application Form</a></li>
+            <li><a href="./files/4-FR.004-Study-Protocol-Assessment-Form-Copy.docx" download>Study Protocol</a></li>
+            <li><a href="./instructions.html">Instructions</a></li>
+            <li>
+                <form method="POST" action="researcherHome.php">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                    <button type="submit" name="logout" class="logout-button">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
 </header>
   
 </div>
@@ -303,28 +331,51 @@ $fresult = $conn->query($sql);
 
   <section class="divider"></section>
 <!-- newfaq -->
-  <h2>Frequently Asked Questions</h2>
-    <table>
-        <tr>
-           
-            <th>Question</th>
-            <th>Answer</th>
-            
-        </tr>
-        <?php
-        if ($fresult->num_rows > 0) {
-            while ($row = $fresult->fetch_assoc()) {
-                echo "<tr>
-                       
-                        <td>" . htmlspecialchars($row["question"]) . "</td>
-                        <td>" . htmlspecialchars($row["answer"]) . "</td>
-                      </tr>";
-            }
-        } else {
-            echo "<tr><td colspan='4'>No FAQs available</td></tr>";
-        }
-        ?>
-    </table>
+ <link rel="stylesheet" href="./css/faq.css">
+<script src="./js/faqrh.js"></script>
+
+<div class="faq-wrapper">
+<div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">How will I know if my research is for exemption? <span>+</span></div>
+            <div class="faq-answer">You will be notified through Gmail if your research is exempted from the review process. Keep an eye on your inbox for any official communications regarding your submission.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What types of research are typically exempt from review? <span>+</span></div>
+            <div class="faq-answer">Certain types of research, especially those involving minimal risk to participants, may be exempt from the full review process. Examples include studies using anonymous surveys, observational studies in public settings, or research involving publicly available data.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How can I submit for application? <span>+</span></div>
+            <div class="faq-answer">To submit your review application, ensure first that you have the hard copies of the necessary documents that can be downloaded through the downloadables tab.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How long does an expedited review take? <span>+</span></div>
+            <div class="faq-answer">Expedited reviews take approximately 15 days to be completed.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How will I know if my research has changed its status? <span>+</span></div>
+            <div class="faq-answer">You will be notified through Gmail within weeks after submission from the review process.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What should I do if I haven't received a notification about my research study? <span>+</span></div>
+            <div class="faq-answer">If you haven't received a notification, it's best to wait a little longer as the review process can take time. Check your inbox and spam folder.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How long does it usually take for a research paper to be reviewed? <span>+</span></div>
+            <div class="faq-answer">The time varies depending on several factors. Typically, it can take anywhere from a few weeks to several months.</div>
+        </div>
+
+    </div>
+
+    </div>
 
 <!-- newfaq -->
 <!-- faq temporary close <h1 class="vision1"> FREQUENTLY ASKED QUESTIONS</h1>
