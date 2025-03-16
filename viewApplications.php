@@ -86,6 +86,10 @@ $applicants = new Applicants();
 //     return $titlesAndAppointments;
 // }
 // }
+
+
+
+
 ?>
 
 
@@ -114,6 +118,185 @@ $applicants = new Applicants();
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/interaction/main.min.js'></script>
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+  
+   <script>
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     let calendarEl = document.getElementById('calendar');
+//     let calendar = new FullCalendar.Calendar(calendarEl, {
+//         initialView: 'dayGridMonth',
+//         selectable: true,
+//         events: 'fetch_available_dates.php',  // Fetch available dates dynamically
+//         dateClick: function(info) {
+//             fetchTimeSlots(info.dateStr);
+//         }
+//     });
+//     calendar.render();
+
+//     function fetchTimeSlots(date) {
+//         $.post("fetch_time_slots.php", { date: date, consultant_id: 1 }, function(response) {
+//             let slots = JSON.parse(response);
+//             let slotsHtml = "<h3>Available Time Slots for " + date + "</h3>";
+
+//             if (slots.length > 0) {
+//                 slots.forEach(slot => {
+//                     slotsHtml += `<button onclick="book('${date}', '${slot.start_time}', '${slot.end_time}')">
+//                                     ${slot.start_time} - ${slot.end_time}
+//                                   </button><br>`;
+//                 });
+//             } else {
+//                 slotsHtml += "<p>No available slots for this date.</p>";
+//             }
+
+//             document.getElementById("timeSlots").innerHTML = slotsHtml;
+//         });
+//     }
+
+//     window.book = function(date, startTime, endTime) {
+//         $.post("book_appointment.php", { 
+//             date: date, 
+//             start_time: startTime, 
+//             end_time: endTime, 
+//             researcher_id: 2, 
+//             consultant_id: 1 
+//         }, function(response) {
+//             alert(response);
+//             calendar.refetchEvents();
+//         });
+//     }
+// });
+
+  //  document.addEventListener('DOMContentLoaded', function () {
+  //      const calendarEl = document.getElementById('calendar');
+  //      calendarEl.style.display = 'none'; // Initially hide the calendar
+   
+  //      let unavailableDates = []; // Unavailable dates
+  //      let pendingDates = []; // Pending appointment dates
+   
+  //      const calendar = new FullCalendar.Calendar(calendarEl, {
+  //          plugins: ['interaction', 'dayGrid'],
+  //          defaultView: 'dayGridMonth',
+  //          validRange: {
+  //              start: new Date() // Prevent selecting past dates
+  //          },
+  //          businessHours: {
+  //              daysOfWeek: [1, 2, 3, 4, 5] // Monday to Friday
+  //          },
+  //          dateClick: function (info) {
+  //              const clickedDate = new Date(info.dateStr);
+  //              const dayOfWeek = clickedDate.getDay(); // 0 = Sunday, 6 = Saturday
+   
+  //              if (dayOfWeek === 0 || dayOfWeek === 6) {
+  //                  Swal.fire('Unavailable!', 'Weekends are not available for scheduling.', 'error');
+  //                  return;
+  //              }
+   
+  //              if (unavailableDates.includes(info.dateStr)) {
+  //                  Swal.fire('Unavailable!', 'You cannot select this date as it is unavailable.', 'error');
+  //              } else {
+  //                  rescheduleAppointment(info.dateStr);
+  //              }
+  //          }
+  //      });
+   
+  //      document.getElementById('rescheduleButton').addEventListener('click', function () {
+  //          const isDisplayed = calendarEl.style.display;
+  //          calendarEl.style.display = isDisplayed === 'block' ? 'none' : 'block';
+   
+  //          if (calendarEl.style.display === 'block') {
+  //              fetch('getUnavailableDates.php')
+  //                  .then(response => response.json())
+  //                  .then(data => {
+  //                      unavailableDates = Array.isArray(data.unavailableDates) ? data.unavailableDates : [];
+                       
+  //                      calendar.removeAllEvents();
+   
+  //                      // Mark unavailable dates as background events
+  //                      unavailableDates.forEach(date => {
+  //                          calendar.addEvent({
+  //                              start: date,
+  //                              allDay: true,
+  //                              rendering: 'background',
+  //                              color: '#ff9f89' // Highlight unavailable dates
+  //                          });
+  //                      });
+   
+  //                      // Fetch pending appointments
+  //                      return fetch('getPendingAppointments.php');
+  //                  })
+  //                  .then(response => response.json())
+  //                  .then(data => {
+  //                      pendingDates = Array.isArray(data.pendingDates) ? data.pendingDates : [];
+   
+  //                      // Mark pending appointment dates in green with a professional message
+  //                      pendingDates.forEach(date => {
+  //                          calendar.addEvent({
+  //                              start: date,
+  //                              allDay: true,
+  //                              rendering: 'background',
+  //                              color: '#90EE90', // Highlight pending dates in green
+  //                              title: 'Your appointment is scheduled on this day.' // Add a professional tooltip
+  //                          });
+  //                      });
+   
+  //                      calendar.render();
+  //                  })
+  //                  .catch(error => {
+  //                      console.error('Error fetching dates:', error);
+  //                  });
+  //          }
+  //      });
+   
+  //      calendar.render();
+   
+  //      function rescheduleAppointment(newDate) {
+  //          Swal.fire({
+  //              title: 'Confirm Rescheduling',
+  //              text: `Reschedule your appointment to ${newDate}?`,
+  //              icon: 'question',
+  //              showCancelButton: true,
+  //              confirmButtonColor: '#3085d6',
+  //              cancelButtonColor: '#d33',
+  //              confirmButtonText: 'Yes, reschedule it!'
+  //          }).then((result) => {
+  //              if (result.isConfirmed) {
+  //                  const userId = document.getElementById('rescheduleButton').getAttribute('data-user-id');
+   
+  //                  fetch('rescheduleAppointment.php', {
+  //                      method: 'POST',
+  //                      headers: {
+  //                          'Content-Type': 'application/x-www-form-urlencoded',
+  //                      },
+  //                      body: `newDate=${encodeURIComponent(newDate)}&userId=${encodeURIComponent(userId)}&csrf_token=${encodeURIComponent('<?php echo $_SESSION['csrf_token']; ?>')}`
+  //                  })
+  //                      .then(response => response.json())
+  //                      .then(data => {
+  //                          if (data.success) {
+  //                              Swal.fire('Rescheduled!', 'Your appointment has been rescheduled.', 'success').then(() => {
+  //                                  // Refresh calendar events
+  //                                  window.location.href = 'researcherHome.php';
+  //                                  calendar.refetchEvents();
+  //                              });
+  //                          } else {
+  //                              Swal.fire('Error!', data.message || 'Could not reschedule. Please try again.', 'error');
+  //                          }
+  //                      })
+  //                      .catch(error => {
+  //                          console.error('Error:', error);
+  //                          Swal.fire('Error!', 'A network or server error occurred.', 'error');
+  //                      });
+  //              }
+  //          });
+  //      }
+  //  });
+   
+
+
+   </script>
 <!--===============================================================================================-->
 <body>
 	
@@ -179,133 +362,6 @@ $applicants = new Applicants();
     </div>
   </div>
 </header>
-  
-   <script>
-   document.addEventListener('DOMContentLoaded', function () {
-       const calendarEl = document.getElementById('calendar');
-       calendarEl.style.display = 'none'; // Initially hide the calendar
-   
-       let unavailableDates = []; // Unavailable dates
-       let pendingDates = []; // Pending appointment dates
-   
-       const calendar = new FullCalendar.Calendar(calendarEl, {
-           plugins: ['interaction', 'dayGrid'],
-           defaultView: 'dayGridMonth',
-           validRange: {
-               start: new Date() // Prevent selecting past dates
-           },
-           businessHours: {
-               daysOfWeek: [1, 2, 3, 4, 5] // Monday to Friday
-           },
-           dateClick: function (info) {
-               const clickedDate = new Date(info.dateStr);
-               const dayOfWeek = clickedDate.getDay(); // 0 = Sunday, 6 = Saturday
-   
-               if (dayOfWeek === 0 || dayOfWeek === 6) {
-                   Swal.fire('Unavailable!', 'Weekends are not available for scheduling.', 'error');
-                   return;
-               }
-   
-               if (unavailableDates.includes(info.dateStr)) {
-                   Swal.fire('Unavailable!', 'You cannot select this date as it is unavailable.', 'error');
-               } else {
-                   rescheduleAppointment(info.dateStr);
-               }
-           }
-       });
-   
-       document.getElementById('rescheduleButton').addEventListener('click', function () {
-           const isDisplayed = calendarEl.style.display;
-           calendarEl.style.display = isDisplayed === 'block' ? 'none' : 'block';
-   
-           if (calendarEl.style.display === 'block') {
-               fetch('getUnavailableDates.php')
-                   .then(response => response.json())
-                   .then(data => {
-                       unavailableDates = Array.isArray(data.unavailableDates) ? data.unavailableDates : [];
-                       
-                       calendar.removeAllEvents();
-   
-                       // Mark unavailable dates as background events
-                       unavailableDates.forEach(date => {
-                           calendar.addEvent({
-                               start: date,
-                               allDay: true,
-                               rendering: 'background',
-                               color: '#ff9f89' // Highlight unavailable dates
-                           });
-                       });
-   
-                       // Fetch pending appointments
-                       return fetch('getPendingAppointments.php');
-                   })
-                   .then(response => response.json())
-                   .then(data => {
-                       pendingDates = Array.isArray(data.pendingDates) ? data.pendingDates : [];
-   
-                       // Mark pending appointment dates in green with a professional message
-                       pendingDates.forEach(date => {
-                           calendar.addEvent({
-                               start: date,
-                               allDay: true,
-                               rendering: 'background',
-                               color: '#90EE90', // Highlight pending dates in green
-                               title: 'Your appointment is scheduled on this day.' // Add a professional tooltip
-                           });
-                       });
-   
-                       calendar.render();
-                   })
-                   .catch(error => {
-                       console.error('Error fetching dates:', error);
-                   });
-           }
-       });
-   
-       calendar.render();
-   
-       function rescheduleAppointment(newDate) {
-           Swal.fire({
-               title: 'Confirm Rescheduling',
-               text: `Reschedule your appointment to ${newDate}?`,
-               icon: 'question',
-               showCancelButton: true,
-               confirmButtonColor: '#3085d6',
-               cancelButtonColor: '#d33',
-               confirmButtonText: 'Yes, reschedule it!'
-           }).then((result) => {
-               if (result.isConfirmed) {
-                   const userId = document.getElementById('rescheduleButton').getAttribute('data-user-id');
-   
-                   fetch('rescheduleAppointment.php', {
-                       method: 'POST',
-                       headers: {
-                           'Content-Type': 'application/x-www-form-urlencoded',
-                       },
-                       body: `newDate=${encodeURIComponent(newDate)}&userId=${encodeURIComponent(userId)}&csrf_token=${encodeURIComponent('<?php echo $_SESSION['csrf_token']; ?>')}`
-                   })
-                       .then(response => response.json())
-                       .then(data => {
-                           if (data.success) {
-                               Swal.fire('Rescheduled!', 'Your appointment has been rescheduled.', 'success').then(() => {
-                                   // Refresh calendar events
-                                   window.location.href = 'researcherHome.php';
-                                   calendar.refetchEvents();
-                               });
-                           } else {
-                               Swal.fire('Error!', data.message || 'Could not reschedule. Please try again.', 'error');
-                           }
-                       })
-                       .catch(error => {
-                           console.error('Error:', error);
-                           Swal.fire('Error!', 'A network or server error occurred.', 'error');
-                       });
-               }
-           });
-       }
-   });
-   
-   </script>
 
 
   
@@ -317,8 +373,10 @@ $applicants = new Applicants();
    
     <button class="schedbtn" id="rescheduleButton" data-user-id="<?php echo htmlspecialchars($user_id); ?>">Reschedule Appointment</button>
     
-<div id='calendar'></div>
+<!-- <div id='calendar'></div>
+<div id="timeSlots"></div> -->
 
+  
    <!-- Display research titles and appointments -->
    <?php
     // $titlesAndAppointments = getResearchTitlesAndAppointments($_SESSION['user_id']);

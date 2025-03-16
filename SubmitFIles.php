@@ -77,7 +77,7 @@ if ($result == false) {
 // $stmt->close();
 
 $useremail = $submit->fetchUserEmail($user_id);
-
+$flag_set = false;
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      // Rate limiting
@@ -121,7 +121,11 @@ if (strpos($research_category, '&#39;') !== false) {
     // $stmt->bind_param("issss", $user_id, $study_protocol_title, $college, $research_category, $adviser_name);
     // $stmt->execute();
 
-    $submit->researchTitleInfo($user_id, $study_protocol_title, $college, $research_category, $adviser_name);
+    if($submit->researchTitleInfo($user_id, $study_protocol_title, $college, $research_category, $adviser_name))
+  {  $flag_set = True;
+} else {
+    $flag_set = False;
+}
 
     // Get the ID of the inserted researcher title information
     // $researcher_title_id = $conn->insert_id; // questionable(fixed)
@@ -153,7 +157,11 @@ if (strpos($research_category, '&#39;') !== false) {
         $first_name = clean($researcher_first_names[$i]);
         $last_name = clean($researcher_last_names[$i]);
         $middle_initial = !empty($researcher_middle_initials[$i]) ? clean($researcher_middle_initials[$i]) : null;
-        $submit->researchInvolved( $researcher_title_id, $first_name, $last_name, $middle_initial);
+        if($submit->researchInvolved( $researcher_title_id, $first_name, $last_name, $middle_initial)) {
+            $flag_set = True;
+        } else {
+            $flag_set = False;
+        }
     }  
         
         
@@ -203,7 +211,11 @@ foreach ($files as $file) {
         // Move uploaded file
         if (move_uploaded_file($_FILES[$file]['tmp_name'], $file_path)) {
             $file_type = ucfirst(str_replace('_', ' ', $file));
-            $submit->UploadFile($researcher_title_id, $file_type, $file_name, $file_path);
+            if($submit->UploadFile($researcher_title_id, $file_type, $file_name, $file_path)) {
+                $flag_set = True;
+            } else {
+                $flag_set = False;
+            }
         }
     }
 }
@@ -238,12 +250,23 @@ if (!empty($_FILES['other_files']['name'][0])) {
                 // $stmt->bind_param("iss", $researcher_title_id, $unique_other_file_name, $file_path);
                 // $stmt->execute();
 
-                $submit->moveUploadFiles($researcher_title_id,
-                 $unique_other_file_name, $file_path);
+                if($submit->moveUploadFiles($researcher_title_id,
+                 $unique_other_file_name, $file_path)) {
+                 $flag_set = True;
+                 } else {
+                    $flag_set = False;
+                 }
+                
             }
         }
     }
 }
+
+    if($flag_set){
+        
+        header('Location: viewApplications.php');
+        exit;
+    }
 }
 
 
