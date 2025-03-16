@@ -20,95 +20,86 @@ if (isset($_GET['download'])) {
 }
 ?>
 
-<header class="desktop-navbar">
-    <a href="#" class="brand">
-        <img src="./img/wmsu-logo-hd.png" class="logo">
-        <span class="reoc">Research Ethics Oversight Committee Portal</span>
-    </a>
-
-    <div class="navigation">
-        <div class="navigation-items">
-            <div class="dropdown1">
-                <a href="#">Applications</a>
-                <div class="dropdown-content1">
-                    <div class="file-item1"><a href="SubmitFiles.php">Submit Application</a></div>
-                    <div class="file-item1"><a href="viewApplications.php">View Applications</a></div>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <a href="#">Downloadables</a>
-                <div class="dropdown-content">
-                    <div class="file-item">
-                        <span><strong>Application Form</strong></span>
-                        <a href="?download=2-FR.002-Application-Form.doc">Download</a>
-                    </div>
-                    <div class="file-item">
-                        <span><strong>Study Protocol Assessment</strong></span>
-                        <a href="?download=4-FR.004-Study-Protocol-Assessment-Form-Copy.docx">Download</a>
-                    </div>
-                </div>
-            </div>
-
-            <a href="./instructions.html">Instructions</a>
-
-            <form method="POST" action="researcherHome.php" style="display: inline;">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
-                <button type="submit" name="logout" class="logout-button">Logout</button>
-            </form>
-        </div>
-    </div>
-</header>
-
-<header class="mobile-navbar">
-    <a href="#" class="brand">
-        <img src="./img/wmsu-logo-hd.png" class="logo">
-        <span class="reoc">WMSU REOC PORTAL</span>
-    </a>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
     
-    <div class="menu-btn" id="mobile-menu-btn">
-        <span class="burger"></span>
-    </div>
+    .navbar-brand img {
+      height: 40px;
+    }
+    
+    .navbar {
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .dropdown-item > a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
 
-    <nav class="mobile-menu" id="mobile-menu">
-        <ul>
-            <li><a href="SubmitFiles.php">Submit Application</a></li>
-            <li><a href="viewApplications.php">View Applications</a></li>
-            <li><a href="?download=2-FR.002-Application-Form.doc">Application Form</a></li>
-            <li><a href="?download=4-FR.004-Study-Protocol-Assessment-Form-Copy.docx">Study Protocol</a></li>
-            <li><a href="./instructions.html">Instructions</a></li>
-            <li>
-                <form method="POST" action="researcherHome.php">
-                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
-                    <button type="submit" name="logout" class="logout-button">Logout</button>
-                </form>
-            </li>
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+      
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="./img/wmsu-logo-hd.png" alt="Logo">
+        <div class="ms-2">
+          <span class="d-none d-lg-block">Research Ethics Oversight Committee Portal</span>
+          <span class="d-lg-none">WMSU REOC PORTAL</span>
+        </div>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+              aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+     
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+         
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="applicationsDropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              Applications
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="applicationsDropdown">
+              <li><a class="dropdown-item" href="SubmitFiles.php">Submit Application</a></li>
+              <li><a class="dropdown-item" href="viewApplications.php">View Applications</a></li>
+            </ul>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="downloadablesDropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              Downloadables
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="downloadablesDropdown">
+              <li>
+                <div class="dropdown-item">
+                  <strong>Application Form</strong>
+                  <div><a href="?download=2-FR.002-Application-Form.doc">Download</a></div>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown-item">
+                  <strong>Study Protocol Assessment</strong>
+                  <div><a href="?download=4-FR.004-Study-Protocol-Assessment-Form-Copy.docx">Download</a></div>
+                </div>
+              </li>
+            </ul>
+          </li>
+         
+          <li class="nav-item">
+            <a class="nav-link" href="./instructions.html">Instructions</a>
+          </li>
+
+          <li class="nav-item">
+            <form method="POST" action="researcherHome.php" class="d-flex align-items-center">
+              <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+              <button type="submit" name="logout" class="btn btn-danger ms-lg-2">Logout</button>
+            </form>
+          </li>
         </ul>
-    </nav>
-</header>
-
-<style>
-  .desktop-navbar {
-    height: 10vh;
-  }
-  .logo {
-    width: auto;
-    height: auto;
-    max-width: none;
-    max-height: none;
-    margin-bottom: 5px;
-  }
-  .menu-btn {
-    margin-top: 15px;
-  }
-  .reoc {
-    margin-bottom: 10px;
-  }
-</style>
-
-<script>
-document.getElementById("mobile-menu-btn").addEventListener("click", function() {
-    document.getElementById("mobile-menu").classList.toggle("open");
-});
-</script>
-
+      </div>
+    </div>
+  </nav>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
