@@ -1,7 +1,7 @@
 const loaderStartTime = Date.now();
 
 window.addEventListener("load", () => {
-  const minDisplayTime = 4000;
+  const minDisplayTime = 3000;
   const elapsedTime = Date.now() - loaderStartTime;
   const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
   

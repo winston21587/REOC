@@ -4,7 +4,7 @@
 <?php
 session_start();
 
-// Regenerate session ID to prevent fixation
+// Regenerate session ID to prevent fixation  
 if (!isset($_SESSION['user_id'])) {
     session_regenerate_id(true); // Regenerate session id on first visit
 }
@@ -126,76 +126,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <body>
 
-<!-- Header Section -->
+<?php include './navbar/navbar.php'; ?> <!-- call these for the navbar -->
 
-<header class="desktop-navbar">
-    <a href="#" class="brand">
-        <img src="img/logos.png" class="logo">
-        <span class="reoc">Research Ethics Oversite Committee Portal</span>
-    </a>
-
-    <div class="navigation">
-        <div class="navigation-items">
-            <div class="dropdown1">
-                <a href="#">Applications</a>
-                <div class="dropdown-content1">
-                    <div class="file-item1"><a href="SubmitFiles.php">Submit Application</a></div>
-                    <div class="file-item1"><a href="viewApplications.php">View Applications</a></div>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <a href="#">Downloadables</a>
-                <div class="dropdown-content">
-                    <div class="file-item">
-                        <span><strong>Application Form</strong></span>
-                        <a href="./files/2-FR.002-Application-Form.doc" download>Download</a>
-                    </div>
-                    <div class="file-item">
-                        <span><strong>Study Protocol Assessment</strong></span>
-                        <a href="./files/4-FR.004-Study-Protocol-Assessment-Form-Copy.docx" download>Download</a>
-                    </div>
-                </div>
-            </div>
-
-            <a href="./instructions.html">Instructions</a>
-
-            <form method="POST" action="researcherHome.php" style="display: inline;">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                <button type="submit" name="logout" class="logout-button">Logout</button>
-            </form>
-        </div>
-    </div>
-</header>
-
-<header class="mobile-navbar">
-    <a href="#" class="brand">
-        <span class="reoc">REOC Portal</span>
-    </a>
-    
-    <div class="menu-btn" id="mobile-menu-btn">
-        <span class="burger"></span>
-    </div>
-
-    <nav class="mobile-menu" id="mobile-menu">
-        <ul>
-            <li><a href="SubmitFiles.php">Submit Application</a></li>
-            <li><a href="viewApplications.php">View Applications</a></li>
-            <li><a href="./files/2-FR.002-Application-Form.doc" download>Application Form</a></li>
-            <li><a href="./files/4-FR.004-Study-Protocol-Assessment-Form-Copy.docx" download>Study Protocol</a></li>
-            <li><a href="./instructions.html">Instructions</a></li>
-            <li>
-                <form method="POST" action="researcherHome.php">
-                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                    <button type="submit" name="logout" class="logout-button">Logout</button>
-                </form>
-            </li>
-        </ul>
-    </nav>
-</header>
-  
 </div>
-
 <section class="home">
       <div class="gradient"></div>
         <img decoding="async" class="img-slide active" src="./img/reocpic.jpg" ></img>
@@ -233,91 +166,101 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 <section class="divider"></section>
+<img class="msgp" src="./img/msg.png" alt="">
+<link rel="stylesheet" href="./css/msg.css">
 
-
- <h1 class="vision"> WMSU-REOC VISION, MISSION, GOALS</h1>
- <div class="section1">
-
-
-    <div class="slide-container ">
-        <div class="slide-content">
-            <div class="card-wrapper swiper-wrapper">
-
-
-
-                <div class="card swiper-slide">
-                    <div class="image-content">
-                        <span class="overlay"> <h2 class="name1">Vision</h2></span>
-                    </div>
-
-                    <div class="card-content">
-                      <br>
-                        <p class="description"><?php echo nl2br(htmlspecialchars($vision)); ?></p>
-                      <br>
-                    </div>
-                </div>
-
-                <div class="card swiper-slide">
-                  <div class="image-content">
-                      <span class="overlay"> <h2 class="name1">Mission</h2></span>
-                  </div>
-
-                  <div class="card-content">
-                    <br>
-                      <p class="description"><?php echo nl2br(htmlspecialchars($mission)); ?></p>
-                    <br>
-                  </div>
-              </div>
-
-
-              <div class="card swiper-slide">
-                <div class="image-content">
-                    <span class="overlay"> <h2 class="name1">Goals</h2></span>
-                </div>
-
-                <div class="card-content">
-                  <br>
-                    <p class="description"><?php echo nl2br(htmlspecialchars($goals)); ?></p>
-                  <br>
-                </div>
-            </div>
-
-                
-            </div>
-        </div>
-
+<div class="msg-container">
+    <div class="msg">
+        <br>
+        <hr class="hr">
+        <h3>Mission</h3>
+        <p>WMSU REOC(CERC) safeguards the general welfare of human participants and animal subjects in the conduct of researches.</p>
+        <br>
+        <hr class="hr">
+        <h3>Vision</h3>
+        <p>The Western Mindanao State University Research Ethics Oversight Committee (WMSU REOC) / College Research Ethics Committee (CERC) is an accredited board instituted to conduct ethics review in various fields of researches that involve human participants and animal subjects in the University and the region.</p>
+        <br>
+        <hr class="hr">
+        <h3>Goals</h3>
+        <strong>Ethical Review Excellence</strong>
+        <br>
+        <p>WMSU REOC is committed to conducting a high-quality and standardized ethical review process to safeguard the rights and welfare of research participants.</p>
+        <br>
+        <strong>Expert Multidisciplinary Review</strong>
+        <br>
+        <p>We establish and maintain a diverse pool of professional reviewers to ensure thorough and efficient evaluations through expedited and full review procedures.</p>
+        <br>
+        <strong>Commitment to Ethical Compliance</strong>
+        <p>We uphold strict adherence to ethical standards in the implementation of all research protocols.</p>
+        <br>
+        <hr class="hr">
+        <br>  
     </div>
-    
-   
+    <img class="msg2" src="./img/msg2.png" alt="">
+</div>
 
 
  
+   
 
 </div>
 
 
-<section class="divider"></section>
-    <h1 class="vision1"> WMSU-REOC FACULTY</h1>
-  
-<!-- Display Faculty Members -->
-<?php
-    // Display Faculty Members
-    $sqlFaculty = "SELECT id, name, picture FROM faculty_members";
-    $resultFaculty = $conn->query($sqlFaculty);
+<!-- Include Bootstrap (if not already included) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    if ($resultFaculty->num_rows > 0) {
-        echo "<div class='gallery'>"; // Change <ul> to <div> with a class for styling
-        while ($row = $resultFaculty->fetch_assoc()) {
-            $picturePath = "Faculty Members/" . $row['picture'];
-            echo "<div class='gallery-item' >
-                    <img   src='" . $picturePath . "' alt='" . htmlspecialchars($row['name']) . "' class='faculty-img' >
-                  </div>";
-        }
-        echo "</div>";
-    } else {
-        echo "<p>No faculty members found.</p>";
+<section class="divider"></section>
+<h1 class="text-center mt-4 fw-bold">WMSU-REOC FACULTY</h1>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <?php
+            $sqlFaculty = "SELECT id, name, picture FROM faculty_members";
+            $resultFaculty = $conn->query($sqlFaculty);
+
+            if ($resultFaculty->num_rows > 0) {
+                while ($row = $resultFaculty->fetch_assoc()) {
+                    $picturePath = "Faculty Members/" . $row['picture'];
+                    echo "<div class='col-md-6 col-sm-7 col-12 mb-4'>
+                            <div class='card shadow-lg border-0'>
+                                <img src='" . $picturePath . "' alt='" . htmlspecialchars($row['name']) . "' class='card-img-top faculty-img'>
+                                <div class='card-body text-center'>
+                                    <h5 class='card-title fw-semibold'>" . htmlspecialchars($row['name']) . "</h5>
+                                </div>
+                            </div>
+                          </div>";
+                }
+            } else {
+                echo "<p class='text-center text-muted'>No faculty members found.</p>";
+            }
+        ?>
+    </div>
+</div>
+
+<style>
+ .faculty-img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+@media (min-width: 992px) {
+    .faculty-img {
+        max-width: 1200px;
     }
-?>
+    .card {
+        max-width: 90%;
+        margin: 0 auto; 
+    }
+}
+.container {
+    max-width: 100%;
+    padding: 0 5vw;
+}
+</style>
 
 
 
@@ -331,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   <section class="divider"></section>
 <!-- newfaq -->
- <link rel="stylesheet" href="./css/faq.css">
+<link rel="stylesheet" href="./css/faq.css">
 <script src="./js/faqrh.js"></script>
 
 <div class="faq-wrapper">
@@ -376,6 +319,8 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
 
     </div>
+
+    
 
 <!-- newfaq -->
 <!-- faq temporary close <h1 class="vision1"> FREQUENTLY ASKED QUESTIONS</h1>
@@ -433,6 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
  <div class="office-schedule">
  
 <!-- Display Schedules -->
+
 <!-- if u want with a no image and empty space warning use this: <?php
 /*
 if (!isset($conn)) {
@@ -459,7 +405,6 @@ if ($resultSchedule && $resultSchedule->num_rows > 0) {
 */
 ?> -->
 
-<!-- else use this code on the bottom -->     
 <?php
 
 if (!isset($conn)) {
@@ -485,6 +430,8 @@ if ($resultSchedule && $resultSchedule->num_rows > 0) {
 }
 ?>
 
+
+
 </div>
 
 </div>
@@ -500,71 +447,31 @@ if ($resultSchedule && $resultSchedule->num_rows > 0) {
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script><script  src="./script.js"></script>
 
 
-
-
-
-
-
 <footer class="footer">
   <div class="owl-carousel">
-
     <a href="#" class="gallery__photo">
       <img src="img/wmsu55.jpg" alt="" />
-   
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/wmsu11.jpg" alt="" />
-    
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/reoc11.jpg" alt="" />
-     
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/wmsu22.jpg" alt="" />
-    
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/reoc22.jpg" alt="" />
-     
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/wmsu44.jpg" alt="" />
-     
     </a>
+  </div>
 
-  </div>
-  <div class="footer__redes">
-    <ul class="footer__redes-wrapper">
-      <li>
-        <a href="#" class="footer__link">
-          <i class=""></i>
-          Normal Road, Baliwasan, Z.C.
-        </a>
-      </li>
-      <li>
-        <a href="#" class="footer__link">
-          <i class=""></i>
-          09112464566
-        </a>
-      </li>
-      <li>
-        <a href="#" class="footer__link">
-          <i class=""></i>
-          wmsureoc@gmail.com
-        </a>
-      </li>
-      <li>
-        <a href="#" class="footer__link">
-          <i class="fab fa-phone-alt"></i>
-          
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="separador"></div>
-  <p class="footer__texto">RESEARCH ETHICS OVERSITE COMMITTEE - WMSU</p>
 </footer>
+
+
 <!-- partial -->
   <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://unpkg.com/feather-icons'></script><script  src="footer.js"></script>

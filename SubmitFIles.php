@@ -208,6 +208,115 @@ if (!empty($_FILES['other_files']['name'][0])) {
         }
     }
 }
+
+
+
+
+    // After successful insertions into the researcher and file tables
+    // Handle automatic appointment scheduling
+
+
+    // Commented for Backup 
+
+/*
+    // Get the current date and add 5 days to set the minimum appointment date
+    // Get the current date and add 5 days to set the minimum appointment date
+$start_date = date('Y-m-d', strtotime('+5 days'));
+
+// Function to check if the date is valid (Monday to Friday)
+function isValidAppointmentDate($date) {
+    $day_of_week = date('N', strtotime($date)); // 1 = Monday, 7 = Sunday
+    return $day_of_week >= 1 && $day_of_week <= 5; // Monday to Friday
+}
+
+// Loop through the dates until an available one is found with less than appointment_capacity
+$appointment_date = $start_date;
+while (true) {
+    // Fetch the appointment capacity from the reoc_dynamic_data table
+    $capacity_query = "SELECT appointment_capacity FROM reoc_dynamic_data LIMIT 1";
+    $capacity_result = $conn->query($capacity_query);
+
+    // Check if the query was successful and retrieve the appointment capacity
+    if ($capacity_result && $row = $capacity_result->fetch_assoc()) {
+        $appointment_capacity = (int)$row['appointment_capacity'];
+    } else {
+        $appointment_capacity = 20; // Fallback to 20 if the query fails
+    }
+
+    // Check if the date is a valid appointment day (Monday to Friday)
+    if (isValidAppointmentDate($appointment_date)) {
+        // Check if the appointment date is unavailable (exists in notavail_appointment table)
+        $unavailable_query = "SELECT DISTINCT unavailable_date FROM notavail_appointment WHERE unavailable_date = ?";
+        $stmt = $conn->prepare($unavailable_query);
+        $stmt->bind_param("s", $appointment_date);
+        $stmt->execute();
+        $stmt->bind_result($unavailable_count);
+        $stmt->fetch();
+        $stmt->close();
+
+        // If the date is unavailable, skip it and move to the next day
+        if ($unavailable_count > 0) {
+            $appointment_date = date('Y-m-d', strtotime($appointment_date . ' +1 day'));
+            continue;
+        }
+
+        // Query to count the number of appointments for this date
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM appointments WHERE appointment_date = ?");
+        $stmt->bind_param("s", $appointment_date);
+        $stmt->execute();
+        $stmt->bind_result($appointment_count);
+        $stmt->fetch();
+        $stmt->close();
+
+        // If the number of appointments is less than appointment_capacity, assign this date
+        if ($appointment_count < $appointment_capacity) {
+            // Insert the appointment for the user
+            $stmt = $conn->prepare("INSERT INTO appointments (researcher_title_id, appointment_date) VALUES (?, ?)");
+            $stmt->bind_param("is", $researcher_title_id, $appointment_date);
+            $stmt->execute();
+            $stmt->close();
+            
+            // Appointment successfully assigned
+            break;
+        }
+    }
+    
+    // Move to the next day
+    $appointment_date = date('Y-m-d', strtotime($appointment_date . ' +1 day'));
+}
+*/
+  
+    //Client requested to remove this feature
+    //Commented for backup 2025
+    /*
+    // Send appointment confirmation email
+    $mail = new PHPMailer(true);
+    try {
+        // Server settings (ensure this is set up correctly)
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com'; // Replace with your email host
+        $mail->SMTPAuth = true;
+        $mail->Username = ''; // Replace with your email
+        $mail->Password = ''; // Replace with your email password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        // Recipients
+        $mail->setFrom('', '');
+        $mail->addAddress($email); // Add the recipient's email
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Appointment Confirmation';
+        $mail->Body    = "Your appointment has been scheduled for <strong>$appointment_date</strong>.";
+        
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+
+$success = true; // Set success variable to true
+*/
 }
 
 
@@ -231,7 +340,6 @@ if (!empty($_FILES['other_files']['name'][0])) {
     <link rel="stylesheet" type="text/css" href="./css/login1.css">
     <link rel="stylesheet" type="text/css" href="./css/login2.css">
     <link rel="icon" type="image/x-icon" href="./img/reoclogo1.jpg">
-    <link rel="stylesheet" type="text/css" href="./css/SubmitFilesPhp.css">
 </head>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -239,7 +347,1244 @@ if (!empty($_FILES['other_files']['name'][0])) {
 
 
 
+<style>
+.other-documents-container {
+    display: flex;
+    align-items: center;
+}
 
+.other-documents-container input[type="file"] {
+    margin-right: 10px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: #800000;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.header h1 {
+    margin: 0;
+    margin-right: 20px;
+}
+
+.navbar {
+    display: flex;
+    gap: 10px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: #dc3545;
+}
+
+.logout-button {
+    background-color: #aa3636;
+    color: white;
+    font-size: 16px;
+    padding: 5px 9px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 20px;
+    /* Space between navbar and logout button */
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.titles-container {
+    position: fixed;
+    /* Keep it fixed on the screen */
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Optional: semi-transparent background */
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 300px;
+    /* Optional: limits the width */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    /* Optional: adds a shadow */
+    z-index: 10;
+    /* Ensures it appears on top of other elements */
+    overflow-y: auto;
+    /* Ensure the list doesn't overflow the container */
+}
+
+.titles-container ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.titles-container li {
+    margin-bottom: 5px;
+}
+
+
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #ebeeef;
+}
+
+
+.container-login1001 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(187, 52, 52, 0.5)),
+        url('img/REOCBG.jpg') no-repeat center center;
+    background-size: cover;
+    /* Ensures the image covers the entire viewport */
+
+
+}
+
+.footer {
+    background: rgba(6, 145, 192, 0);
+}
+
+
+.wrap-login100 {
+    width: 670px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+.wrap-login1001 {
+    width: 1000px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/*==================================================================
+  [ Title form ]*/
+.login100-form-title {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    padding: 70px 15px 74px 15px;
+}
+
+.login100-form-title-1 {
+    font-family: Poppins-Bold;
+    font-size: 30px;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.login100-form-title::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, rgba(190, 41, 41, 0.562), rgba(51, 39, 39, 0.712));
+}
+
+
+
+
+/*==================================================================
+  [ Title form1 ]*/
+.login100-form1-title {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    padding: 70px 15px 74px 15px;
+}
+
+.login100-form1-title-1 {
+    font-family: Poppins-Bold;
+    font-size: 30px;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.login100-form1-title::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, rgba(190, 41, 41, 0.562), rgba(51, 39, 39, 0.712));
+}
+
+
+
+/*==================================================================
+  [ Form ]*/
+
+.login100-form {
+    width: 100%;
+
+    top: 20px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 43px 88px 93px 190px;
+}
+
+.login100-form1 {
+    width: 100%;
+    position: relative;
+    margin-left: 55px;
+    margin-top: 50px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 88px 93px 55px;
+}
+
+
+
+
+
+/*------------------------------------------------------------------
+  [ Input ]*/
+
+.wrap-input100 {
+    top: 20px;
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #b2b2b2;
+}
+
+.wrap-input200 {
+    top: 20px;
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #0a8b5a00;
+}
+
+
+
+.wrap-input1001 {
+    top: 20px;
+    width: 100%;
+
+    position: relative;
+    border-radius: 5px;
+}
+
+
+.wrap-input100SN {
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #b2b2b2;
+}
+
+
+
+.wrap-input100FN {
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #b2b2b2;
+}
+
+
+.opt {
+    color: #660707;
+}
+
+.wrap-input100MI {
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #b2b2b2;
+}
+
+.label-input100 {
+    font-family: Poppins-Regular;
+    font-size: 15px;
+    color: #000000;
+    line-height: 1.2;
+    text-align: left;
+
+    position: absolute;
+    top: 14px;
+    left: -105px;
+    width: 80px;
+
+}
+
+
+
+
+.label-input200 {
+    font-family: Poppins-Regular;
+    font-size: 13px;
+    color: #000000;
+    line-height: 1.2;
+    text-align: left;
+
+    position: absolute;
+
+    left: -105px;
+    width: 270px;
+
+}
+
+
+
+
+
+/*---------------------------------------------*/
+.input100 {
+    font-family: Poppins-Regular;
+    font-size: 15px;
+    color: #555555;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    background: transparent;
+    padding: 0 5px;
+}
+
+
+.input200 {
+    position: relative;
+    font-family: Poppins-Regular;
+    font-size: 15px;
+    color: #555555;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    left: 180px;
+    background: transparent;
+    padding: 0 5px;
+}
+
+
+
+.input1001 {
+    position: relative;
+    top: -7px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 16px;
+    color: #333;
+
+}
+
+
+select.input1001 option:hover {
+    background-color: #ff0000;
+    color: red;
+}
+
+
+select.input1001 option:checked {
+    background-color: #a83939;
+    color: rgb(255, 255, 255);
+}
+
+.input1001 {
+    background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M7 10l5 5 5-5H7z"/></svg>') no-repeat right;
+    background-size: 16px;
+    height: 50px;
+}
+
+
+
+
+.login100-form-btn:hover {
+    background-color: #a30707;
+}
+
+
+.login100-form-btn2:hover {
+    background-color: #a30707;
+}
+
+.login100-form-btn1:hover {
+    background-color: #a30707;
+}
+
+
+.login100-form1-btn:hover {
+    background-color: #a30707;
+}
+
+
+.login100-form1-btn2:hover {
+    background-color: #a30707;
+}
+
+.login100-form1-btn1:hover {
+    background-color: #a30707;
+}
+
+
+
+
+
+
+.inputsign {
+    font-family: Poppins-Regular;
+    font-size: 15px;
+    color: #555555;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    background: transparent;
+    padding: 0 5px;
+}
+
+
+
+.inputsignSN {
+    font-family: Poppins-Regular;
+    font-size: 15px;
+    color: #555555;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    background: transparent;
+    padding: 0 5px;
+}
+
+
+
+
+.name-fields {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name-fields .wrap-input100 {
+    width: 100%;
+}
+
+
+.name-fields .wrap-input200 {
+    width: 100%;
+}
+
+
+
+
+
+
+.name-fields .wrap-input100SN {
+    width: 35%;
+}
+
+.name-fields .wrap-input100FN {
+    width: 45%;
+}
+
+
+
+.name-fields .wrap-input100MI {
+    width: 8%;
+    height: 5%;
+}
+
+
+.focus-input100 {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+
+
+
+
+.focus-input200 {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+
+
+
+
+
+
+.focus-input100FN {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.focus-input100SN {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.focus-input100MI {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+
+
+
+
+
+.focus-input100::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+
+    background-color: #751111;
+}
+
+
+
+.focus-input200::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+
+    background-color: #751111;
+}
+
+
+
+.focus-input100FN::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+
+    background-color: #751111;
+}
+
+
+.focus-input100SN::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+
+    background-color: #751111;
+}
+
+
+.focus-input100MI::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+
+    background-color: #751111;
+}
+
+
+
+/*---------------------------------------------*/
+input.input100 {
+    height: 45px;
+}
+
+
+
+input.input200 {
+    height: 45px;
+}
+
+
+
+
+input.inputsign {
+    height: 45px;
+}
+
+
+input.inputsignSN {
+    height: 45px;
+}
+
+
+
+input.inputsignFN {
+    height: 45px;
+}
+
+input.inputsignMI {
+    height: 45px;
+}
+
+
+
+.input100:focus+.focus-input100::before {
+    width: 100%;
+}
+
+.has-val.input100+.focus-input100::before {
+    width: 100%;
+}
+
+
+.input100FN:focus+.focus-input100FN::before {
+    width: 100%;
+}
+
+.has-val.input100FN+.focus-input100FN::before {
+    width: 100%;
+}
+
+
+
+
+.input200:focus+.focus-input200::before {
+    width: 100%;
+}
+
+.has-val.input200+.focus-input200::before {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.input100SN:focus+.focus-input100SN::before {
+    width: 100%;
+}
+
+.has-val.input100SN+.focus-input100SN::before {
+    width: 100%;
+}
+
+
+.input100MI:focus+.focus-input100MI::before {
+    width: 100%;
+}
+
+.has-val.input100MI+.focus-input100MI::before {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+.inputsign:focus+.focus-input100::before {
+    width: 100%;
+}
+
+.has-val.inputsign+.focus-input100::before {
+    width: 100%;
+}
+
+
+
+
+.inputsign:focus+.focus-input200::before {
+    width: 100%;
+}
+
+.has-val.inputsign+.focus-input200::before {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.inputsignSN:focus+.focus-input100::before {
+    width: 100%;
+}
+
+.has-val.inputsignSN+.focus-input100::before {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*==================================================================
+  [ Restyle Checkbox ]*/
+
+.input-checkbox100 {
+    display: none;
+}
+
+.label-checkbox100 {
+    font-family: Poppins-Regular;
+    font-size: 13px;
+    color: #999999;
+    line-height: 1.4;
+
+    display: block;
+    position: relative;
+    padding-left: 26px;
+    cursor: pointer;
+}
+
+.label-checkbox100::before {
+    content: "\f00c";
+    font-family: FontAwesome;
+    font-size: 13px;
+    color: transparent;
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 2px;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    left: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.input-checkbox100:checked+.label-checkbox100::before {
+    color: #57b846;
+}
+
+/*------------------------------------------------------------------
+  [ Button ]*/
+.container-login100-form-btn {
+
+    position: relative;
+    margin-left: 350px;
+    margin-top: 100px;
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+
+.container-login100-form-btn2 {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container-login1001-form-btn {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+
+.container-login1001-form-btn2 {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+
+
+
+.login100-form-btn {
+    position: relative;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20 20px;
+    min-width: 160px;
+    height: 50px;
+    background-color: #751111;
+    border-radius: 25px;
+
+    font-family: Poppins-Regular;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+
+
+.login100-form-btn {
+    position: relative;
+    top: -20px;
+    right: 222px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px;
+    min-width: 160px;
+    height: 50px;
+    background-color: #751111;
+    border-radius: 25px;
+
+    font-family: Poppins-Regular;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+
+.login100-form-btn:hover {
+    background-color: #a30707;
+}
+
+
+.login100-form1-btn:hover {
+    background-color: #a30707;
+}
+
+
+
+
+
+.login100-form-btn2 {
+    position: relative;
+    left: 65px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20 20px;
+    min-width: 160px;
+    height: 50px;
+    background-color: #751111;
+    border-radius: 25px;
+
+    font-family: Poppins-Regular;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+
+
+.login100-form1-btn2 {
+    position: relative;
+    left: 65px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20 20px;
+    min-width: 160px;
+    height: 50px;
+    background-color: #751111;
+    border-radius: 25px;
+
+    font-family: Poppins-Regular;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+
+
+
+
+
+
+
+
+
+.container-login100-form-btn1 {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.container-login1001-form-btn1 {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+
+.login100-form-btn1 {
+    position: relative;
+    margin-left: 250px;
+    margin-top: 90px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-width: 160px;
+    height: 50px;
+    background-color: #751111;
+    border-radius: 25px;
+
+    font-family: Poppins-Regular;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.login100-form-btn1 {
+    position: relative;
+    margin-left: 250px;
+    margin-top: 90px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-width: 160px;
+    height: 50px;
+    background-color: #751111;
+    border-radius: 25px;
+
+    font-family: Poppins-Regular;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+
+
+
+
+
+.login100-form-btn1:hover {
+    background-color: #a30707;
+}
+
+.login100-form-btn2:hover {
+    background-color: #a30707;
+}
+
+
+
+.login100-form1-btn1:hover {
+    background-color: #a30707;
+}
+
+.login100-form1-btn2:hover {
+    background-color: #a30707;
+}
+
+
+.move {
+    position: relative;
+    left: 100px;
+}
+
+
+
+.addbtn {
+    position: relative;
+    left: 320px;
+    padding: 6px 6px;
+    font-size: 11px;
+    border: none;
+    border-radius: 10px;
+    background-color: #aa3636;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+
+}
+
+
+
+.addbtn:hover {
+    background-color: #802c2c;
+}
+
+
+
+
+.cobtn {
+    position: relative;
+
+    padding: 6px 6px;
+    font-size: 11px;
+    border: none;
+    border-radius: 10px;
+    background-color: #aa3636;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+
+.cobtn:hover {
+    background-color: #802c2c;
+}
+</style>
 
 
 <script>
@@ -258,13 +1603,11 @@ function addCoResearcher() {
                 <input type="text" name="researcher_first_name[]" placeholder="First Name" required>
                 <input type="text" name="researcher_last_name[]" placeholder="Last Name" required>
                 <input type="text" name="researcher_middle_initial[]" placeholder="M.I." maxlength="2">
-                <button type="button" onclick="removeCoResearcher(this)">Remove</button>
+             
             `;
     container.appendChild(div);
 }
-function removeCoResearcher(button) {
-    button.parentElement.remove();
-}
+
 function toggleOtherInput(selectElement, otherInputId) {
     var otherInput = document.getElementById(otherInputId);
     if (selectElement.value === 'Other') {
@@ -316,6 +1659,7 @@ function toggleAdviserInput() {
         adviserInput.removeAttribute('required');
     }
 }
+
 // Call toggleAdviserInput on page load in case there is a default selected value
 document.addEventListener("DOMContentLoaded", function() {
     toggleAdviserInput();
@@ -404,6 +1748,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     <h4 class="sign">APPLICATION FORM </h4>
                 </div>
 
+
+
+
+
+
+
+
+
                 <?php if ($application_status === 'open'): ?>
                 <form method="POST" enctype="multipart/form-data" class="login100-form1 validate-form">
                     <div id="pageContent" class="page">
@@ -420,6 +1772,13 @@ document.addEventListener("DOMContentLoaded", function() {
                                 placeholder="Enter Title">
                             <span class="focus-input100"></span>
                         </div>
+
+
+
+
+
+
+
 
                         <div class="wrap-input1001 validate-input m-b-26" data-validate="Research Category is required">
                             <span class="label-input100">Research Category & Fees</span>
@@ -438,6 +1797,11 @@ document.addEventListener("DOMContentLoaded", function() {
                                         Funded Research / Other Institution - 3,000.00</option>
                                 </select>
                             </span>
+
+
+
+
+
 
                             <!-- Hidden input to store the selected research category value -->
                             <input type="hidden" name="hidden_research_category" id="hidden_research_category">
@@ -483,10 +1847,19 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
 
 
+
+
+
+
                             <label>Co-researchers</label>
                             <div id="co-researcher-container"></div>
                             <button type="button" onclick="addCoResearcher()" class="cobtn">Add
                                 Co-researcher</button><br>
+
+
+
+
+
 
 
                             <div class="wrap-input1001 validate-input m-b-26"
@@ -496,6 +1869,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <select class="input1001" name="college_dropdown" id="college_dropdown"
                                         onchange="toggleOtherInput(this, 'other_college_input'); handleCollegeChange()"
                                         required>
+
 
                                 </span>
                             </div>
