@@ -202,14 +202,15 @@ foreach ($files as $file) {
 
         // Move uploaded file
         if (move_uploaded_file($_FILES[$file]['tmp_name'], $file_path)) {
-            // $stmt = $conn->prepare("INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path) VALUES (?, ?, ?, ?)");
-            // $file_type = ucfirst(str_replace('_', ' ', $file));
-            // $stmt->bind_param("isss", $researcher_title_id, $file_type, $file_name, $file_path);
-            // $stmt->execute();
+            $file_type = ucfirst(str_replace('_', ' ', $file));
             $submit->UploadFile($researcher_title_id, $file_type, $file_name, $file_path);
         }
     }
 }
+
+// $stmt = $conn->prepare("INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path) VALUES (?, ?, ?, ?)");
+// $stmt->bind_param("isss", $researcher_title_id, $file_type, $file_name, $file_path);
+// $stmt->execute();
 
 // Handle additional documents (other files)
 if (!empty($_FILES['other_files']['name'][0])) {
@@ -232,11 +233,13 @@ if (!empty($_FILES['other_files']['name'][0])) {
 
             // Move uploaded file
             if (move_uploaded_file($_FILES['other_files']['tmp_name'][$key], $file_path)) {
-                // $stmt = $conn->prepare("INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path) VALUES (?, 'Other', ?, ?)");
+                // $stmt = $conn->prepare("INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path)
+                //  VALUES (?, 'Other', ?, ?)");
                 // $stmt->bind_param("iss", $researcher_title_id, $unique_other_file_name, $file_path);
                 // $stmt->execute();
 
-                $submit->moveUploadFiles($researcher_title_id, $unique_other_file_name, $file_path);
+                $submit->moveUploadFiles($researcher_title_id,
+                 $unique_other_file_name, $file_path);
             }
         }
     }

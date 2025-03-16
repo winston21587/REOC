@@ -483,17 +483,6 @@ $fresult = $conn->query($sql);
 <script src='https://unpkg.com/feather-icons'></script><script  src="footer.js"></script>
 
 
-
-
-
-
-
-
-
-
-
-
-
 <!-- partial -->
 <script  src="./script.js"></script>
 <script src="./js/main.js"></script>

@@ -60,17 +60,20 @@ class Submit extends Database{
     }
 
     function getTitleID($user_id, $study_protocol_title){
-        $query = 'SELECT * FROM researcher_title_informations WHERE user_id = :user_id AND study_protocol_title = :study_protocol_title';
+        $query = 'SELECT id FROM researcher_title_informations WHERE user_id = :user_id AND study_protocol_title = :study_protocol_title';
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':user_id', $user_id);
         $stmt->bindParam(':study_protocol_title', $study_protocol_title);
-
-        return $stmt->execute();
+        if($stmt->execute()){
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['id'];
+        }
+        return false;
     }
 
     function UploadFile($researcher_title_id, $file_type, $file_name, $file_path){
-        $query = 'INSERT INTO researcher_files (:researcher_title_id, :file_type, :filename, :file_path)
-         VALUES (:researcher_title_id, :file_type, :filename, :file_path)';
+        $query = 'INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path)
+         VALUES (:researcher_title_id, :file_type, :file_name, :file_path)';
          $stmt = $this->pdo->prepare($query);
          $stmt->bindParam(':researcher_title_id', $researcher_title_id);
          $stmt->bindParam(':file_type', $file_type);
@@ -82,7 +85,7 @@ class Submit extends Database{
     function moveUploadFiles($researcher_title_id, $unique_other_file_name, $file_path){
         $query = 'INSERT INTO researcher_files (researcher_title_id, file_type, filename, file_path)
          VALUES (:researcher_title_id, :file_type, :filename, :file_path)';
-         $fname = 'other';
+         $fname = 'Other';
          $stmt = $this->pdo->prepare($query);
          $stmt->bindParam(':researcher_title_id', $researcher_title_id);
          $stmt->bindParam(':file_type', $fname);

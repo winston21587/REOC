@@ -83,14 +83,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<title>Forgot Password</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="./css/login1.css">
-	<link rel="stylesheet" type="text/css" href="./css/login2.css">
+<head>
+    <title>Forgot Password</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/login1.css">
+    <link rel="stylesheet" type="text/css" href="./css/login2.css">
     <link rel="icon" type="image/x-icon" href="./img/reoclogo1.jpg">
     <link rel="stylesheet" href="./css/ForgotPassPhp.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -99,8 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 <div>
- 
-    
+
+
     <!-- Display error or success messages -->
     <script>
     const errorMessage = <?php echo json_encode($error); ?>;
@@ -129,55 +130,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     <div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<div class="login100-form-title" style="background-image: url(./img/wmsu5.jpg);">
-					<span class="login100-form-title-1">
-						reoc-wmsu portal
-					</span>
-					<h4 class="sign">Forgot password Code Verification </h4>
-				</div>
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-form-title" style="background-image: url(./img/wmsu5.jpg);">
+                    <span class="login100-form-title-1">
+                        reoc-wmsu portal
+                    </span>
+                    <h4 class="sign">Forgot password Code Verification </h4>
+                </div>
 
-                
-    <form method="POST" action="" class="login100-form validate-form">
 
-    <div class="wrap-input100 validate-input m-b-26" data-validate="Email Address is required">
-        <label for="email" class="label-input100">Email address:</label>
-        <input class="input100" type="email" id="email" name="email" required placeholder="Enter your email address" />
-        <span class="focus-input100"></span>
-    </div>
+                <form method="POST" action="" class="login100-form validate-form">
 
-    <div class="flex-sb-m w-full p-b-30">
-						<div class="contact100-form-checkbox">
-						</div>
-					</div>
-		
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Email Address is required">
+                        <label for="email" class="label-input100">Email address:</label>
+                        <input class="input100" type="email" id="email" name="email" required
+                            placeholder="Enter your email address" />
+                        <span class="focus-input100"></span>
+                    </div>
 
-         <div class="container-login100-form-btn2">
-            <button  class="login100-form-btn2" type="submit">Send Reset Code</button>
+                    <div class="flex-sb-m w-full p-b-30">
+                        <div class="contact100-form-checkbox">
+                        </div>
+                    </div>
+
+
+                    <div class="container-login100-form-btn2">
+                        <button class="login100-form-btn2" type="submit">Send Reset Code</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-
-
-
-
-    </form>
-
-
-
-
-
-
-
     </div>
-
-
-
-
-</div>
-</div>
 </div>
 
 
 </body>
+
 </html>
