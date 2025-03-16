@@ -1,11 +1,12 @@
 <?php
 session_start();
+
 // Default value for success is false
 $success = false;
 // Include database connection
 require_once 'dbConnCode.php';  // This file contains the $conn variable for mysqli
 require 'vendor/autoload.php'; // Load PHPMailer
-
+include 'navbar/navbar.php'; // Include the navbar
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -317,6 +318,115 @@ while (true) {
 
 $success = true; // Set success variable to true
 */
+
+
+
+
+    // After successful insertions into the researcher and file tables
+    // Handle automatic appointment scheduling
+
+
+    // Commented for Backup 
+
+/*
+    // Get the current date and add 5 days to set the minimum appointment date
+    // Get the current date and add 5 days to set the minimum appointment date
+$start_date = date('Y-m-d', strtotime('+5 days'));
+
+// Function to check if the date is valid (Monday to Friday)
+function isValidAppointmentDate($date) {
+    $day_of_week = date('N', strtotime($date)); // 1 = Monday, 7 = Sunday
+    return $day_of_week >= 1 && $day_of_week <= 5; // Monday to Friday
+}
+
+// Loop through the dates until an available one is found with less than appointment_capacity
+$appointment_date = $start_date;
+while (true) {
+    // Fetch the appointment capacity from the reoc_dynamic_data table
+    $capacity_query = "SELECT appointment_capacity FROM reoc_dynamic_data LIMIT 1";
+    $capacity_result = $conn->query($capacity_query);
+
+    // Check if the query was successful and retrieve the appointment capacity
+    if ($capacity_result && $row = $capacity_result->fetch_assoc()) {
+        $appointment_capacity = (int)$row['appointment_capacity'];
+    } else {
+        $appointment_capacity = 20; // Fallback to 20 if the query fails
+    }
+
+    // Check if the date is a valid appointment day (Monday to Friday)
+    if (isValidAppointmentDate($appointment_date)) {
+        // Check if the appointment date is unavailable (exists in notavail_appointment table)
+        $unavailable_query = "SELECT DISTINCT unavailable_date FROM notavail_appointment WHERE unavailable_date = ?";
+        $stmt = $conn->prepare($unavailable_query);
+        $stmt->bind_param("s", $appointment_date);
+        $stmt->execute();
+        $stmt->bind_result($unavailable_count);
+        $stmt->fetch();
+        $stmt->close();
+
+        // If the date is unavailable, skip it and move to the next day
+        if ($unavailable_count > 0) {
+            $appointment_date = date('Y-m-d', strtotime($appointment_date . ' +1 day'));
+            continue;
+        }
+
+        // Query to count the number of appointments for this date
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM appointments WHERE appointment_date = ?");
+        $stmt->bind_param("s", $appointment_date);
+        $stmt->execute();
+        $stmt->bind_result($appointment_count);
+        $stmt->fetch();
+        $stmt->close();
+
+        // If the number of appointments is less than appointment_capacity, assign this date
+        if ($appointment_count < $appointment_capacity) {
+            // Insert the appointment for the user
+            $stmt = $conn->prepare("INSERT INTO appointments (researcher_title_id, appointment_date) VALUES (?, ?)");
+            $stmt->bind_param("is", $researcher_title_id, $appointment_date);
+            $stmt->execute();
+            $stmt->close();
+            
+            // Appointment successfully assigned
+            break;
+        }
+    }
+    
+    // Move to the next day
+    $appointment_date = date('Y-m-d', strtotime($appointment_date . ' +1 day'));
+}
+*/
+  
+    //Client requested to remove this feature
+    //Commented for backup 2025
+    /*
+    // Send appointment confirmation email
+    $mail = new PHPMailer(true);
+    try {
+        // Server settings (ensure this is set up correctly)
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com'; // Replace with your email host
+        $mail->SMTPAuth = true;
+        $mail->Username = ''; // Replace with your email
+        $mail->Password = ''; // Replace with your email password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        // Recipients
+        $mail->setFrom('', '');
+        $mail->addAddress($email); // Add the recipient's email
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Appointment Confirmation';
+        $mail->Body    = "Your appointment has been scheduled for <strong>$appointment_date</strong>.";
+        
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+
+$success = true; // Set success variable to true
+*/
 }
 
 
@@ -419,6 +529,8 @@ body {
 .logout-button:hover {
     background-color: #c82333;
 }
+
+
 
 .main-content {
     flex: 1;
@@ -732,10 +844,6 @@ body {
 
 }
 
-
-
-
-
 /*---------------------------------------------*/
 .input100 {
     font-family: Poppins-Regular;
@@ -747,7 +855,6 @@ body {
     background: transparent;
     padding: 0 5px;
 }
-
 
 .input200 {
     position: relative;
@@ -762,8 +869,6 @@ body {
     padding: 0 5px;
 }
 
-
-
 .input1001 {
     position: relative;
     top: -7px;
@@ -771,7 +876,6 @@ body {
     border-radius: 5px;
     border: 1px solid #ccc;
     width: 100%;
-
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -780,12 +884,10 @@ body {
 
 }
 
-
 select.input1001 option:hover {
     background-color: #ff0000;
     color: red;
 }
-
 
 select.input1001 option:checked {
     background-color: #a83939;
@@ -797,9 +899,6 @@ select.input1001 option:checked {
     background-size: 16px;
     height: 50px;
 }
-
-
-
 
 .login100-form-btn:hover {
     background-color: #a30707;
@@ -828,11 +927,6 @@ select.input1001 option:checked {
     background-color: #a30707;
 }
 
-
-
-
-
-
 .inputsign {
     font-family: Poppins-Regular;
     font-size: 15px;
@@ -843,8 +937,6 @@ select.input1001 option:checked {
     background: transparent;
     padding: 0 5px;
 }
-
-
 
 .inputsignSN {
     font-family: Poppins-Regular;
@@ -857,9 +949,6 @@ select.input1001 option:checked {
     padding: 0 5px;
 }
 
-
-
-
 .name-fields {
     display: flex;
     justify-content: space-between;
@@ -869,15 +958,9 @@ select.input1001 option:checked {
     width: 100%;
 }
 
-
 .name-fields .wrap-input200 {
     width: 100%;
 }
-
-
-
-
-
 
 .name-fields .wrap-input100SN {
     width: 35%;
@@ -887,13 +970,10 @@ select.input1001 option:checked {
     width: 45%;
 }
 
-
-
 .name-fields .wrap-input100MI {
     width: 8%;
     height: 5%;
 }
-
 
 .focus-input100 {
     position: absolute;
@@ -905,10 +985,6 @@ select.input1001 option:checked {
     pointer-events: none;
 }
 
-
-
-
-
 .focus-input200 {
     position: absolute;
     display: block;
@@ -918,12 +994,6 @@ select.input1001 option:checked {
     left: 0;
     pointer-events: none;
 }
-
-
-
-
-
-
 
 .focus-input100FN {
     position: absolute;
@@ -955,11 +1025,6 @@ select.input1001 option:checked {
     pointer-events: none;
 }
 
-
-
-
-
-
 .focus-input100::before {
     content: "";
     display: block;
@@ -976,8 +1041,6 @@ select.input1001 option:checked {
 
     background-color: #751111;
 }
-
-
 
 .focus-input200::before {
     content: "";
@@ -996,8 +1059,6 @@ select.input1001 option:checked {
     background-color: #751111;
 }
 
-
-
 .focus-input100FN::before {
     content: "";
     display: block;
@@ -1015,7 +1076,6 @@ select.input1001 option:checked {
     background-color: #751111;
 }
 
-
 .focus-input100SN::before {
     content: "";
     display: block;
@@ -1032,8 +1092,6 @@ select.input1001 option:checked {
 
     background-color: #751111;
 }
-
-
 .focus-input100MI::before {
     content: "";
     display: block;
@@ -1050,33 +1108,22 @@ select.input1001 option:checked {
 
     background-color: #751111;
 }
-
-
-
 /*---------------------------------------------*/
 input.input100 {
     height: 45px;
 }
 
-
-
 input.input200 {
     height: 45px;
 }
-
-
-
 
 input.inputsign {
     height: 45px;
 }
 
-
 input.inputsignSN {
     height: 45px;
 }
-
-
 
 input.inputsignFN {
     height: 45px;
@@ -1086,8 +1133,6 @@ input.inputsignMI {
     height: 45px;
 }
 
-
-
 .input100:focus+.focus-input100::before {
     width: 100%;
 }
@@ -1095,7 +1140,6 @@ input.inputsignMI {
 .has-val.input100+.focus-input100::before {
     width: 100%;
 }
-
 
 .input100FN:focus+.focus-input100FN::before {
     width: 100%;
@@ -1105,9 +1149,6 @@ input.inputsignMI {
     width: 100%;
 }
 
-
-
-
 .input200:focus+.focus-input200::before {
     width: 100%;
 }
@@ -1115,22 +1156,6 @@ input.inputsignMI {
 .has-val.input200+.focus-input200::before {
     width: 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .input100SN:focus+.focus-input100SN::before {
     width: 100%;
@@ -1149,14 +1174,6 @@ input.inputsignMI {
     width: 100%;
 }
 
-
-
-
-
-
-
-
-
 .inputsign:focus+.focus-input100::before {
     width: 100%;
 }
@@ -1164,9 +1181,6 @@ input.inputsignMI {
 .has-val.inputsign+.focus-input100::before {
     width: 100%;
 }
-
-
-
 
 .inputsign:focus+.focus-input200::before {
     width: 100%;
@@ -1176,17 +1190,6 @@ input.inputsignMI {
     width: 100%;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .inputsignSN:focus+.focus-input100::before {
     width: 100%;
 }
@@ -1194,17 +1197,6 @@ input.inputsignMI {
 .has-val.inputsignSN+.focus-input100::before {
     width: 100%;
 }
-
-
-
-
-
-
-
-
-
-
-
 /*==================================================================
   [ Restyle Checkbox ]*/
 
@@ -1272,9 +1264,6 @@ input.inputsignMI {
     flex-wrap: wrap;
 }
 
-
-
-
 .container-login100-form-btn2 {
     width: 100%;
     display: -webkit-box;
@@ -1295,9 +1284,6 @@ input.inputsignMI {
     flex-wrap: wrap;
 }
 
-
-
-
 .container-login1001-form-btn2 {
     width: 100%;
     display: -webkit-box;
@@ -1307,11 +1293,6 @@ input.inputsignMI {
     display: flex;
     flex-wrap: wrap;
 }
-
-
-
-
-
 
 .login100-form-btn {
     position: relative;
@@ -1336,8 +1317,6 @@ input.inputsignMI {
     -moz-transition: all 0.4s;
     transition: all 0.4s;
 }
-
-
 
 .login100-form-btn {
     position: relative;
@@ -1364,19 +1343,13 @@ input.inputsignMI {
     transition: all 0.4s;
 }
 
-
 .login100-form-btn:hover {
     background-color: #a30707;
 }
 
-
 .login100-form1-btn:hover {
     background-color: #a30707;
 }
-
-
-
-
 
 .login100-form-btn2 {
     position: relative;
@@ -1401,9 +1374,6 @@ input.inputsignMI {
     -moz-transition: all 0.4s;
     transition: all 0.4s;
 }
-
-
-
 .login100-form1-btn2 {
     position: relative;
     left: 65px;
@@ -1427,16 +1397,6 @@ input.inputsignMI {
     -moz-transition: all 0.4s;
     transition: all 0.4s;
 }
-
-
-
-
-
-
-
-
-
-
 .container-login100-form-btn1 {
     width: 100%;
     display: -webkit-box;
@@ -1446,8 +1406,6 @@ input.inputsignMI {
     display: flex;
     flex-wrap: wrap;
 }
-
-
 .container-login1001-form-btn1 {
     width: 100%;
     display: -webkit-box;
@@ -1458,9 +1416,6 @@ input.inputsignMI {
     flex-wrap: wrap;
 }
 
-
-
-
 .login100-form-btn1 {
     position: relative;
     margin-left: 250px;
@@ -1510,11 +1465,6 @@ input.inputsignMI {
     -moz-transition: all 0.4s;
     transition: all 0.4s;
 }
-
-
-
-
-
 
 .login100-form-btn1:hover {
     background-color: #a30707;
@@ -1524,8 +1474,6 @@ input.inputsignMI {
     background-color: #a30707;
 }
 
-
-
 .login100-form1-btn1:hover {
     background-color: #a30707;
 }
@@ -1534,13 +1482,10 @@ input.inputsignMI {
     background-color: #a30707;
 }
 
-
 .move {
     position: relative;
     left: 100px;
 }
-
-
 
 .addbtn {
     position: relative;
@@ -1557,14 +1502,9 @@ input.inputsignMI {
 
 }
 
-
-
 .addbtn:hover {
     background-color: #802c2c;
 }
-
-
-
 
 .cobtn {
     position: relative;
@@ -1580,12 +1520,154 @@ input.inputsignMI {
     margin-top: 20px;
 }
 
-
 .cobtn:hover {
     background-color: #802c2c;
 }
-</style>
 
+h2 {
+    font-size: clamp(18px, 4vw, 32px); 
+}
+
+p {
+    font-size: clamp(14px, 3.5vw, 22px);
+}
+
+@media screen and (max-width: 1440px) {
+    .container {
+        width: 70%;
+        background: #f8d7da;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .container {
+        width: 80%;
+        background: #d1ecf1;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .name-fields {
+        flex-direction: column;
+    }
+
+    .name-fields .wrap-input100SN, 
+    .name-fields .wrap-input100FN, 
+    .name-fields .wrap-input100MI {
+        width: 100%;
+    }
+
+    .wrap-input100, 
+    .wrap-input200, 
+    .wrap-input1001 {
+        width: 100%;
+    }
+
+    .login100-form {
+        padding: 20px;
+    }
+
+    .login100-form-btn, 
+    .login100-form-btn1, 
+    .login100-form-btn2 {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .wrap-login1001 {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .container {
+        width: 95%;
+        background: #ffebcd;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 6vw;
+    }
+
+    p {
+        font-size: 5vw;
+    }
+
+    .header, .footer {
+        padding: 10px;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    .logout-button {
+        padding: 8px 16px;
+        margin-left: 10px;
+    }
+
+    .wrap-input100, 
+    .wrap-input200, 
+    .wrap-input1001 {
+        width: 100%;
+    }
+
+    .name-fields {
+        flex-direction: column;
+    }
+
+    .name-fields .wrap-input100SN, 
+    .name-fields .wrap-input100FN, 
+    .name-fields .wrap-input100MI {
+        width: 100%;
+    }
+
+    .login100-form {
+        padding: 20px;
+    }
+
+    .login100-form-btn, 
+    .login100-form-btn1, 
+    .login100-form-btn2 {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .wrap-login1001 {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .container {
+        width: 100%;
+        background: #c3e6cb;
+        padding: 12px;
+    }
+
+    h2 {
+        font-size: 7vw;
+    }
+
+    p {
+        font-size: 5.5vw;
+    }
+
+    .wrap-login1001 {
+        width: 100%;
+        padding: 20px;
+    }
+}
+.card-title {
+    background-color: #800000;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+</style>
 
 <script>
 function addOtherFile() {
@@ -1604,9 +1686,11 @@ function addCoResearcher() {
                 <input type="text" name="researcher_last_name[]" placeholder="Last Name" required>
                 <input type="text" name="researcher_middle_initial[]" placeholder="M.I." maxlength="2">
              
+             
             `;
     container.appendChild(div);
 }
+
 
 function toggleOtherInput(selectElement, otherInputId) {
     var otherInput = document.getElementById(otherInputId);
@@ -1660,83 +1744,26 @@ function toggleAdviserInput() {
     }
 }
 
+
 // Call toggleAdviserInput on page load in case there is a default selected value
 document.addEventListener("DOMContentLoaded", function() {
     toggleAdviserInput();
 });
 </script>
-
-
 </head>
 
 <body>
-
-
-    <!-- Header Section -->
-    <header>
-        <a href="#" class="brand">
-            <img src="img/logos.png" class="logo">
-            <span class="reoc">Research Ethics Oversite Committee Portal</span>
-        </a>
-
-        <div class="menu-btn">
-            <div class="navigation">
-                <div class="navigation-items">
-                    <a href="researcherHome.php"><strong>Home</strong></a>
-                    <div class="dropdown1">
-                        <a href="#"><strong>Applications</strong></a>
-                        <div class="dropdown-content1">
-                            <div class="file-item1">
-                                <a href="SubmitFiles.php"><strong>Submit Application</strong></a>
-                            </div>
-                            <div class="file-item1">
-                                <a href="viewApplications.php"><strong>View Applications</strong></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <a href="#"><strong>Downloadables</strong></a>
-                        <div class="dropdown-content">
-                            <div class="file-item">
-                                <span><strong>Application Form (WMSU-REOC-FR-001)</strong></span>
-                                <a href="./files/2-FR.002-Application-Form.doc" download>Download</a>
-                            </div>
-                            <div class="file-item">
-                                <span><strong>Study Protocol Assessment Form (WMSU-REOC-FR-004)</strong></span>
-                                <a href="./files/4-FR.004-Study-Protocol-Assessment-Form-Copy.docx"
-                                    download>Download</a>
-                            </div>
-                            <div class="file-item">
-                                <span><strong>Informed Consent Assessment Form (WMSU-REOC-FR-005)</strong></span>
-                                <a href="./files/5-FR.005-Informed-Consent-Assessment-Form (1).docx"
-                                    download>Download</a>
-                            </div>
-                            <div class="file-item">
-                                <span><strong>Exempt Review Assessment Form (WMSU-REOC-FR-006)</strong></span>
-                                <a href="./files/6-FR.006-EXEMPT-REVIEW-ASSESSMENT-FORM (1).docx" download>Download</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="./instructions.html"><strong>Instructions</strong></a>
-
-
-                    <!-- Logout Button -->
-                    <form method="POST" action="researcherHome.php" style="display: inline;">
-                        <input type="hidden" name="csrf_token"
-                            value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                        <button type="submit" name="logout" class="logout-button">Logout</button>
-                    </form>
+                     <!-- Logout Button -->
+                <form method="POST" action="researcherHome.php" style="display: inline;">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                    <button type="submit" name="logout" class="logout-button">Logout</button>
+                </form>
                 </div>
             </div>
         </div>
     </header>
-
     </div>
-
     </form>
-
 
     <div class="limiter">
         <div class="container-login1001">
@@ -1747,39 +1774,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     </span>
                     <h4 class="sign">APPLICATION FORM </h4>
                 </div>
-
-
-
-
-
-
-
-
-
                 <?php if ($application_status === 'open'): ?>
                 <form method="POST" enctype="multipart/form-data" class="login100-form1 validate-form">
                     <div id="pageContent" class="page">
-
-
-
-
-
                         <h3>Research Information</h3>
-
                         <div class="wrap-input100 validate-input m-b-26" data-validate="Title is required">
                             <span class="label-input100">Study Protocol Title</span>
                             <input class="input100" type="text" name="study_protocol_title" required
                                 placeholder="Enter Title">
                             <span class="focus-input100"></span>
                         </div>
-
-
-
-
-
-
-
-
                         <div class="wrap-input1001 validate-input m-b-26" data-validate="Research Category is required">
                             <span class="label-input100">Research Category & Fees</span>
                             <span class="choice">
@@ -1797,31 +1801,17 @@ document.addEventListener("DOMContentLoaded", function() {
                                         Funded Research / Other Institution - 3,000.00</option>
                                 </select>
                             </span>
-
-
-
-
-
-
                             <!-- Hidden input to store the selected research category value -->
                             <input type="hidden" name="hidden_research_category" id="hidden_research_category">
                             <input type="text" id="other_category_input" name="other_category"
                                 placeholder="Specify Other Category" style="display:none;"><br>
-
                         </div>
-
-
-
-
                         <br>
                         <br>
                         <br>
                         <h3>Researcher Information</h3>
-
                         <form class="login100-form validate-form">
                             <div class="name-fields">
-
-
                                 <div class="wrap-input100SN validate-input m-b-18" data-validate="Required">
                                     <span class="label-input100">Full Name</span>
                                     <input class="input100" type="text" name="researcher_first_name[]"
@@ -1829,15 +1819,11 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <span class="focus-input100"></span>
                                 </div>
 
-
-
                                 <div class="wrap-input100FN validate-input m-b-18" data-validate="Required">
                                     <input class="input100" type="text" name="researcher_last_name[]"
                                         placeholder="Last Name" required>
                                     <span class="focus-input100"></span>
                                 </div>
-
-
 
                                 <div class="wrap-input100MI">
                                     <input class="input100" type="text" name="researcher_middle_initial[]"
@@ -1846,21 +1832,10 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                             </div>
 
-
-
-
-
-
                             <label>Co-researchers</label>
                             <div id="co-researcher-container"></div>
                             <button type="button" onclick="addCoResearcher()" class="cobtn">Add
                                 Co-researcher</button><br>
-
-
-
-
-
-
 
                             <div class="wrap-input1001 validate-input m-b-26"
                                 data-validate="Research Category is required">
@@ -1869,15 +1844,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <select class="input1001" name="college_dropdown" id="college_dropdown"
                                         onchange="toggleOtherInput(this, 'other_college_input'); handleCollegeChange()"
                                         required>
-
-
                                 </span>
                             </div>
-
-                            <?php
-
-
-
+<?php
     // Fetch each row and create an option for each college
     while ($row = mysqli_fetch_assoc($result)) {
         echo '<option value="' . htmlspecialchars($row['college_name_and_color']) . '">' . htmlspecialchars($row['college_name_and_color']) . '</option>';
@@ -1888,18 +1857,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
                             <input type="text" id="other_college_input" name="other_college"
                                 placeholder="Specify Other College" style="display:none;"><br>
-
-
-
-
-
                             <div class="wrap-input100 validate-input m-b-26">
                                 <span class="label-input100">Name of Adviser</span>
                                 <input class="input100" type="text" id="adviser_name" name="adviser_name">
                                 <span class="focus-input100"></span>
                             </div>
-
-
                             <br>
                             <br>
                             <br>
@@ -1909,12 +1871,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <h4 style="margin-left:-5px;">Upload the Soft Copy of the research here:</h4>
                             <div class="move">
                                 <form class="login100-form validate-form">
-
-
                                     <form class="login100-form validate-form">
-
-
-
                                         <form class="login100-form validate-form">
                                             <div class="wrap-input200 validate-input m-b-26"
                                                 data-validate="Email Address is required">
@@ -1923,33 +1880,23 @@ document.addEventListener("DOMContentLoaded", function() {
                                                     signature in pdf file)</span>
                                                 <input class="input200" type="file" name="application_form"
                                                     accept=".pdf" required>
-
                                             </div>
-
                                             <form class="login100-form validate-form">
-
                                                 <div class="wrap-input200 validate-input m-b-26"
                                                     data-validate="Email Address is required">
                                                     <span class="label-input200"><strong>Research Protocol/Proposal
                                                         </strong>(with page and line number in pdf file)</span>
                                                     <input class="input200" type="file" name="research_protocol"
                                                         accept=".pdf" required>
-
                                                     <div class="wrap-input200 validate-input m-b-26"
                                                         data-validate="Email Address is required">
                                                         <span class="label-input200"><strong>Technical Review Clearance
                                                             </strong>(pdf file)</span>
                                                         <input class="input200" type="file"
                                                             name="technical_review_clearance" accept=".pdf" required>
-
                                                     </div>
 
-
-
-
-
                                                     <form class="login100-form validate-form">
-
                                                         <div class="wrap-input200 validate-input m-b-26"
                                                             data-validate="Email Address is required">
                                                             <span class="label-input200"><strong>Data Collection
@@ -1957,15 +1904,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                 pdf file)</span>
                                                             <input class="input200" type="file" name="data_instruments"
                                                                 accept=".pdf" required>
-
                                                         </div>
 
-
-
-
-
                                                         <form class="login100-form validate-form">
-
                                                             <div class="wrap-input200 validate-input m-b-26"
                                                                 data-validate="Email Address is required">
                                                                 <span class="label-input200"><strong>Informed
@@ -1973,11 +1914,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                     number in pdf file)</span>
                                                                 <input class="input200" type="file"
                                                                     name="informed_consent" accept=".pdf" required>
-
                                                             </div>
 
                                                             <form class="login100-form validate-form">
-
                                                                 <div class="wrap-input200 validate-input m-b-26"
                                                                     data-validate="Email Address is required">
                                                                     <span class="label-input200"><strong>Curriculum
@@ -1985,12 +1924,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                         file)</span>
                                                                     <input class="input200" type="file" name="cv"
                                                                         accept=".pdf" required>
-
                                                                 </div>
 
-
                                                                 <form class="login100-form validate-form">
-
                                                                     <div class="wrap-input200 validate-input m-b-26"
                                                                         data-validate="Email Address is required">
                                                                         <span class="label-input200"><strong>Completed
@@ -2001,12 +1937,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                         <input class="input200" type="file"
                                                                             name="study_protocol_form"
                                                                             accept=".doc,.docx" required>
-
                                                                     </div>
 
-
                                                                     <form class="login100-form validate-form">
-
                                                                         <div class="wrap-input200 validate-input m-b-26"
                                                                             data-validate="Email Address is required">
                                                                             <span class="label-input200"><strong>Completed
@@ -2017,13 +1950,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                             <input class="input200" type="file"
                                                                                 name="informed_consent_form"
                                                                                 accept=".doc,.docx" required>
-
                                                                         </div>
 
-
-
                                                                         <form class="login100-form validate-form">
-
                                                                             <div class="wrap-input200 validate-input m-b-26"
                                                                                 data-validate="Email Address is required">
                                                                                 <span class="label-input200"><strong>Completed
@@ -2034,12 +1963,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                                 <input class="input200" type="file"
                                                                                     name="exempt_review_form"
                                                                                     accept=".doc,.docx" required>
-
                                                                             </div>
-
-
-
-
 
                                                                             <form class="login100-form validate-form">
                                                                                 <div class="wrap-input200 validate-input m-b-26"
@@ -2060,19 +1984,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                                             type="button"
                                                                                             onclick="addOtherFile()">Add
                                                                                             More</button>
-
                                                                                     </div>
-
-
-
-
-
-
-
-
-
-
-
                                                                             </form>
 
                                                                             <div class="container-login100-form-btn"
@@ -2081,7 +1993,6 @@ document.addEventListener("DOMContentLoaded", function() {
                                                                                     type="submit" id="prevButton">
                                                                                     Submit
                                                                                 </button>
-
                                                                             </div>
                                                                             <?php else: ?>
                                                                             <!-- Message when application is closed -->
@@ -2092,48 +2003,24 @@ document.addEventListener("DOMContentLoaded", function() {
                                                 </div>
                             </div>
                     </div>
-
-
-
                 </form>
             </div>
         </div>
     </div>
-
-
-
-
     </div>
     </div>
     </form>
-
     </div>
-
     </form>
-
-
-
-
-
-
-
-
-
-
     </div>
     </li>
-
     </form>
     </div>
-
-    </div>
-
     </div>
     </div>
     </div>
     </div>
-
-
+    </div>
 
     <script>
     // Check if the PHP success variable is true
@@ -2211,27 +2098,14 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="separador"></div>
         <p class="footer__texto">RESEARCH ETHICS OVERSITE COMMITTEE - WMSU</p>
     </footer>
-
-
-
-
-
-
-
     <!-- partial -->
-
-
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
     <script src='https://unpkg.com/feather-icons'></script>
     <script src="./js/main.js"></script>
     <script src="./js/swiper.js"></script>
     <script src="./js/footer.js"></script>
     <script src="./js/faq.js"></script>
-
-
     <script src="./js/fonts.js"></script>
-
-
     </div>
 </body>
 
