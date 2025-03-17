@@ -95,4 +95,25 @@ class Submit extends Database{
          return $stmt->execute();
 
     }
+
+    function getAvailableConsultation(){
+        $query = "SELECT 
+        id, 
+        consultant_id, 
+        weekday, 
+        start_time, 
+        end_time,
+        status,
+        DATE_ADD(CURDATE(), INTERVAL ((FIND_IN_SET(weekday, `Monday,Tuesday,Wednesday,Thursday,Friday`) 
+            - WEEKDAY(CURDATE()) + 7) % 7) DAY) AS next_appointment_date
+            FROM consultant_availability
+            WHERE status = `open`
+            ORDER BY next_appointment_date ASC
+            LIMIT 1";
+        $stmt = $this->pdo->prepare($query);
+        if($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
 }

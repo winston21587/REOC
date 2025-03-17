@@ -1,7 +1,11 @@
 <?php
 require_once './class/clean.php';
 require_once './class/Submit.php';
+// require_once './class/Appointment.php';
+
 $submit = new Submit();
+// $appoint = new Appointment();
+
 session_start();
 // Default value for success is false
 $success = false;
@@ -263,9 +267,11 @@ if (!empty($_FILES['other_files']['name'][0])) {
 }
 
     if($flag_set){
-        
-        header('Location: viewApplications.php');
-        exit;
+        $dateforconsult = $submit->getAvailableConsultation();
+        $date = $dateforconsult['date'];
+        // header('Location: viewApplications.php');
+        // exit;
+        echo '<h1>'. $date .'</h1>';
     }
 }
 
