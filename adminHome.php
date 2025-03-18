@@ -8,7 +8,6 @@ include('updateAppointments.php');
 if (!isset($_SESSION['user_id'])) {
     session_regenerate_id(true);
 }
-
 // Check if the user is logged in and if their role is 'Admin'
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
     header("Location: login.php");
