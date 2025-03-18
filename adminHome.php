@@ -4,6 +4,7 @@
 <?php
 session_start();
 include('updateAppointments.php');
+
 // Regenerate session ID to prevent fixation
 if (!isset($_SESSION['user_id'])) {
     session_regenerate_id(true);
