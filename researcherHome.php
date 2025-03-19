@@ -1,6 +1,7 @@
 <?php include 'Website Loading Screen/loader.php'; ?> <!-- call these for website loading animation -->
 <link rel="stylesheet" href="Website Loading Screen/loader.css"> <!-- call these for website loading animation -->
 <script src="Website Loading Screen/loader.js"></script> <!-- call these for website loading animation -->
+<?php include './navbar/navbar.php'; ?> <!-- call these for the navbar -->
 <?php
 session_start();
 
@@ -126,8 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <body>
 
-<?php include './navbar/navbar.php'; ?> <!-- call these for the navbar -->
-
 </div>
 <section class="home">
       <div class="gradient"></div>
@@ -166,46 +165,107 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 <section class="divider"></section>
-<img class="msgp" src="./img/msg.png" alt="">
-<link rel="stylesheet" href="./css/msg.css">
+<img src="./img/msg.png" alt="WMSU REOC Mission Visual" class="w-full h-auto max-h-64 object-contain rounded-lg shadow-sm transition-all duration-300 hover:scale-98">
+<div class="mission-vision-goals">
+    <style>
 
-<div class="msg-container">
-    <div class="msg">
-        <br>
-        <hr class="hr">
-        <h3>Mission</h3>
-        <p>WMSU REOC(CERC) safeguards the general welfare of human participants and animal subjects in the conduct of researches.</p>
-        <br>
-        <hr class="hr">
-        <h3>Vision</h3>
-        <p>The Western Mindanao State University Research Ethics Oversight Committee (WMSU REOC) / College Research Ethics Committee (CERC) is an accredited board instituted to conduct ethics review in various fields of researches that involve human participants and animal subjects in the University and the region.</p>
-        <br>
-        <hr class="hr">
-        <h3>Goals</h3>
-        <strong>Ethical Review Excellence</strong>
-        <br>
-        <p>WMSU REOC is committed to conducting a high-quality and standardized ethical review process to safeguard the rights and welfare of research participants.</p>
-        <br>
-        <strong>Expert Multidisciplinary Review</strong>
-        <br>
-        <p>We establish and maintain a diverse pool of professional reviewers to ensure thorough and efficient evaluations through expedited and full review procedures.</p>
-        <br>
-        <strong>Commitment to Ethical Compliance</strong>
-        <p>We uphold strict adherence to ethical standards in the implementation of all research protocols.</p>
-        <br>
-        <hr class="hr">
-        <br>  
-    </div>
-    <img class="msg2" src="./img/msg2.png" alt="">
-</div>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: transparent;
+            overflow-x: hidden;
+        }
 
+        .msg-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 20px;
+        }
+        .msg2 {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
+        h3 {
+            color: #990101 !important;
+            font-size: 2.5rem !important;
+            font-weight: 700 !important;
+            margin: 1rem 0;
+        }
+
+        p {
+            font-size: 1rem !important;
+            margin-bottom: 1rem;
+        }
+
+        .hr {
+            opacity: 25%;
+            margin: 1.5rem 0;
+        }
+
+        .str {
+            font-size: 1.2rem !important;
+        }
+        
+        @media (min-width: 768px) {
+            .msg-container {
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 40px 20px;
+            }
+            
+            .msg {
+                width: 60%;
+                padding-right: 40px;
+            }
+            
+            .msg2 {
+                width: 40%;
+                position: sticky;
+                top: 20px;
+            }
+        }
+    </style>
  
-   
-
+<div class="msg-container">
+        <div class="msg">
+            <hr class="hr">
+            <h3>Mission</h3>
+            <p>WMSU REOC(CERC) safeguards the general welfare of human participants and animal subjects in the conduct of researches.</p>
+            
+            <hr class="hr">
+            <h3>Vision</h3>
+            <p>The Western Mindanao State University Research Ethics Oversight Committee (WMSU REOC) / College Research Ethics Committee (CERC) is an accredited board instituted to conduct ethics review in various fields of researches that involve human participants and animal subjects in the University and the region.</p>
+            
+            <hr class="hr">
+            <h3>Goals</h3>
+            <strong class="str">Ethical Review Excellence</strong>
+            <p>WMSU REOC is committed to conducting a high-quality and standardized ethical review process to safeguard the rights and welfare of research participants.</p>
+            
+            <strong class="str">Expert Multidisciplinary Review</strong>
+            <p>We establish and maintain a diverse pool of professional reviewers to ensure thorough and efficient evaluations through expedited and full review procedures.</p>
+            
+            <strong class="str">Commitment to Ethical Compliance</strong>
+            <p>We uphold strict adherence to ethical standards in the implementation of all research protocols.</p>
+            <hr class="hr">
+        </div>
+        
+        <img class="msg2" src="./img/msg2.png" alt="WMSU REOC Visual">
+    </div>
 </div>
 
 
+</div>
 <!-- Include Bootstrap (if not already included) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
