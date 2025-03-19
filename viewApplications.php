@@ -386,7 +386,10 @@ $applicants = new Applicants();
         echo "<h3>Your Research Titles and Appointments:</h3>";
         echo "<ul>";
         foreach ($titlesAndAppointments as $item) {
-            echo "<li><span class='title'>" . htmlspecialchars($item['study_protocol_title']) . "</span></li>";
+          $dateOfAppointment = $applicants->getAppointedDate($item['id']);
+            echo "<li><span class='title'>" . htmlspecialchars($item['study_protocol_title']) . "</span>";
+            echo  "<span class='dateOfAppointment'> Appointed Date: "  . $dateOfAppointment['appointment_date'] ."</span>";
+            echo "</li>";
         }
         echo "</ul>";
         echo "</div>";

@@ -81,10 +81,11 @@ if ($result == false) {
 // $stmt->close();
 
 $useremail = $submit->fetchUserEmail($user_id);
-$flag_set = false;
+$flag_set = [];
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-     // Rate limiting
+     try {
+    // Rate limiting
      if (isset($_SESSION['last_submission_time']) && (time() - $_SESSION['last_submission_time']) < 10) {
         // Redirect to researcherHome.php if submission is too quick
         header("Location: researcherHome.php");
@@ -126,9 +127,9 @@ if (strpos($research_category, '&#39;') !== false) {
     // $stmt->execute();
 
     if($submit->researchTitleInfo($user_id, $study_protocol_title, $college, $research_category, $adviser_name))
-  {  $flag_set = True;
+  {  $flag_set[0] = True;
 } else {
-    $flag_set = False;
+    $flag_set[0] = False;
 }
 
     // Get the ID of the inserted researcher title information
@@ -162,9 +163,9 @@ if (strpos($research_category, '&#39;') !== false) {
         $last_name = clean($researcher_last_names[$i]);
         $middle_initial = !empty($researcher_middle_initials[$i]) ? clean($researcher_middle_initials[$i]) : null;
         if($submit->researchInvolved( $researcher_title_id, $first_name, $last_name, $middle_initial)) {
-            $flag_set = True;
+            $flag_set[1] = True;
         } else {
-            $flag_set = False;
+            $flag_set[1] = False;
         }
     }  
         
@@ -216,9 +217,9 @@ foreach ($files as $file) {
         if (move_uploaded_file($_FILES[$file]['tmp_name'], $file_path)) {
             $file_type = ucfirst(str_replace('_', ' ', $file));
             if($submit->UploadFile($researcher_title_id, $file_type, $file_name, $file_path)) {
-                $flag_set = True;
+                $flag_set[2] = True;
             } else {
-                $flag_set = False;
+                $flag_set[2] = False;
             }
         }
     }
@@ -256,23 +257,41 @@ if (!empty($_FILES['other_files']['name'][0])) {
 
                 if($submit->moveUploadFiles($researcher_title_id,
                  $unique_other_file_name, $file_path)) {
-                 $flag_set = True;
+                 $flag_set[3] = True;
                  } else {
-                    $flag_set = False;
+                    $flag_set[3] = False;
                  }
                 
             }
         }
     }
 }
+  
 
-    if($flag_set){
+    // if(in_array(false,$flag_set)){
         $dateforconsult = $submit->getAvailableConsultation();
-        $date = $dateforconsult['date'];
-        // header('Location: viewApplications.php');
-        // exit;
-        echo '<h1>'. $date .'</h1>';
-    }
+        if(!empty($dateforconsult)){
+        $date = $dateforconsult['next_appointment_date']; // date for the appointment
+        $consultID = $dateforconsult['id'];
+        $submit->setconsultSchedStatus($consultID);
+        $submit->setAppointment($researcher_title_id,$consultID,$date);
+        } else {
+            echo 'No appointment available';  // fill next week or add status wait
+        }
+        header('Location: viewApplications.php');
+        exit;
+        
+    //     // echo '<h1>'. $date .'</h1>';`
+    // }else{
+    //     // error in submissionflow
+    // }
+
+
+} catch (Exception $e) {
+    // $this->pdo->rollBack();  // i cant use 'this'
+    echo $e->getMessage();
+ }
+
 }
 
 
@@ -298,91 +317,91 @@ if (!empty($_FILES['other_files']['name'][0])) {
     <link rel="icon" type="image/x-icon" href="./img/reoclogo1.jpg">
     <link rel="stylesheet" type="text/css" href="./css/SubmitFilesPhp.css">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
-<script>
-function addOtherFile() {
-    const container = document.getElementById('other-files-container');
-    const div = document.createElement('div');
-    div.innerHTML = '<input type="file" name="other_files[]" required>';
-    container.appendChild(div);
-}
-// Adds fields for co-researchers (same structure as main researcher)
-function addCoResearcher() {
-    const container = document.getElementById('co-researcher-container');
-    const div = document.createElement('div');
-    div.innerHTML = `
+    <script>
+    function addOtherFile() {
+        const container = document.getElementById('other-files-container');
+        const div = document.createElement('div');
+        div.innerHTML = '<input type="file" name="other_files[]" required>';
+        container.appendChild(div);
+    }
+    // Adds fields for co-researchers (same structure as main researcher)
+    function addCoResearcher() {
+        const container = document.getElementById('co-researcher-container');
+        const div = document.createElement('div');
+        div.innerHTML = `
                
                 <input type="text" name="researcher_first_name[]" placeholder="First Name" required>
                 <input type="text" name="researcher_last_name[]" placeholder="Last Name" required>
                 <input type="text" name="researcher_middle_initial[]" placeholder="M.I." maxlength="2">
                 <button type="button" onclick="removeCoResearcher(this)">Remove</button>
             `;
-    container.appendChild(div);
-}
-
-function removeCoResearcher(button) {
-    button.parentElement.remove();
-}
-
-function toggleOtherInput(selectElement, otherInputId) {
-    var otherInput = document.getElementById(otherInputId);
-    if (selectElement.value === 'Other') {
-        otherInput.style.display = 'inline';
-    } else {
-        otherInput.style.display = 'none';
-        otherInput.value = ''; // Reset the input field when not used
+        container.appendChild(div);
     }
 
-    // Call handleCollegeChange if the College dropdown is involved
-    if (selectElement.id === 'college_dropdown') {
-        handleCollegeChange();
+    function removeCoResearcher(button) {
+        button.parentElement.remove();
     }
-}
 
-function handleCollegeChange() {
-    const collegeDropdown = document.getElementById("college_dropdown");
-    const researchCategoryDropdown = document.getElementById("research_category_dropdown");
-    const hiddenResearchCategory = document.getElementById("hidden_research_category");
+    function toggleOtherInput(selectElement, otherInputId) {
+        var otherInput = document.getElementById(otherInputId);
+        if (selectElement.value === 'Other') {
+            otherInput.style.display = 'inline';
+        } else {
+            otherInput.style.display = 'none';
+            otherInput.value = ''; // Reset the input field when not used
+        }
 
-    if (collegeDropdown.value === "Other") {
-        // Set Research Category to "Externally Funded Research / Other Institution - 3,000.00"
-        researchCategoryDropdown.value = "Externally Funded Research / Other Institution - 3,000.00";
-        // Disable the dropdown to prevent changes
-        researchCategoryDropdown.disabled = true;
-
-        // Set the value of the hidden input
-        hiddenResearchCategory.value = "Externally Funded Research / Other Institution - 3,000.00";
-    } else {
-        // Re-enable the Research Category dropdown if College is not "Other"
-        researchCategoryDropdown.disabled = false;
-
-        // Reset hidden input value if necessary
-        hiddenResearchCategory.value = '';
+        // Call handleCollegeChange if the College dropdown is involved
+        if (selectElement.id === 'college_dropdown') {
+            handleCollegeChange();
+        }
     }
-}
 
-function toggleAdviserInput() {
-    var categoryDropdown = document.getElementById('research_category_dropdown');
-    var adviserInput = document.getElementById('adviser_name');
-    var selectedValue = categoryDropdown.value;
+    function handleCollegeChange() {
+        const collegeDropdown = document.getElementById("college_dropdown");
+        const researchCategoryDropdown = document.getElementById("research_category_dropdown");
+        const hiddenResearchCategory = document.getElementById("hidden_research_category");
 
-    // Check if the selected value is one of the required categories
-    if (selectedValue === "WMSU Undergraduate Thesis - 300.00" ||
-        selectedValue === "WMSU Master's Thesis - 700.00" ||
-        selectedValue === "WMSU Dissertation - 1,500.00") {
-        adviserInput.setAttribute('required', 'required');
-    } else {
-        adviserInput.removeAttribute('required');
+        if (collegeDropdown.value === "Other") {
+            // Set Research Category to "Externally Funded Research / Other Institution - 3,000.00"
+            researchCategoryDropdown.value = "Externally Funded Research / Other Institution - 3,000.00";
+            // Disable the dropdown to prevent changes
+            researchCategoryDropdown.disabled = true;
+
+            // Set the value of the hidden input
+            hiddenResearchCategory.value = "Externally Funded Research / Other Institution - 3,000.00";
+        } else {
+            // Re-enable the Research Category dropdown if College is not "Other"
+            researchCategoryDropdown.disabled = false;
+
+            // Reset hidden input value if necessary
+            hiddenResearchCategory.value = '';
+        }
     }
-}
-// Call toggleAdviserInput on page load in case there is a default selected value
-document.addEventListener("DOMContentLoaded", function() {
-    toggleAdviserInput();
-});
-</script>
+
+    function toggleAdviserInput() {
+        var categoryDropdown = document.getElementById('research_category_dropdown');
+        var adviserInput = document.getElementById('adviser_name');
+        var selectedValue = categoryDropdown.value;
+
+        // Check if the selected value is one of the required categories
+        if (selectedValue === "WMSU Undergraduate Thesis - 300.00" ||
+            selectedValue === "WMSU Master's Thesis - 700.00" ||
+            selectedValue === "WMSU Dissertation - 1,500.00") {
+            adviserInput.setAttribute('required', 'required');
+        } else {
+            adviserInput.removeAttribute('required');
+        }
+    }
+    // Call toggleAdviserInput on page load in case there is a default selected value
+    document.addEventListener("DOMContentLoaded", function() {
+        toggleAdviserInput();
+    });
+    </script>
 
 </head>
 
@@ -766,9 +785,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-                                                        </form>
+                </form>
             </div>
-        </div>       
+        </div>
     </div>
 
 
@@ -779,7 +798,7 @@ document.addEventListener("DOMContentLoaded", function() {
     </form>
 
     </div>
-                                                  <!-- bro wtf -->
+    <!-- bro wtf -->
 
     </form>
 
