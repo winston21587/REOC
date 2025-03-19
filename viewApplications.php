@@ -1,3 +1,7 @@
+<?php include 'Website Loading Screen/loader.php'; ?> <!-- call these for website loading animation -->
+<link rel="stylesheet" href="Website Loading Screen/loader.css"> <!-- call these for website loading animation -->
+<script src="Website Loading Screen/loader.js"></script> <!-- call these for website loading animation -->
+<?php include './navbar/navbar.php'; ?> <!-- call these for the navbar -->
 <?php
 session_start();
 
@@ -347,71 +351,6 @@ header .navigation .navigation-items a:hover:before{
 </head>
 <body>
 
-<!-- Header Section -->
-
-<header>
-  <a href="#" class="brand">
-    <img src="img/logos.png" class="logo">
-    <span class="reoc">Research Ethics Oversite Committee Portal</span>
-  </a>
-
-  <div class="menu-btn">
-    <div class="navigation">
-      <div class="navigation-items">
-        <a href="researcherHome.php">Home</a>
-        <div class="dropdown1">
-          <a href="#">Applications</a>
-          <div class="dropdown-content1">
-            <div class="file-item1">
-              <a href="SubmitFiles.php">Submit Application</a>
-            </div>
-            <div class="file-item1">
-              <a href="viewApplications.php">View Applications</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <a href="#">Downloadables</a>
-          <div class="dropdown-content">
-            <div class="file-item">
-              <span><strong>Application Form (WMSU-REOC-FR-001)</strong></span>
-              <a href="./files/2-FR.002-Application-Form.doc" download>Download</a>
-            </div>
-            <div class="file-item">
-              <span><strong>Study Protocol Assessment Form (WMSU-REOC-FR-004)</strong></span>
-              <a href="./files/4-FR.004-Study-Protocol-Assessment-Form-Copy.docx" download>Download</a>
-            </div>
-            <div class="file-item">
-              <span><strong>Informed Consent Assessment Form (WMSU-REOC-FR-005)</strong></span>
-              <a href="./files/5-FR.005-Informed-Consent-Assessment-Form (1).docx" download>Download</a>
-            </div>
-            <div class="file-item">
-              <span><strong>Exempt Review Assessment Form (WMSU-REOC-FR-006)</strong></span>
-              <a href="./files/6-FR.006-EXEMPT-REVIEW-ASSESSMENT-FORM (1).docx" download>Download</a>
-            </div>
-          </div>
-        </div>
-
-        <a href="./instructions.html">Instructions</a>
-     
-
-        <!-- Logout Button -->
-        <form method="POST" action="researcherHome.php" style="display: inline;">
-          <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-          <button type="submit" name="logout" class="logout-button">Logout</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</header>
-  
-</div>
-
-
-  
-  
-
 <!-- Main Content -->
 <div class="main-content">
 <h1 class="vision"> Appointment Schedule</h1>
@@ -600,37 +539,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		   
 		  </a>
 	  
-		</div>
-		<div class="footer__redes">
-		  <ul class="footer__redes-wrapper">
-			<li>
-			  <a href="#" class="footer__link">
-				<i class=""></i>
-				Normal Road, Baliwasan, Z.C.
-			  </a>
-			</li>
-			<li>
-			  <a href="#" class="footer__link">
-				<i class=""></i>
-				09112464566
-			  </a>
-			</li>
-			<li>
-			  <a href="#" class="footer__link">
-				<i class=""></i>
-				wmsureoc@gmail.com
-			  </a>
-			</li>
-			<li>
-			  <a href="#" class="footer__link">
-				<i class="fab fa-phone-alt"></i>
-				
-			  </a>
-			</li>
-		  </ul>
-		</div>
-		<div class="separador"></div>
-		<p class="footer__texto">RESEARCH ETHICS OVERSITE COMMITTEE - WMSU</p>
 	  </footer>
 	
 
