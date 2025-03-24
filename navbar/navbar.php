@@ -35,17 +35,22 @@ if (isset($_GET['download'])) {
       text-decoration: none;
       color: inherit;
     }
+
+    .reoc-text {
+    color: #990101 !important;
+    }
+
   </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container-fluid">
       
       <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="./img/wmsu-logo-hd.png" alt="Logo">
+        <img src="./img/real-reoc-logo.png" alt="Logo">
         <div class="ms-2">
-          <span class="d-none d-lg-block">Research Ethics Oversight Committee Portal</span>
-          <span class="d-lg-none">WMSU REOC PORTAL</span>
-        </div>
+        <span class="d-none d-lg-block reoc-text">Research Ethics Oversight Committee Portal</span>
+        <span class="d-lg-none reoc-text">WMSU REOC PORTAL</span>
+       </div>
       </a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
@@ -76,13 +81,13 @@ if (isset($_GET['download'])) {
               <li>
                 <div class="dropdown-item">
                   <strong>Application Form</strong>
-                  <div><a href="?download=2-FR.002-Application-Form.doc">Download</a></div>
+                  <div><a href="./REOC Application Form/2-FR.002 Application Form.doc">Download</a></div>
                 </div>
               </li>
               <li>
                 <div class="dropdown-item">
                   <strong>Study Protocol Assessment</strong>
-                  <div><a href="?download=4-FR.004-Study-Protocol-Assessment-Form-Copy.docx">Download</a></div>
+                  <div><a href="./Expedited and Full Form/4-FR.004 Study Protocol  Assessment Form.docx">Download</a></div>
                 </div>
               </li>
             </ul>
