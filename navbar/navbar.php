@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 if (isset($_GET['download'])) {
     $file = basename($_GET['download']);
     $filepath = __DIR__ . "/files/" . $file;
@@ -21,8 +23,8 @@ if (isset($_GET['download'])) {
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
   <style>
-    
     .navbar-brand img {
       height: 40px;
     }
@@ -39,7 +41,6 @@ if (isset($_GET['download'])) {
     .reoc-text {
     color: #990101 !important;
     }
-
   </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -88,6 +89,18 @@ if (isset($_GET['download'])) {
                 <div class="dropdown-item">
                   <strong>Study Protocol Assessment</strong>
                   <div><a href="./Expedited and Full Form/4-FR.004 Study Protocol  Assessment Form.docx">Download</a></div>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown-item">
+                  <strong>Informed Consent Assessment Form</strong>
+                  <div><a href="./Expedited and Full Form/5 -FR.005 Informed Consent Assessment Form.docx">Download</a></div>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown-item">
+                  <strong>Exempt Review Assessment Form</strong>
+                  <div><a href="./Exempt Form/6- FR.006 EXEMPT REVIEW ASSESSMENT FORM.docx">Download</a></div>
                 </div>
               </li>
             </ul>
