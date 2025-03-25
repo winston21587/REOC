@@ -956,7 +956,7 @@ $collegeCounts = json_encode(array_column($collegeData, 'count'));
 
 
         // Show the modal
-        document.getElementById("facultyModal").style.display = "block";
+        document.getElementById("facultyModal").style.display = "flex";
     }
 
     // Close Modal
@@ -1111,7 +1111,7 @@ $collegeCounts = json_encode(array_column($collegeData, 'count'));
 
         // Open modal
         editFaqBtn.addEventListener("click", function() {
-            modal.style.display = "block";
+            modal.style.display = "flex";
             loadFAQs(); // Load FAQs when opening 
         });
 
