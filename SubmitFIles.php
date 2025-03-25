@@ -1524,51 +1524,29 @@ input.inputsignMI {
     background-color: #802c2c;
 }
 
-h2 {
-    font-size: clamp(18px, 4vw, 32px); 
-}
-
-p {
-    font-size: clamp(14px, 3.5vw, 22px);
-}
-
-@media screen and (max-width: 1440px) {
-    .container {
-        width: 70%;
-        background: #f8d7da;
-    }
-}
-
 @media screen and (max-width: 1024px) {
     .container {
-        width: 80%;
-        background: #d1ecf1;
+        width: 90%;
+        padding: 15px;
     }
-}
 
-@media screen and (max-width: 768px) {
     .name-fields {
         flex-direction: column;
     }
 
-    .name-fields .wrap-input100SN, 
-    .name-fields .wrap-input100FN, 
+    .name-fields .wrap-input100SN,
+    .name-fields .wrap-input100FN,
     .name-fields .wrap-input100MI {
         width: 100%;
-    }
-
-    .wrap-input100, 
-    .wrap-input200, 
-    .wrap-input1001 {
-        width: 100%;
+        margin-bottom: 10px;
     }
 
     .login100-form {
-        padding: 20px;
+        padding: 15px;
     }
 
-    .login100-form-btn, 
-    .login100-form-btn1, 
+    .login100-form-btn,
+    .login100-form-btn1,
     .login100-form-btn2 {
         width: 100%;
         margin: 10px 0;
@@ -1576,15 +1554,70 @@ p {
 
     .wrap-login1001 {
         width: 100%;
-        padding: 20px;
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 5vw;
+    }
+
+    p {
+        font-size: 4.5vw;
+    }
+
+    .header, .footer {
+        padding: 10px;
+    }
+
+    .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .wrap-input100,
+    .wrap-input200,
+    .wrap-input1001 {
+        width: 100%;
+    }
+
+    .name-fields {
+        flex-direction: column;
+    }
+
+    .name-fields .wrap-input100SN,
+    .name-fields .wrap-input100FN,
+    .name-fields .wrap-input100MI {
+        width: 100%;
+    }
+
+    .login100-form {
+        padding: 10px;
+    }
+
+    .login100-form-btn,
+    .login100-form-btn1,
+    .login100-form-btn2 {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .wrap-login1001 {
+        width: 100%;
+        padding: 10px;
     }
 }
 
 @media screen and (max-width: 425px) {
     .container {
-        width: 95%;
-        background: #ffebcd;
-        padding: 15px;
+        width: 100%;
+        padding: 8px;
     }
 
     h2 {
@@ -1596,20 +1629,16 @@ p {
     }
 
     .header, .footer {
-        padding: 10px;
-    }
-
-    .content {
-        padding: 10px;
+        padding: 8px;
     }
 
     .logout-button {
-        padding: 8px 16px;
-        margin-left: 10px;
+        padding: 6px 10px;
+        font-size: 12px;
     }
 
-    .wrap-input100, 
-    .wrap-input200, 
+    .wrap-input100,
+    .wrap-input200,
     .wrap-input1001 {
         width: 100%;
     }
@@ -1618,34 +1647,33 @@ p {
         flex-direction: column;
     }
 
-    .name-fields .wrap-input100SN, 
-    .name-fields .wrap-input100FN, 
+    .name-fields .wrap-input100SN,
+    .name-fields .wrap-input100FN,
     .name-fields .wrap-input100MI {
         width: 100%;
     }
 
     .login100-form {
-        padding: 20px;
+        padding: 8px;
     }
 
-    .login100-form-btn, 
-    .login100-form-btn1, 
+    .login100-form-btn,
+    .login100-form-btn1,
     .login100-form-btn2 {
         width: 100%;
-        margin: 10px 0;
+        margin: 8px 0;
     }
 
     .wrap-login1001 {
         width: 100%;
-        padding: 20px;
+        padding: 8px;
     }
 }
 
 @media screen and (max-width: 375px) {
     .container {
         width: 100%;
-        background: #c3e6cb;
-        padding: 12px;
+        padding: 5px;
     }
 
     h2 {
@@ -1653,14 +1681,20 @@ p {
     }
 
     p {
-        font-size: 5.5vw;
+        font-size: 6vw;
     }
 
     .wrap-login1001 {
         width: 100%;
-        padding: 20px;
+        padding: 5px;
+    }
+
+    .logout-button {
+        padding: 5px 8px;
+        font-size: 10px;
     }
 }
+
 .card-title {
     background-color: #800000;
     color: white;
