@@ -1142,19 +1142,16 @@ input.inputsignMI {
 
 /*------------------------------------------------------------------
   [ Button ]*/
-.container-login100-form-btn {
-
+  .container-login100-form-btn {
     position: relative;
-    margin-left: 350px;
-    margin-top: 100px;
-    width: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
+    margin: 100px auto; /* Center horizontally */
+    width: fit-content; /* Adjust to fit content width */
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
+
 
 .container-login100-form-btn2 {
     width: 100%;
