@@ -472,89 +472,25 @@ body {
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    display: block; 
 }
-
-.header {
-    background-color: #800000;
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-content {
-    display: flex;
-    align-items: center;
-}
-
-.header h1 {
-    margin: 0;
-    margin-right: 20px;
-}
-
-.navbar {
-    display: flex;
-    gap: 10px;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px;
-    transition: color 0.3s;
-}
-
-.navbar a:hover {
-    color: #dc3545;
-}
-
-.logout-button {
-    background-color: #aa3636;
-    color: white;
-    font-size: 16px;
-    padding: 5px 9px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-left: 20px;
-    /* Space between navbar and logout button */
-    transition: background-color 0.3s;
-}
-
-.logout-button:hover {
-    background-color: #c82333;
-}
-
-
-
 .main-content {
     flex: 1;
     padding: 20px;
 }
 
 .titles-container {
-    position: fixed;
-    /* Keep it fixed on the screen */
+    position: absolute; /* Changed from fixed to absolute */
     top: 20px;
     right: 20px;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Optional: semi-transparent background */
     color: white;
     padding: 10px;
     border-radius: 5px;
     max-width: 300px;
-    /* Optional: limits the width */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    /* Optional: adds a shadow */
     z-index: 10;
-    /* Ensures it appears on top of other elements */
     overflow-y: auto;
-    /* Ensure the list doesn't overflow the container */
 }
 
 .titles-container ul {
@@ -592,27 +528,19 @@ body {
 .container-login1001 {
     width: 100%;
     min-height: 100vh;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     padding: 15px;
     background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(187, 52, 52, 0.5)),
-        url('img/REOCBG.jpg') no-repeat center center;
+        url('../img/REOCBG.jpg') no-repeat center center;
     background-size: cover;
-    /* Ensures the image covers the entire viewport */
-
-
 }
 
 .footer {
     background: rgba(6, 145, 192, 0);
 }
-
 
 .wrap-login100 {
     width: 670px;
@@ -622,16 +550,12 @@ body {
     position: relative;
 }
 
-
-
 .wrap-login1001 {
-    width: 1000px;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 15px;
 }
-
 
 /*==================================================================
   [ Title form ]*/
@@ -647,11 +571,9 @@ body {
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-
     padding: 70px 15px 74px 15px;
 }
 
@@ -676,9 +598,6 @@ body {
     background: linear-gradient(to bottom, rgba(190, 41, 41, 0.562), rgba(51, 39, 39, 0.712));
 }
 
-
-
-
 /*==================================================================
   [ Title form1 ]*/
 .login100-form1-title {
@@ -693,11 +612,9 @@ body {
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-
     padding: 70px 15px 74px 15px;
 }
 
@@ -721,8 +638,6 @@ body {
     left: 0;
     background: linear-gradient(to bottom, rgba(190, 41, 41, 0.562), rgba(51, 39, 39, 0.712));
 }
-
-
 
 /*==================================================================
   [ Form ]*/
@@ -756,10 +671,6 @@ body {
     padding: 20px 88px 93px 55px;
 }
 
-
-
-
-
 /*------------------------------------------------------------------
   [ Input ]*/
 
@@ -777,8 +688,6 @@ body {
     border-bottom: 1px solid #0a8b5a00;
 }
 
-
-
 .wrap-input1001 {
     top: 20px;
     width: 100%;
@@ -787,21 +696,17 @@ body {
     border-radius: 5px;
 }
 
-
 .wrap-input100SN {
     width: 100%;
     position: relative;
     border-bottom: 1px solid #b2b2b2;
 }
 
-
-
 .wrap-input100FN {
     width: 100%;
     position: relative;
     border-bottom: 1px solid #b2b2b2;
 }
-
 
 .opt {
     color: #660707;
@@ -819,7 +724,6 @@ body {
     color: #000000;
     line-height: 1.2;
     text-align: left;
-
     position: absolute;
     top: 14px;
     left: -105px;
@@ -827,18 +731,13 @@ body {
 
 }
 
-
-
-
 .label-input200 {
     font-family: Poppins-Regular;
     font-size: 13px;
     color: #000000;
     line-height: 1.2;
     text-align: left;
-
     position: absolute;
-
     left: -105px;
     width: 270px;
 
@@ -904,7 +803,6 @@ select.input1001 option:checked {
     background-color: #a30707;
 }
 
-
 .login100-form-btn2:hover {
     background-color: #a30707;
 }
@@ -913,11 +811,9 @@ select.input1001 option:checked {
     background-color: #a30707;
 }
 
-
 .login100-form1-btn:hover {
     background-color: #a30707;
 }
-
 
 .login100-form1-btn2:hover {
     background-color: #a30707;
@@ -1033,7 +929,6 @@ select.input1001 option:checked {
     left: 0;
     width: 0;
     height: 1px;
-
     -webkit-transition: all 0.6s;
     -o-transition: all 0.6s;
     -moz-transition: all 0.6s;
@@ -1050,7 +945,6 @@ select.input1001 option:checked {
     left: 0;
     width: 0;
     height: 1px;
-
     -webkit-transition: all 0.6s;
     -o-transition: all 0.6s;
     -moz-transition: all 0.6s;
@@ -1067,7 +961,6 @@ select.input1001 option:checked {
     left: 0;
     width: 0;
     height: 1px;
-
     -webkit-transition: all 0.6s;
     -o-transition: all 0.6s;
     -moz-transition: all 0.6s;
@@ -1075,6 +968,7 @@ select.input1001 option:checked {
 
     background-color: #751111;
 }
+
 
 .focus-input100SN::before {
     content: "";
@@ -1084,14 +978,13 @@ select.input1001 option:checked {
     left: 0;
     width: 0;
     height: 1px;
-
     -webkit-transition: all 0.6s;
     -o-transition: all 0.6s;
     -moz-transition: all 0.6s;
     transition: all 0.6s;
-
     background-color: #751111;
 }
+
 .focus-input100MI::before {
     content: "";
     display: block;
@@ -1100,14 +993,13 @@ select.input1001 option:checked {
     left: 0;
     width: 0;
     height: 1px;
-
     -webkit-transition: all 0.6s;
     -o-transition: all 0.6s;
     -moz-transition: all 0.6s;
     transition: all 0.6s;
-
     background-color: #751111;
 }
+
 /*---------------------------------------------*/
 input.input100 {
     height: 45px;
@@ -1165,7 +1057,6 @@ input.inputsignMI {
     width: 100%;
 }
 
-
 .input100MI:focus+.focus-input100MI::before {
     width: 100%;
 }
@@ -1197,6 +1088,7 @@ input.inputsignMI {
 .has-val.inputsignSN+.focus-input100::before {
     width: 100%;
 }
+
 /*==================================================================
   [ Restyle Checkbox ]*/
 
@@ -1306,12 +1198,10 @@ input.inputsignMI {
     height: 50px;
     background-color: #751111;
     border-radius: 25px;
-
     font-family: Poppins-Regular;
     font-size: 16px;
     color: #fff;
     line-height: 1.2;
-
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
@@ -1374,6 +1264,7 @@ input.inputsignMI {
     -moz-transition: all 0.4s;
     transition: all 0.4s;
 }
+
 .login100-form1-btn2 {
     position: relative;
     left: 65px;
@@ -1397,6 +1288,7 @@ input.inputsignMI {
     -moz-transition: all 0.4s;
     transition: all 0.4s;
 }
+
 .container-login100-form-btn1 {
     width: 100%;
     display: -webkit-box;
@@ -1406,6 +1298,7 @@ input.inputsignMI {
     display: flex;
     flex-wrap: wrap;
 }
+
 .container-login1001-form-btn1 {
     width: 100%;
     display: -webkit-box;
@@ -1429,12 +1322,10 @@ input.inputsignMI {
     height: 50px;
     background-color: #751111;
     border-radius: 25px;
-
     font-family: Poppins-Regular;
     font-size: 16px;
     color: #fff;
     line-height: 1.2;
-
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
@@ -1454,12 +1345,10 @@ input.inputsignMI {
     height: 50px;
     background-color: #751111;
     border-radius: 25px;
-
     font-family: Poppins-Regular;
     font-size: 16px;
     color: #fff;
     line-height: 1.2;
-
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
@@ -1499,7 +1388,6 @@ input.inputsignMI {
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 20px;
-
 }
 
 .addbtn:hover {
@@ -1508,7 +1396,6 @@ input.inputsignMI {
 
 .cobtn {
     position: relative;
-
     padding: 6px 6px;
     font-size: 11px;
     border: none;
@@ -1522,6 +1409,107 @@ input.inputsignMI {
 
 .cobtn:hover {
     background-color: #802c2c;
+}
+
+/* General responsive styles */
+.container {
+    width: 100%;
+    padding: 8px;
+}
+
+h2 {
+    font-size: 6vw;
+}
+
+p {
+    font-size: 5vw;
+}
+
+.header, .footer {
+    padding: 8px;
+}
+
+.logout-button {
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+.wrap-input100,
+.wrap-input200,
+.wrap-input1001 {
+    width: 100%;
+}
+
+.name-fields {
+    flex-direction: column;
+}
+
+.name-fields .wrap-input100SN,
+.name-fields .wrap-input100FN,
+.name-fields .wrap-input100MI {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.login100-form {
+    padding: 8px;
+}
+
+.login100-form-btn,
+.login100-form-btn1,
+.login100-form-btn2 {
+    width: 100%;
+    margin: 8px 0;
+}
+
+.wrap-login1001 {
+    width: 100%;
+    padding: 8px;
+}
+
+/* Specific adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+    h2 {
+        font-size: 5vw;
+    }
+
+    p {
+        font-size: 4.5vw;
+    }
+
+    .logout-button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    h2 {
+        font-size: 6.5vw;
+    }
+
+    p {
+        font-size: 5.5vw;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    h2 {
+        font-size: 7vw;
+    }
+
+    p {
+        font-size: 6vw;
+    }
+
+    .logout-button {
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+
+    .wrap-login1001 {
+        padding: 5px;
+    }
 }
 
 @media screen and (max-width: 1024px) {
