@@ -126,45 +126,147 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 <body>
+</div>
+
+<div class="HomePageWeb">
+
+<section class="hero-section">
+  
+  <div class="hero-background">
+   <img src="./img/reocpic.jpg" alt="home-bg">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <h1>Upholding Ethical Research Standards</h1>
+    <p>
+      The Research Ethics Oversight Committee (REOC) at Western Mindanao State
+      University (WMSU) ensures that all research meets the highest ethical
+      standards. With a commitment to integrity, transparency, and participant
+      protection, REOC provides expert review and guidance, making ethical
+      approval seamless and efficient.
+    </p>
+    <p>
+      As a Level 2 accredited committee by the Philippine Health Research
+      Ethics Board (PHREB), WMSU REOC is a trusted authority for researchers
+      across Mindanao, offering thorough evaluations for diverse research
+      fields—excluding clinical trials.
+    </p>
+    <p>Join us in advancing ethical research.</p>
+
+    <a href="SubmitFiles.php" class="btn-submit">Submit Application</a>
+  </div>
+</section>
+
+<style>
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 0 !important;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    color: #fff;
+    padding: 2rem;
+    margin-left: 3%;
+  }
+
+  .hero-content h1 {
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-content p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .btn-submit {
+    display: inline-block;
+    background-color: #990101;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .btn-submit:hover {
+    background-color:rgb(0, 0, 0);
+  }
+
+  @media (max-width: 768px) {
+    .hero-content {
+      margin-left: 3%;
+      padding: 1rem;
+      max-width: 90%;
+    }
+
+    .hero-content h1 {
+      font-size: 2rem;
+    }
+
+    .hero-content p {
+      font-size: 1rem;
+    }
+
+    .btn-submit {
+      font-size: 0.9rem;
+      padding: 0.6rem 1.2rem;
+    }
+  }
+</style>
+
 
 </div>
-<section class="home">
-      <div class="gradient"></div>
-        <img decoding="async" class="img-slide active" src="./img/reocpic.jpg" ></img>
-        <img decoding="async" class="img-slide" src="./img/wmsu2.jpg" ></img>
-        <img decoding="async" class="img-slide" src="./img/wmsu1.jpg" ></img>
-        <img decoding="async" class="img-slide" src="./img/wmsu5.jpg" ></img>
-        <img decoding="async" class="img-slide" src="./img/wmsu1.jpg" ></img>
 
 
-        <div class="content active">
-            <h1>Best in Service<br></h1>
-            <p>The Research Ethics Oversight Committee (REOC) offers the highest standard of service in Mindanao, ensuring that all research activities adhere to ethical principles and guidelines. With a commitment to safeguarding the rights and welfare of research participants, the REOC provides comprehensive review processes, expert guidance, and timely support. Their dedication to upholding ethical integrity in research has established them as a trusted authority, making them the go-to committee for researchers seeking ethical approval in Mindanao.</p>
-          <a href="SubmitFiles.php" style="    transition: 0.3s ease;">Submit Application</a>
-        </div>
-        <div class="content">
-          <h1>Ethical Excellence Guaranteed<br></h1>
-          <p>The Research Ethics Oversight Committee (REOC) at Western Mindanao State University (WMSU) provides the best ethical review services in Mindanao. As a leading institution, WMSU ensures that all research projects meet the highest ethical standards, safeguarding participants’ rights and promoting responsible research. Through rigorous evaluation and expert guidance, REOC at WMSU supports researchers by providing swift, transparent, and thorough reviews, positioning the university as a pillar of ethical integrity in the region.</p>
-         
-        </div>
-        <div class="content">
-          <h1>High Standards for Research Ethics<br></h1>
-          <p>WMSU REOC has been granted Level 2 Accreditation by the Philippine Health Research Ethics Board (PHREB). This Level 2 accreditation is a testament to the committee's dedication and commitment to upholding the highest standards of research ethics. It empowers WMSU REOC to conduct thorough research reviews across all research categories, except clinical trials.</p>
-          
-        </div>
-       
-        <div class="slider-navigation">
-            <div class="nav-btn active"></div>
-            <div class="nav-btn"></div>
-            <div class="nav-btn"></div>
-        
-    </section>
+<br>
+<br>
 
-
-
-
-
-<section class="divider"></section>
 <img src="./img/msg.png" alt="WMSU REOC Mission Visual" class="w-full h-auto max-h-64 object-contain rounded-lg shadow-sm transition-all duration-300 hover:scale-98">
 <div class="mission-vision-goals">
     <style>
@@ -686,4 +788,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
-
