@@ -105,10 +105,15 @@ if (isset($_GET['download'])) {
               </li>
             </ul>
           </li>
-         
-          <li class="nav-item">
-            <a class="nav-link" href="./instructions.html">Instructions</a>
-          </li>
+          <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Instructions
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="./instructions.html">Instructions</a></li>
+        <li><a class="dropdown-item" href="view_faculty_members.php">Faculty Members</a></li>
+    </ul>
+</li>
 
           <li class="nav-item">
             <form method="POST" action="researcherHome.php" class="d-flex align-items-center">
