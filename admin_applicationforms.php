@@ -499,7 +499,7 @@ if ($result->num_rows > 0) {
     <!-- Footer Section -->
    
 
-	<footer class="footer">
+	<!-- <footer class="footer">
 		<div class="owl-carousel">
 	  
 		  <a href="#" class="gallery__photo">
@@ -558,7 +558,7 @@ if ($result->num_rows > 0) {
 		</div>
 		<div class="separador"></div>
 		<p class="footer__texto">RESEARCH ETHICS OVERSITE COMMITTEE - WMSU</p>
-	  </footer>
+	  </footer> -->
 	
 
 	  

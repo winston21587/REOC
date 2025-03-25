@@ -37,7 +37,7 @@ if (isset($_POST['logout'])) {
 // Database connection
 require_once 'dbConnCode.php'; // Replace with your actual database connection file
 
-
+require_once './class/Admin.php';
 
 $faculty_id = 1; // Replace with dynamic ID based on the schedule being edited
 
@@ -469,7 +469,8 @@ $collegeCounts = json_encode(array_column($collegeData, 'count'));
     <div class="filter-container">
         <form method="GET" action="adminHome.php">
             <label for="month"></label>
-            <select name="month" id="month" onchange="this.form.submit()" style="		padding: 10px 20px; font-size: 16px; cursor: pointer;    background-color: #aa3636; /* Blue color */
+            <select name="month" id="month" onchange="this.form.submit()" style="		
+            padding: 10px 20px; font-size: 16px; cursor: pointer;    background-color: #aa3636; /* Blue color */
           color: white; /* Text color */
           border: none; /* Remove border */
           border-radius: 10px; /* Rounded corners */

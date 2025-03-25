@@ -386,11 +386,15 @@ $applicants = new Applicants();
         echo "<h3>Your Research Titles and Appointments:</h3>";
         echo "<ul class='AppointmentList'>";
         foreach ($titlesAndAppointments as $item) {
+          echo "<li><span class='title'>" . htmlspecialchars($item['study_protocol_title']) . "</span>";
+          if(!empty($applicants->getAppointedDate($item['id']))){
           $dateOfAppointment = $applicants->getAppointedDate($item['id']);
-            echo "<li><span class='title'>" . htmlspecialchars($item['study_protocol_title']) . "</span>";
             echo  "<span class='dateOfAppointment'> Appointed Date: "  . $dateOfAppointment['appointment_date'] . "</span>";
             echo  "<span class='dateOfAppointment'> at " . time_format($dateOfAppointment['start_time']). ' - ' . time_format($dateOfAppointment['end_time']) . "</span>";
-            echo "</li>";
+          }else{
+            echo "could not find date";
+          }
+          echo "</li>";
         }
         echo "</ul>";
         echo "</div>";

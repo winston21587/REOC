@@ -334,7 +334,7 @@ $total_users = $total_row['total_users'];
         <?php } ?>
     </table>
 
-	<footer class="footer">
+	<!-- <footer class="footer">
 		<div class="owl-carousel">
 	  
 		  <a href="#" class="gallery__photo">
@@ -393,7 +393,7 @@ $total_users = $total_row['total_users'];
 		</div>
 		<div class="separador"></div>
 		<p class="footer__texto">RESEARCH ETHICS OVERSITE COMMITTEE - WMSU</p>
-	  </footer>
+	  </footer> -->
 	
 
 	  

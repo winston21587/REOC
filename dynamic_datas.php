@@ -674,8 +674,6 @@ td{
       <a href="adminHome.php">Home</a>
       <a href="admin_applicationforms.php">Application Forms</a>
       <a href="Account.php">Account Verifications</a>
-     <a href="./admin_dashboard.html">Dashboard</a>
-       
 
         <!-- Logout Button -->
         <form method="POST" action="researcherHome.php" style="display: inline;">

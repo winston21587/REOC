@@ -227,7 +227,7 @@ $result = mysqli_query($conn, $query);
       <a href="adminHome.php">Home</a>
       <a href="admin_applicationforms.php">Application Forms</a>
       <a href="account.php">Account Verifications</a>
-     <a href="./admin_dashboard.html">Dashboard</a>
+
        
 
         <!-- Logout Button -->

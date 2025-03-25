@@ -426,14 +426,14 @@ textarea {
 
 
 
-.printcont {
+/* .printcont { */
     /* position: fixed;
     top: 120px;
     right: 200px;
     z-index: 1; */
-}
+/* } */
 
-.printbtn {
+/* .printbtn { */
     /* padding: 10px 20px;
     font-size: 16px;
     cursor: pointer; */
@@ -453,7 +453,7 @@ textarea {
     /* width: 4rem; */
 
 
-}
+/* } */
 
 .printbtn:hover {
     background-color: #802c2c;
