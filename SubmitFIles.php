@@ -1478,6 +1478,38 @@ p {
         padding: 8px 12px;
         font-size: 14px;
     }
+
+    .wrap-input100,
+    .wrap-input200,
+    .wrap-input1001 {
+        width: 100%;
+    }
+
+    .name-fields {
+        flex-direction: column;
+    }
+
+    .name-fields .wrap-input100SN,
+    .name-fields .wrap-input100FN,
+    .name-fields .wrap-input100MI {
+        width: 100%;
+    }
+
+    .login100-form {
+        padding: 10px;
+    }
+
+    .login100-form-btn,
+    .login100-form-btn1,
+    .login100-form-btn2 {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .wrap-login1001 {
+        width: 100%;
+        padding: 10px;
+    }
 }
 
 @media screen and (max-width: 425px) {
@@ -1487,6 +1519,43 @@ p {
 
     p {
         font-size: 5.5vw;
+    }
+
+    .logout-button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .wrap-input100,
+    .wrap-input200,
+    .wrap-input1001 {
+        width: 100%;
+    }
+
+    .name-fields {
+        flex-direction: column;
+    }
+
+    .name-fields .wrap-input100SN,
+    .name-fields .wrap-input100FN,
+    .name-fields .wrap-input100MI {
+        width: 100%;
+    }
+
+    .login100-form {
+        padding: 8px;
+    }
+
+    .login100-form-btn,
+    .login100-form-btn1,
+    .login100-form-btn2 {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    .wrap-login1001 {
+        width: 100%;
+        padding: 8px;
     }
 }
 
@@ -1499,13 +1568,14 @@ p {
         font-size: 6vw;
     }
 
+    .wrap-login1001 {
+        width: 100%;
+        padding: 5px;
+    }
+
     .logout-button {
         padding: 5px 8px;
         font-size: 10px;
-    }
-
-    .wrap-login1001 {
-        padding: 5px;
     }
 }
 
@@ -1775,7 +1845,6 @@ document.addEventListener("DOMContentLoaded", function() {
                      <!-- Logout Button -->
                 <form method="POST" action="researcherHome.php" style="display: inline;">
                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                    <button type="submit" name="logout" class="logout-button">Logout</button>
                 </form>
                 </div>
             </div>
