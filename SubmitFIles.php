@@ -268,7 +268,7 @@ if (!empty($_FILES['other_files']['name'][0])) {
 }
   
 
-    // if(in_array(false,$flag_set)){
+    if(!(in_array(false,$flag_set))){
         $dateforconsult = $submit->getAvailableConsultation();
         if(!empty($dateforconsult)){
         $date = $dateforconsult['next_appointment_date']; // date for the appointment
@@ -282,13 +282,18 @@ if (!empty($_FILES['other_files']['name'][0])) {
         exit;
         
     //     // echo '<h1>'. $date .'</h1>';`
-    // }else{
-    //     // error in submissionflow
-    // }
+    }else{
+        // error in submissionflow
+        // flag 0 =  error in submitting research infromation
+        // flag 1  =  error in submitting co research
+        // flag 2  =  error in submitting files
+        // flag 3  =  error in submitting other files 
+
+    }
 
 
 } catch (Exception $e) {
-    // $this->pdo->rollBack();  // i cant use 'this'
+    // $this->pdo->rollBack();  // i cant use 'this' UPDATE: nvm using this rollsback the entire database
     echo $e->getMessage();
  }
 

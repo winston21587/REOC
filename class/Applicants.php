@@ -15,7 +15,9 @@ class Applicants extends Database {
     }
 
     public function getAppointedDate($id) {
-    $query = 'SELECT * from appointments WHERE researcher_title_id = :id';
+    $query = 'SELECT a.availability_id, a.appointment_date, a.status, b.weekday, b.start_time,b.end_time,b.status 
+    from appointments a LEFT JOIN consultant_availability b ON a.availability_id = b.id
+    WHERE a.researcher_title_id = :id ';
     $stmt = $this->pdo->prepare($query);
     $stmt->bindParam(':id', $id);
     if($stmt->execute()){

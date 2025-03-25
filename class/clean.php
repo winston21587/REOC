@@ -16,3 +16,9 @@ function clean($input) {
     
     return $input;
 }
+
+function time_format($time) {
+    $dateTime = DateTime::createFromFormat('H:i:s', $time);
+    $time = $dateTime->format('h:i A');
+    return $time;
+}   

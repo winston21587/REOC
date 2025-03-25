@@ -31,7 +31,7 @@ if (isset($_POST['logout'])) {
 }
 require_once 'dbConnCode.php';
 require_once 'class/Applicants.php';
-
+require_once 'class/clean.php';
 $applicants = new Applicants();
 
 // function unnesessary_function(){
@@ -384,11 +384,12 @@ $applicants = new Applicants();
     if (!empty($titlesAndAppointments)) {
         echo "<div class='titles-appointments'>";
         echo "<h3>Your Research Titles and Appointments:</h3>";
-        echo "<ul>";
+        echo "<ul class='AppointmentList'>";
         foreach ($titlesAndAppointments as $item) {
           $dateOfAppointment = $applicants->getAppointedDate($item['id']);
             echo "<li><span class='title'>" . htmlspecialchars($item['study_protocol_title']) . "</span>";
-            echo  "<span class='dateOfAppointment'> Appointed Date: "  . $dateOfAppointment['appointment_date'] ."</span>";
+            echo  "<span class='dateOfAppointment'> Appointed Date: "  . $dateOfAppointment['appointment_date'] . "</span>";
+            echo  "<span class='dateOfAppointment'> at " . time_format($dateOfAppointment['start_time']). ' - ' . time_format($dateOfAppointment['end_time']) . "</span>";
             echo "</li>";
         }
         echo "</ul>";
