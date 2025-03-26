@@ -36,7 +36,7 @@ body {
     margin-right: 20px;
 }
 
-.navbar {
+/* .navbar {
     display: flex;
     gap: 10px;
 }
@@ -62,9 +62,9 @@ body {
     border-radius: 10px;
     cursor: pointer;
     margin-left: 20px;
-    /* Space between navbar and logout button */
+    Space between navbar and logout button
     transition: background-color 0.3s;
-}
+} */
 
 .logout-button:hover {
     background-color: #c82333;

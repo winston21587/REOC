@@ -185,9 +185,13 @@ header .navigation .navigation-items a:hover:before{
     left: 200px;
 }
 
+.footer__link{
+    text-decoration: none;
+    color: #333;
+}
 
 .vision {
-    background-color: #F8F7F4;
+    /* background-color: #F8F7F4; */
     position: relative;
     padding-top: 100px;
     text-align: center;
