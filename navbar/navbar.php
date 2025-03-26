@@ -47,7 +47,7 @@ if (isset($_GET['download'])) {
     <div class="container-fluid">
       
       <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="./img/real-reoc-logo.png" alt="Logo">
+        <img src="./img/reoclogo1.jpg" alt="">
         <div class="ms-2">
         <span class="d-none d-lg-block reoc-text">Research Ethics Oversight Committee Portal</span>
         <span class="d-lg-none reoc-text">WMSU REOC PORTAL</span>
@@ -110,7 +110,7 @@ if (isset($_GET['download'])) {
         Instructions
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="./instructions.php">Instructions</a></li>
+        <li><a class="dropdown-item" href="./instructions.html">Instructions</a></li>
         <li><a class="dropdown-item" href="view_faculty_members.php">Faculty Members</a></li>
     </ul>
 </li>
