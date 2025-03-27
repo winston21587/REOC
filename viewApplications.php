@@ -316,7 +316,7 @@ $applicants = new Applicants();
 <div class="main-content">
 <h1 class="vision"> Appointment Schedule</h1>
    
-    <!-- <button class="schedbtn" id="rescheduleButton" data-user-id="<?php // echo htmlspecialchars($user_id); ?>">Reschedule Appointment</button> -->
+    <button class="schedbtn" id="rescheduleButton" data-user-id="<?php echo htmlspecialchars($user_id); ?>">Reschedule Appointment</button>
     
 <!-- <div id='calendar'></div>
 <div id="timeSlots"></div> -->
