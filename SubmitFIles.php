@@ -415,8 +415,7 @@ if (!empty($_FILES['other_files']['name'][0])) {
 
 
     <!-- Header Section -->
-    <?php include 'navbar/navbar.php'; ?>
-
+<?php include 'navbar/navbar.php'; ?>
 
     </div>
     

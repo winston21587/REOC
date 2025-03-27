@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             $mail->Host = 'smtp.gmail.com';
                             $mail->SMTPAuth = true;
                             $mail->Username = 'wbtester33@gmail.com'; // Replace with your email
-                            $mail->Password = 'opqsqyhllizjjymc'; // Replace with your email password
+                            $mail->Password = 'bljerhkjpgbkvjbv'; // Replace with your email password
                             $mail->SMTPSecure = 'ssl';
                             $mail->Port = 465;
 

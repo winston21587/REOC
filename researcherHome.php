@@ -1,7 +1,11 @@
+<?php include 'Website Loading Screen/loader.php'; ?> <!-- call these for website loading animation -->
+<link rel="stylesheet" href="Website Loading Screen/loader.css"> <!-- call these for website loading animation -->
+<script src="Website Loading Screen/loader.js"></script> <!-- call these for website loading animation -->
+<?php include './navbar/navbar.php'; ?> <!-- call these for the navbar -->
 <?php
 session_start();
 
-// Regenerate session ID to prevent fixation
+// Regenerate session ID to prevent fixation  
 if (!isset($_SESSION['user_id'])) {
     session_regenerate_id(true); // Regenerate session id on first visit
 }
@@ -103,190 +107,322 @@ $fresult = $conn->query($sql);
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/interaction/main.min.js'></script>
 
 </head>
-<body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
 
-<!-- Header Section -->
+    menuBtn.addEventListener("click", function () {
+        mobileMenu.classList.toggle("active");
+    });
 
-<header>
-  <a href="#" class="brand">
-    <img src="img/logos.png" class="logo">
-    <span class="reoc">Research Ethics Oversite Committee Portal</span>
-  </a>
-
-  <div class="menu-btn">     
-    <span class="burger" ></span>
-    <div class="navigation">
-      <div class="navigation-items">
-        <div class="dropdown1">
-          <a href="#">Applications</a>
-          <div class="dropdown-content1">
-            <div class="file-item1">
-              <a href="SubmitFiles.php">Submit Application</a>
-            </div>
-            <div class="file-item1">
-              <a href="viewApplications.php">View Applications</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <a href="#">Downloadables</a>
-          <div class="dropdown-content">
-            <div class="file-item">
-              <span><strong>Application Form (WMSU-REOC-FR-001)</strong></span>
-              <a href="./files/2-FR.002-Application-Form.doc" download>Download</a>
-            </div>
-            <div class="file-item">
-              <span><strong>Study Protocol Assessment Form (WMSU-REOC-FR-004)</strong></span>
-              <a href="./files/4-FR.004-Study-Protocol-Assessment-Form-Copy.docx" download>Download</a>
-            </div>
-            <div class="file-item">
-              <span><strong>Informed Consent Assessment Form (WMSU-REOC-FR-005)</strong></span>
-              <a href="./files/5-FR.005-Informed-Consent-Assessment-Form (1).docx" download>Download</a>
-            </div>
-            <div class="file-item">
-              <span><strong>Exempt Review Assessment Form (WMSU-REOC-FR-006)</strong></span>
-              <a href="./files/6-FR.006-EXEMPT-REVIEW-ASSESSMENT-FORM (1).docx" download>Download</a>
-            </div>
-          </div>
-        </div>
-
-        <a href="./instructions.html">Instructions</a>
-      
-        <!-- Logout Button -->
-        <form method="POST" action="researcherHome.php" style="display: inline;">
-          <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-          <button type="submit" name="logout" class="logout-button">Logout</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</header>
-  
-</div>
-
-<section class="home">
-      <div class="gradient"></div>
-        <img decoding="async" class="img-slide active" src="./img/reocpic.jpg" ></img>
-        <img decoding="async" class="img-slide" src="./img/wmsu2.jpg" ></img>
-        <img decoding="async" class="img-slide" src="./img/wmsu1.jpg" ></img>
-        <img decoding="async" class="img-slide" src="./img/wmsu5.jpg" ></img>
-        <img decoding="async" class="img-slide" src="./img/wmsu1.jpg" ></img>
-
-
-        <div class="content active">
-            <h1>Best in Service<br></h1>
-            <p>The Research Ethics Oversight Committee (REOC) offers the highest standard of service in Mindanao, ensuring that all research activities adhere to ethical principles and guidelines. With a commitment to safeguarding the rights and welfare of research participants, the REOC provides comprehensive review processes, expert guidance, and timely support. Their dedication to upholding ethical integrity in research has established them as a trusted authority, making them the go-to committee for researchers seeking ethical approval in Mindanao.</p>
-          <a href="SubmitFiles.php" style="    transition: 0.3s ease;">Submit Application</a>
-        </div>
-        <div class="content">
-          <h1>Ethical Excellence Guaranteed<br></h1>
-          <p>The Research Ethics Oversight Committee (REOC) at Western Mindanao State University (WMSU) provides the best ethical review services in Mindanao. As a leading institution, WMSU ensures that all research projects meet the highest ethical standards, safeguarding participants’ rights and promoting responsible research. Through rigorous evaluation and expert guidance, REOC at WMSU supports researchers by providing swift, transparent, and thorough reviews, positioning the university as a pillar of ethical integrity in the region.</p>
-         
-        </div>
-        <div class="content">
-          <h1>High Standards for Research Ethics<br></h1>
-          <p>WMSU REOC has been granted Level 2 Accreditation by the Philippine Health Research Ethics Board (PHREB). This Level 2 accreditation is a testament to the committee's dedication and commitment to upholding the highest standards of research ethics. It empowers WMSU REOC to conduct thorough research reviews across all research categories, except clinical trials.</p>
-          
-        </div>
-       
-        <div class="slider-navigation">
-            <div class="nav-btn active"></div>
-            <div class="nav-btn"></div>
-            <div class="nav-btn"></div>
-        
-    </section>
-
-
-
-
-
-<section class="divider"></section>
-
-
- <h1 class="vision"> WMSU-REOC VISION, MISSION, GOALS</h1>
- <div class="section1">
-
-
-    <div class="slide-container ">
-        <div class="slide-content">
-            <div class="card-wrapper swiper-wrapper">
-
-
-
-                <div class="card swiper-slide">
-                    <div class="image-content">
-                        <span class="overlay"> <h2 class="name1">Vision</h2></span>
-                    </div>
-
-                    <div class="card-content">
-                      <br>
-                        <p class="description"><?php echo nl2br(htmlspecialchars($vision)); ?></p>
-                      <br>
-                    </div>
-                </div>
-
-                <div class="card swiper-slide">
-                  <div class="image-content">
-                      <span class="overlay"> <h2 class="name1">Mission</h2></span>
-                  </div>
-
-                  <div class="card-content">
-                    <br>
-                      <p class="description"><?php echo nl2br(htmlspecialchars($mission)); ?></p>
-                    <br>
-                  </div>
-              </div>
-
-
-              <div class="card swiper-slide">
-                <div class="image-content">
-                    <span class="overlay"> <h2 class="name1">Goals</h2></span>
-                </div>
-
-                <div class="card-content">
-                  <br>
-                    <p class="description"><?php echo nl2br(htmlspecialchars($goals)); ?></p>
-                  <br>
-                </div>
-            </div>
-
-                
-            </div>
-        </div>
-
-    </div>
-    
-   
-
-
- 
-
-</div>
-
-
-<section class="divider"></section>
-    <h1 class="vision1"> WMSU-REOC FACULTY</h1>
-  
-<!-- Display Faculty Members -->
-<?php
-    // Display Faculty Members
-    $sqlFaculty = "SELECT id, name, picture FROM faculty_members";
-    $resultFaculty = $conn->query($sqlFaculty);
-
-    if ($resultFaculty->num_rows > 0) {
-        echo "<div class='gallery'>"; // Change <ul> to <div> with a class for styling
-        while ($row = $resultFaculty->fetch_assoc()) {
-            $picturePath = "Faculty Members/" . $row['picture'];
-            echo "<div class='gallery-item' >
-                    <img   src='" . $picturePath . "' alt='" . htmlspecialchars($row['name']) . "' class='faculty-img' >
-                  </div>";
+    // Close menu when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!menuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+            mobileMenu.classList.remove("active");
         }
-        echo "</div>";
-    } else {
-        echo "<p>No faculty members found.</p>";
+    });
+});
+
+</script>
+<body>
+</div>
+
+<div class="HomePageWeb">
+
+<section class="hero-section">
+  
+  <div class="hero-background">
+   <img src="./img/reocpic.jpg" alt="home-bg">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <h1>Upholding Ethical Research Standards</h1>
+    <p>
+      The Research Ethics Oversight Committee (REOC) at Western Mindanao State
+      University (WMSU) ensures that all research meets the highest ethical
+      standards. With a commitment to integrity, transparency, and participant
+      protection, REOC provides expert review and guidance, making ethical
+      approval seamless and efficient.
+    </p>
+    <p>
+      As a Level 2 accredited committee by the Philippine Health Research
+      Ethics Board (PHREB), WMSU REOC is a trusted authority for researchers
+      across Mindanao, offering thorough evaluations for diverse research
+      fields—excluding clinical trials.
+    </p>
+    <p>Join us in advancing ethical research.</p>
+
+    <a href="SubmitFiles.php" class="btn-submit">Submit Application</a>
+  </div>
+</section>
+
+<style>
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 0 !important;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    color: #fff;
+    padding: 2rem;
+    margin-left: 3%;
+  }
+
+  .hero-content h1 {
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-content p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .btn-submit {
+    display: inline-block;
+    background-color: #990101;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .btn-submit:hover {
+    background-color:rgb(0, 0, 0);
+  }
+
+  @media (max-width: 768px) {
+    .hero-content {
+      margin-left: 3%;
+      padding: 1rem;
+      max-width: 90%;
     }
-?>
+
+    .hero-content h1 {
+      font-size: 2rem;
+    }
+
+    .hero-content p {
+      font-size: 1rem;
+    }
+
+    .btn-submit {
+      font-size: 0.9rem;
+      padding: 0.6rem 1.2rem;
+    }
+  }
+</style>
+
+
+</div>
+
+
+<br>
+<br>
+
+<img src="./img/msg.png" alt="WMSU REOC Mission Visual" class="w-full h-auto max-h-64 object-contain rounded-lg shadow-sm transition-all duration-300 hover:scale-98">
+<div class="mission-vision-goals">
+    <style>
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: transparent;
+            overflow-x: hidden;
+        }
+
+        .msg-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 20px;
+        }
+        .msg2 {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h3 {
+            color: #990101 !important;
+            font-size: 2.5rem !important;
+            font-weight: 700 !important;
+            margin: 1rem 0;
+        }
+
+        p {
+            font-size: 1rem !important;
+            margin-bottom: 1rem;
+        }
+
+        .hr {
+            opacity: 25%;
+            margin: 1.5rem 0;
+        }
+
+        .str {
+            font-size: 1.2rem !important;
+        }
+        
+        @media (min-width: 768px) {
+            .msg-container {
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 40px 20px;
+            }
+            
+            .msg {
+                width: 60%;
+                padding-right: 40px;
+            }
+            
+            .msg2 {
+                width: 40%;
+                position: sticky;
+                top: 20px;
+            }
+        }
+    </style>
+ 
+<div class="msg-container">
+        <div class="msg">
+            <hr class="hr">
+            <h3>Mission</h3>
+            <p>WMSU REOC(CERC) safeguards the general welfare of human participants and animal subjects in the conduct of researches.</p>
+            
+            <hr class="hr">
+            <h3>Vision</h3>
+            <p>The Western Mindanao State University Research Ethics Oversight Committee (WMSU REOC) / College Research Ethics Committee (CERC) is an accredited board instituted to conduct ethics review in various fields of researches that involve human participants and animal subjects in the University and the region.</p>
+            
+            <hr class="hr">
+            <h3>Goals</h3>
+            <strong class="str">Ethical Review Excellence</strong>
+            <p>WMSU REOC is committed to conducting a high-quality and standardized ethical review process to safeguard the rights and welfare of research participants.</p>
+            
+            <strong class="str">Expert Multidisciplinary Review</strong>
+            <p>We establish and maintain a diverse pool of professional reviewers to ensure thorough and efficient evaluations through expedited and full review procedures.</p>
+            
+            <strong class="str">Commitment to Ethical Compliance</strong>
+            <p>We uphold strict adherence to ethical standards in the implementation of all research protocols.</p>
+            <hr class="hr">
+        </div>
+        
+        <img class="msg2" src="./img/msg2.png" alt="WMSU REOC Visual">
+    </div>
+</div>
+
+
+</div>
+<!-- Include Bootstrap (if not already included) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<section class="divider"></section>
+<h1 class="text-center mt-4 fw-bold">WMSU-REOC FACULTY</h1>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <?php
+            $sqlFaculty = "SELECT id, name, picture FROM faculty_members";
+            $resultFaculty = $conn->query($sqlFaculty);
+
+            if ($resultFaculty->num_rows > 0) {
+                while ($row = $resultFaculty->fetch_assoc()) {
+                    $picturePath = "Faculty Members/" . $row['picture'];
+                    echo "<div class='col-md-6 col-sm-7 col-12 mb-4'>
+                            <div class='card shadow-lg border-0'>
+                                <img src='" . $picturePath . "' alt='" . htmlspecialchars($row['name']) . "' class='card-img-top faculty-img'>
+                                <div class='card-body text-center'>
+                                    <h5 class='card-title fw-semibold'>" . htmlspecialchars($row['name']) . "</h5>
+                                </div>
+                            </div>
+                          </div>";
+                }
+            } else {
+                echo "<p class='text-center text-muted'>No faculty members found.</p>";
+            }
+        ?>
+    </div>
+</div>
+
+<style>
+ .faculty-img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+@media (min-width: 992px) {
+    .faculty-img {
+        max-width: 1200px;
+    }
+    .card {
+        max-width: 90%;
+        margin: 0 auto; 
+    }
+}
+.container {
+    max-width: 100%;
+    padding: 0 5vw;
+}
+</style>
 
 
 
@@ -300,28 +436,53 @@ $fresult = $conn->query($sql);
 
   <section class="divider"></section>
 <!-- newfaq -->
-  <h2>Frequently Asked Questions</h2>
-    <table>
-        <tr>
-           
-            <th>Question</th>
-            <th>Answer</th>
-            
-        </tr>
-        <?php
-        if ($fresult->num_rows > 0) {
-            while ($row = $fresult->fetch_assoc()) {
-                echo "<tr>
-                       
-                        <td>" . htmlspecialchars($row["question"]) . "</td>
-                        <td>" . htmlspecialchars($row["answer"]) . "</td>
-                      </tr>";
-            }
-        } else {
-            echo "<tr><td colspan='4'>No FAQs available</td></tr>";
-        }
-        ?>
-    </table>
+<link rel="stylesheet" href="./css/faq.css">
+<script src="./js/faqrh.js"></script>
+
+<div class="faq-wrapper">
+<div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">How will I know if my research is for exemption? <span>+</span></div>
+            <div class="faq-answer">You will be notified through Gmail if your research is exempted from the review process. Keep an eye on your inbox for any official communications regarding your submission.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What types of research are typically exempt from review? <span>+</span></div>
+            <div class="faq-answer">Certain types of research, especially those involving minimal risk to participants, may be exempt from the full review process. Examples include studies using anonymous surveys, observational studies in public settings, or research involving publicly available data.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How can I submit for application? <span>+</span></div>
+            <div class="faq-answer">To submit your review application, ensure first that you have the hard copies of the necessary documents that can be downloaded through the downloadables tab.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How long does an expedited review take? <span>+</span></div>
+            <div class="faq-answer">Expedited reviews take approximately 15 days to be completed.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How will I know if my research has changed its status? <span>+</span></div>
+            <div class="faq-answer">You will be notified through Gmail within weeks after submission from the review process.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What should I do if I haven't received a notification about my research study? <span>+</span></div>
+            <div class="faq-answer">If you haven't received a notification, it's best to wait a little longer as the review process can take time. Check your inbox and spam folder.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How long does it usually take for a research paper to be reviewed? <span>+</span></div>
+            <div class="faq-answer">The time varies depending on several factors. Typically, it can take anywhere from a few weeks to several months.</div>
+        </div>
+
+    </div>
+
+    </div>
+
+    
 
 <!-- newfaq -->
 <!-- faq temporary close <h1 class="vision1"> FREQUENTLY ASKED QUESTIONS</h1>
@@ -379,24 +540,59 @@ $fresult = $conn->query($sql);
  <div class="office-schedule">
  
 <!-- Display Schedules -->
-<?php
-    // Display Schedules
-    $sqlSchedule = "SELECT id, name, picture FROM Schedule";
-    $resultSchedule = $conn->query($sqlSchedule);
 
-    if ($resultSchedule->num_rows > 0) {
-        echo "<div class='gallery'>"; // Change <ul> to <div> with a class for styling
-        while ($row = $resultSchedule->fetch_assoc()) {
-            $picturePath = "Schedules/" . $row['picture'];
+<!-- if u want with a no image and empty space warning use this: <?php
+/*
+if (!isset($conn)) {
+    die("Database connection error.");
+}
+
+$sqlSchedule = "SELECT id, name, picture FROM Schedule";
+$resultSchedule = $conn->query($sqlSchedule);
+
+if ($resultSchedule && $resultSchedule->num_rows > 0) {
+    echo "<div class='gallery'>";
+    while ($row = $resultSchedule->fetch_assoc()) {
+        $name = htmlspecialchars($row['name']);
+        $picturePath = "Schedules/" . htmlspecialchars($row['picture']);
+
+        if (!empty($row['picture']) && file_exists($picturePath)) {
             echo "<div class='gallery-item'>
-                    <img src='" . $picturePath . "' alt='" . htmlspecialchars($row['name']) . "' class='schedule-img'>
+                    <img src='$picturePath' alt='$name' class='schedule-img'>
                   </div>";
         }
-        echo "</div>";
-    } else {
-        echo "<p>No schedules found.</p>";
     }
+    echo "</div>";
+}
+*/
+?> -->
+
+<?php
+
+if (!isset($conn)) {
+    die("Database connection error.");
+}
+
+$sqlSchedule = "SELECT id, name, picture FROM Schedule";
+$resultSchedule = $conn->query($sqlSchedule);
+
+if ($resultSchedule && $resultSchedule->num_rows > 0) {
+    echo "<div class='gallery'>";
+    while ($row = $resultSchedule->fetch_assoc()) {
+        $name = htmlspecialchars($row['name']);
+        $picturePath = "Schedules/" . htmlspecialchars($row['picture']);
+
+        if (!empty($row['picture']) && file_exists($picturePath)) {
+            echo "<div class='gallery-item'>
+                    <img src='$picturePath' alt='$name' class='schedule-img'>
+                  </div>";
+        }
+    }
+    echo "</div>";
+}
 ?>
+
+
 
 </div>
 
@@ -413,71 +609,31 @@ $fresult = $conn->query($sql);
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script><script  src="./script.js"></script>
 
 
-
-
-
-
-
 <footer class="footer">
   <div class="owl-carousel">
-
     <a href="#" class="gallery__photo">
       <img src="img/wmsu55.jpg" alt="" />
-   
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/wmsu11.jpg" alt="" />
-    
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/reoc11.jpg" alt="" />
-     
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/wmsu22.jpg" alt="" />
-    
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/reoc22.jpg" alt="" />
-     
     </a>
     <a href="#" class="gallery__photo">
       <img src="img/wmsu44.jpg" alt="" />
-     
     </a>
+  </div>
 
-  </div>
-  <div class="footer__redes">
-    <ul class="footer__redes-wrapper">
-      <li>
-        <a href="#" class="footer__link">
-          <i class=""></i>
-          Normal Road, Baliwasan, Z.C.
-        </a>
-      </li>
-      <li>
-        <a href="#" class="footer__link">
-          <i class=""></i>
-          09112464566
-        </a>
-      </li>
-      <li>
-        <a href="#" class="footer__link">
-          <i class=""></i>
-          wmsureoc@gmail.com
-        </a>
-      </li>
-      <li>
-        <a href="#" class="footer__link">
-          <i class="fab fa-phone-alt"></i>
-          
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="separador"></div>
-  <p class="footer__texto">RESEARCH ETHICS OVERSITE COMMITTEE - WMSU</p>
 </footer>
+
+
 <!-- partial -->
   <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://unpkg.com/feather-icons'></script><script  src="footer.js"></script>
@@ -621,4 +777,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
-

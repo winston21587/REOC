@@ -1,9 +1,9 @@
 <?php
 // Database configuration
 $servername = "localhost";
-$username = "admin";
-$password = "admin";
-$database = "ReocWebDB";
+$username = "root";
+$password = "";
+$database = "reocwebdb";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);

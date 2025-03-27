@@ -46,7 +46,7 @@ header .brand{
 
 }
 
-
+.mi 
 .reoc{
     position: relative;
     top: 14px;
@@ -1425,17 +1425,6 @@ width: 200px;
 .file-item1 span {
 font-size: 15px;
 width: 200px;
-}
-
-.dateOfAppointment{
-  width: 100%;
-  text-align: center;
-}
-.AppointmentList li{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 @media (max-width: 1040px) {
