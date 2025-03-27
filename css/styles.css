@@ -1437,3 +1437,265 @@ width: 200px;
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 1040px) {
+  header {
+      padding: 12px 20px;
+  }
+
+  header .navigation {
+      display: none;
+  }
+
+  header .navigation.active {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(1, 1, 1, 0.5);
+      z-index: 999;
+  }
+
+  header .navigation .navigation-items {
+      background: #fff;
+      width: 300px;
+      max-width: 80%;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 8px;
+      box-shadow: 0 5px 25px rgba(1, 1, 1, 0.2);
+  }
+
+  header .navigation .navigation-items a {
+      color: #a14242;
+      font-size: 1.2em;
+      margin: 15px;
+      text-decoration: none;
+  }
+
+  .menu-btn {
+      display: block;
+      cursor: pointer;
+      background: url("./img/burger-menu-svgrepo-com.svg") no-repeat;
+      background-size: cover;
+      width: 35px;
+      height: 35px;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      z-index: 1000;
+  }
+
+  .menu-btn.active {
+      background: url("./img/close-button.png") no-repeat;
+      background-size: cover;
+  }
+} 
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.brand img.logo {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.reoc {
+  font-size: 18px;
+  font-weight: bold;
+  color: #800000;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.navigation-items {
+  display: flex;
+  gap: 20px;
+}
+
+.dropdown1, .dropdown {
+  position: relative;
+}
+
+.dropdown-content1, .dropdown-content {
+  display: none;
+  position: absolute;
+  background: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  top: 100%;
+  left: 0;
+  min-width: 250px;
+}
+
+.dropdown1:hover .dropdown-content1,
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.logout-button {
+  background: #b33;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+@media (max-width: 1024px) {
+  .navigation-items {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: white;
+      width: 250px;
+      padding: 15px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .navigation-items.active {
+      display: flex;
+  }
+
+  .menu-btn {
+      display: block;
+      cursor: pointer;
+      font-size: 24px;
+      padding: 10px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .menu-btn {
+      display: none;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #fff;
+  background: red;
+  border-radius: 50%;
+  padding: 5px 10px;
+}
+
+/* Hide Mobile Navbar by Default */
+.mobile-navbar {
+  display: none;
+}
+
+/* Show Mobile Navbar on Smaller Screens */
+@media screen and (max-width: 768px) {
+  .desktop-navbar {
+      display: none;
+  }
+  .mobile-navbar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: white;
+      width: 100%;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #f8f8f8;
+      width: 100%;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-menu.active {
+      display: flex;
+  }
+
+  .mobile-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+  }
+
+  .mobile-menu li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+  }
+
+  .mobile-menu a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+  }
+
+  .menu-btn {
+      cursor: pointer;
+      display: block;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      width: 30px;
+      height: 30px;
+  }
+
+  .menu-btn .burger {
+      width: 25px;
+      height: 3px;
+      margin-top: 10px;
+      background: #333;
+      display: block;
+      position: relative;
+  }
+
+  .menu-btn .burger::before,
+  .menu-btn .burger::after {
+      content: "";
+      width: 25px;
+      height: 3px;
+      background: #333;
+      display: block;
+      position: absolute;
+      transition: 0.3s;
+  }
+
+  .menu-btn .burger::before {
+      top: -8px;
+  }
+
+  .menu-btn .burger::after {
+      top: 8px;
+  }
+  .reoc {
+    padding-right: 280px;
+  }
+}
