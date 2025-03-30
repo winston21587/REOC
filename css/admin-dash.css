@@ -1,0 +1,66 @@
+.charts-container{
+display: flex;
+align-items: flex-start;
+justify-content: space-around;
+flex-wrap: wrap;
+gap: 70px;
+}
+.monthSelect{
+    padding: 10px 20px; font-size: 16px; cursor: pointer;    background-color: #aa3636; /* Blue color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 5px 9px; /* Button size */
+    font-size: 16px; /* Font size */
+    transition: background-color 0.3s; 
+    margin: 2rem;
+    }
+.chart-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+.chart-item h3{
+    font-size: 30px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 1rem;
+
+}
+.vision2{
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+}
+.totalstat{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+.totalstat .box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+}
+.totalstat .box .n-stat{
+    display: flex;
+    flex-direction: column;
+}
+
+.box svg{
+    width: 48px;
+    height: 48px;
+}
+.OutputNumber{
+    font-size: 32px;
+    font-weight: bold;
+    color: #333333;
+}

@@ -42,7 +42,55 @@ public function FetchavailableMonth(){
 
 }
 
+public function fetchFAQ(){
+    $query = "SELECT * FROM faq";
+    $stmt = $this->pdo->prepare($query);
+    if( $stmt->execute()){
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    return false;
+}
 
+public function addFAQ($question,$answer){
+    $query = "INSERT INTO faq (question, answer) VALUES (:question, :answer)";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(":question", $question);
+    $stmt->bindParam(":answer", $answer);
+    return $stmt->execute();
+}
+
+public function updateFAQ($faq_id, $question, $answer) {
+    $query = "UPDATE faq SET question = :question, answer = :answer WHERE id = :faq_id";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(":question", $question);
+    $stmt->bindParam(":answer", $answer);
+    $stmt->bindParam(":faq_id", $faq_id);
+    return $stmt->execute();
+    }
+
+public function deleteFAQ($faq_id){
+    $query = "DELETE FROM faq WHERE id = :faq_id";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(":faq_id", $faq_id);
+    return $stmt->execute();
+}
+
+public function showVM(){
+    $query = "SELECT * FROM vision_mission";
+    $stmt = $this->pdo->prepare($query);
+    if($stmt->execute())
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return false;
+
+}
+
+public function updateVM($content, $id) {
+    $query = "UPDATE vision_mission SET content = :content WHERE id = :id";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindParam(":content", $content);
+    $stmt->bindParam(":id", $id);
+    return $stmt->execute();
+}
 
 
 }
