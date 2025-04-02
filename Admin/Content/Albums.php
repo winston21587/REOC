@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 // Check if the user is logged in and if their role is 'Admin'
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
-    header("Location: ../../login.php");
+    header("Location: /REOC/login.php");
     exit();
 }
 
@@ -40,7 +40,7 @@ $admin = new admin();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin-Mission/Vision</title>
+    <title>Admin-Albums</title>
     <link rel="icon" type="image/x-icon" href="../../img/reoclogo1.jpg">
     <link rel="stylesheet" href="../../sidebar/sidebar.css">
     <link rel="stylesheet" href="../../css/admin.css">

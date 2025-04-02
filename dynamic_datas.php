@@ -3,7 +3,7 @@ session_start();
 
 // Check if the user is logged in and if their role is 'Admin'
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
-    header("Location: login.php");
+    header("Location: ../../login.php");
     exit();
 }
 
@@ -12,8 +12,7 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-require_once 'dbConnCode.php';
-
+require_once '/REOC/dbConnCode.php'; // Adjust the path as necessary
 // Initialize a message variable for SweetAlert
 $message = null;
 

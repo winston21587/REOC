@@ -5,13 +5,27 @@
 session_start();
 // include('updateAppointments.php');
 
+
+// if the session id is not present it will direct to the login page
+if(!isset($_SESSION['user_id'])){
+    header('location:/REOC/login.php');
+    exit();
+}
+
+// if the role is not matching the type of page admin e.g it will direct to the login page
+if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin'){
+    header('location:/REOC/login.php'); // rejects unauthorized role (most likely a user role)
+    exit();
+}
+
+
 // Regenerate session ID to prevent fixation
 if (!isset($_SESSION['user_id'])) {
     session_regenerate_id(true);
 }
 // Check if the user is logged in and if their role is 'Admin'
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Admin') {
-    header("Location: ../login.php");
+    header("Location: /REOC/login.php");
     exit();
 }
 

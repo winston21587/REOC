@@ -92,5 +92,20 @@ public function updateVM($content, $id) {
     return $stmt->execute();
 }
 
+public function getUserInfo(){
+    
+    $query = "    SELECT u.id, u.email, u.isActive, rp.mobile_number
+    FROM users AS u
+    LEFT JOIN researcher_profiles AS rp ON u.id = rp.user_id
+    LEFT JOIN user_roles AS ur ON u.id = ur.user_id
+    LEFT JOIN roles AS r ON ur.role_id = r.id
+    WHERE u.email != '' AND u.email IS NOT NULL
+    AND r.name = 'Researcher';";
+    $stmt = $this->pdo->prepare($query);
+    if($stmt->execute()){
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    return false;
+}
 }
