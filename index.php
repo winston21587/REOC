@@ -1,3 +1,6 @@
+<?php include 'Website Loading Screen/loader.php'; ?> <!-- call these for website loading animation -->
+<link rel="stylesheet" href="Website Loading Screen/loader.css"> <!-- call these for website loading animation -->
+<script src="Website Loading Screen/loader.js"></script> <!-- call these for website loading animation -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +8,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WMSUReoc</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+    .fade-in {
+     opacity: 0;
+     transform: translateY(20px);
+     transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
     }
     html, body {
       height: 100%;
@@ -165,19 +177,6 @@
     .arrow.right {
       right: 30px;
     }
-    .dummy-content {
-      min-height: 150vh;
-      padding: 50px 30px;
-      background: #fff;
-      text-align: center;
-      font-size: 1.2rem;
-      color: #333;
-    }
-    .dummy-content a {
-      color: #B22222;
-      text-decoration: none;
-      font-weight: bold;
-    }
     .team-section {
       text-align: center;
       padding: 50px 20px;
@@ -237,6 +236,7 @@
     }
     .social-icons a i {
       font-size: 16px;
+      margin-top: 7px;
     }
     @media (max-width: 768px) {
       .nav-right {
@@ -307,7 +307,7 @@
     <button class="arrow right" id="next"><i class="fas fa-chevron-right"></i></button>
   </div>
 
-  <section class="team-section">
+  <section class="team-section fade-in">
     <h2>Meet the Faculty Members</h2>
     <br>
     <div class="team-container">
@@ -397,6 +397,17 @@
         mobileMenu.style.display = 'none';
       }
     });
+    document.addEventListener("DOMContentLoaded", function () {
+    const fadeInElements = document.querySelectorAll(".fade-in");
+    const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.1 });
+   fadeInElements.forEach(el => observer.observe(el));
+  });
   </script>
 </body>
 </html>
