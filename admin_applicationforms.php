@@ -115,8 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'editResearch.php?id=' + id;
         });
     });
-});
-document.addEventListener('DOMContentLoaded', function() {
+
     // Select all Edit buttons
     document.querySelectorAll('.edit-button').forEach(button => {
         button.addEventListener('click', function() {
@@ -363,13 +362,14 @@ button{
       </div>
     </div>
   </div>
-  </header>
 </header>
   
 <h1 class="vision2">Application Forms</h1>
     <!-- Main Content -->
     <div class="main-content">
       
+
+    <!-- filter container -->
     <div class="table-filters1">
     <input type="text" id="searchTitle" placeholder="Search by Study Protocol Title..." onkeyup="filterTable()">
     <input type="text" id="searchEmail" placeholder="Search by Email..." onkeyup="filterTable()">
@@ -403,97 +403,98 @@ button{
         <option value="<?= htmlspecialchars($monthYear) ?>"><?= htmlspecialchars($monthYear) ?></option>
     <?php } ?>
 </select>
-</div>
+    </div>
 
 
 
-<div style="width: 90%; overflow-x: auto; position: relative; margin-left: 100px;">
-            <table  style="border-collapse: collapse; width: 100% !important; ; " >
-                <thead>
-                    <tr>
-                        <th>Date Uploaded</th>
-                        <th>Researchers Involved</th>
-                        <th>Study Protocol Title</th>
-                        <th>Research Category</th>
-                        <th>College/ Institution</th>
-                        <th>Name of the Adviser</th>
-                        <th>Submitted Files</th>
-                        <th>Email</th>
-                        <th>Contact Number</th>
-                        <th>Status</th>
-                        <th>Type Of Research</th>
-                        <th>Toggle Include</th>
-                        <th>Certification</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                <?php
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($row['uploaded_at']) . "</td>";
-        echo "<td><button class='view-btn' data-id='" . $row['id'] . "'>View</button></td>"; // Use id field for data-id
-        echo "<td class='restitle'>" . htmlspecialchars($row['study_protocol_title']) . "</td>"; // Display study_protocol_title
-        echo "<td>" . htmlspecialchars($row['research_category']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['college']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['adviser_name']) . "</td>";
-        echo "<td><button class='view-files-btn' data-id='" . $row['id'] . "'>View Files</button></td>"; // Now using rti.id
-        echo "<td class='emailColumn'>" . htmlspecialchars($row['email']) . "</td>";
+    <div style="width: 90%; overflow-x: auto; position: relative; margin-left: 100px;">
+                <table  style="border-collapse: collapse; width: 100% !important; ; " >
+                    <thead>
+                        <tr>
+                            <th>Date Uploaded</th>
+                            <th>Researchers Involved</th>
+                            <th>Study Protocol Title</th>
+                            <th>Research Category</th>
+                            <th>College/ Institution</th>
+                            <th>Name of the Adviser</th>
+                            <th>Submitted Files</th>
+                            <th>Email</th>
+                            <th>Contact Number</th>
+                            <th>Status</th>
+                            <th>Type Of Research</th>
+                            <th>Toggle Include</th>
+                            <th>Certification</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    <?php
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['uploaded_at']) . "</td>";
+            echo "<td><button class='view-btn' data-id='" . $row['id'] . "'>View</button></td>"; // Use id field for data-id
+            echo "<td class='restitle'>" . htmlspecialchars($row['study_protocol_title']) . "</td>"; // Display study_protocol_title
+            echo "<td>" . htmlspecialchars($row['research_category']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['college']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['adviser_name']) . "</td>";
+            echo "<td><button class='view-files-btn' data-id='" . $row['id'] . "'>View Files</button></td>"; // Now using rti.id
+            echo "<td class='emailColumn'>" . htmlspecialchars($row['email']) . "</td>";
 
-        echo "<td>" . htmlspecialchars($row['mobile_number']) . "</td>";
-        echo "<td>
-        <select class='status-dropdown' data-id='" . $row['id'] . "'>
-            <option value='" . htmlspecialchars($row['status']) . "' selected>" . htmlspecialchars($row['status']) . "</option>
-            <option value='For Initial Review'>For Initial Review</option>
-            <option value='Waiting for Revision'>Waiting for Revision</option>
-            <option value='Panel Deliberation'>Panel Deliberation</option>
-            <option value='Submission of Revisions'>Submission of Revisions</option>
-            <option value='Checking of Revisions'>Checking of Revisions</option>
-            <option value='Issuance of Certificate'>Issuance of Certificate</option>
-            <option value='Complete Submission'>Complete Submission</option>
-            <option value='Other'>Other</option> 
-        </select>
-        <input type='text' class='status-input' data-id='" . $row['id'] . "' placeholder='Enter custom status' style='display:none;'>
-      </td>";
+            echo "<td>" . htmlspecialchars($row['mobile_number']) . "</td>";
+            echo "<td>
+            <select class='status-dropdown' data-id='" . $row['id'] . "'>
+                <option value='" . htmlspecialchars($row['status']) . "' selected>" . htmlspecialchars($row['status']) . "</option>
+                <option value='For Initial Review'>For Initial Review</option>
+                <option value='Waiting for Revision'>Waiting for Revision</option>
+                <option value='Panel Deliberation'>Panel Deliberation</option>
+                <option value='Submission of Revisions'>Submission of Revisions</option>
+                <option value='Checking of Revisions'>Checking of Revisions</option>
+                <option value='Issuance of Certificate'>Issuance of Certificate</option>
+                <option value='Complete Submission'>Complete Submission</option>
+                <option value='Other'>Other</option> 
+            </select>
+            <input type='text' class='status-input' data-id='" . $row['id'] . "' placeholder='Enter custom status' style='display:none;'>
+        </td>";
 
-
+            // Type of Review dropdown
+            echo "<td>
+                    <select class='type-review-dropdown' data-id='" . $row['id'] . "'>
+                        <option value='For Initial Review' " . ($row['type_of_review'] === 'For Initial Review' ? 'selected' : '') . ">For Initial Review</option>
+                        <option value='Initial Review' " . ($row['type_of_review'] === 'Initial Review' ? 'selected' : '') . ">Initial Review</option>
+                        <option value='Full Review' " . ($row['type_of_review'] === 'Full Review' ? 'selected' : '') . ">Full Review</option>
+                        <option value='Expedited' " . ($row['type_of_review'] === 'Expedited' ? 'selected' : '') . ">Expedited</option>
+                        <option value='Exempt' " . ($row['type_of_review'] === 'Exempt' ? 'selected' : '') . ">Exempt</option>
+                    </select>
+                </td>";
+                
+                echo "<td>
+                <button class='toggle-btn' data-id='" . $row['id'] . "' data-toggle='" . $row['Toggle'] . "'>" . 
+                ($row['Toggle'] == 1 ? "Exclude" : "Include") . 
+                "</button>
+                </td>";
         
-
-        // Type of Review dropdown
-        echo "<td>
-                <select class='type-review-dropdown' data-id='" . $row['id'] . "'>
-                    <option value='For Initial Review' " . ($row['type_of_review'] === 'For Initial Review' ? 'selected' : '') . ">For Initial Review</option>
-                    <option value='Initial Review' " . ($row['type_of_review'] === 'Initial Review' ? 'selected' : '') . ">Initial Review</option>
-                    <option value='Full Review' " . ($row['type_of_review'] === 'Full Review' ? 'selected' : '') . ">Full Review</option>
-                    <option value='Expedited' " . ($row['type_of_review'] === 'Expedited' ? 'selected' : '') . ">Expedited</option>
-                    <option value='Exempt' " . ($row['type_of_review'] === 'Exempt' ? 'selected' : '') . ">Exempt</option>
-                </select>
-              </td>";
-              
-              echo "<td>
-              <button class='toggle-btn' data-id='" . $row['id'] . "' data-toggle='" . $row['Toggle'] . "'>" . 
-              ($row['Toggle'] == 1 ? "Exclude" : "Include") . 
-              "</button>
-            </td>";
-      
-      
-         // Generate button
-         echo '<td><button class="generate-btn" data-id="' . $row['id'] . '" data-review-type="' . htmlspecialchars($row['type_of_review']) . '">Generate</button></td>';
- 
-         // Edit button
-         echo "<td><button class='edit-btn' data-id='" . $row['id'] . "'>Edit</button></td>";
- 
-         echo "</tr>";
+        
+            // Generate button
+            echo '<td><button class="generate-btn" data-id="' . $row['id'] . '" data-review-type="' . htmlspecialchars($row['type_of_review']) . '">Generate</button></td>';
+    
+            // Edit button
+            echo "<td><button class='edit-btn' data-id='" . $row['id'] . "'>Edit</button></td>";
+    
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr><td colspan='11'>No files uploaded yet.</td></tr>"; // Adjust colspan based on the number of columns
     }
-} else {
-    echo "<tr><td colspan='11'>No files uploaded yet.</td></tr>"; // Adjust colspan based on the number of columns
-}
-?>
- </tbody>
-            </table>
-</div>
-        </div>
+    ?>
+    </tbody>
+                </table>
+    </div>
+
+    </div>
+
+
+    
     </div>
      
     <!-- Footer Section -->
@@ -658,6 +659,8 @@ document.querySelectorAll('.view-files-btn').forEach(button => {
         });
     });
 });
+
+
     // Change event for Type of Review dropdown
     $('.type-review-dropdown').change(function() {
         var id = $(this).data('id');

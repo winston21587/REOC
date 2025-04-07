@@ -92,7 +92,7 @@ public function updateVM($content, $id) {
     return $stmt->execute();
 }
 
-public function getUserInfo(){
+    public function getUserInfo(){  
     
     $query = "    SELECT u.id, u.email, u.isActive, rp.mobile_number
     FROM users AS u
@@ -108,4 +108,36 @@ public function getUserInfo(){
 
     return false;
 }
+
+    public function fetchAppData(){
+        $query = "
+    SELECT rti.id, 
+            rti.user_id, 
+            rti.uploaded_at, 
+            rti.study_protocol_title, 
+            rti.research_category, 
+            rti.college,
+            rti.adviser_name, 
+            rti.payment,    
+            rti.status,            
+            rti.type_of_review,         
+            rti.Toggle, 
+            a.appointment_date,
+            rp.mobile_number,
+            u.email
+            FROM Researcher_title_informations AS rti
+            LEFT JOIN appointments AS a ON rti.id = a.researcher_title_id  -- Change user_id to researcher_title_id
+            LEFT JOIN researcher_profiles AS rp ON rti.user_id = rp.user_id
+            LEFT JOIN users AS u ON rti.user_id = u.id
+            ORDER BY rti.uploaded_at DESC
+    ";
+
+    $stmt = $this->pdo->prepare($query);
+    if($stmt->execute()){
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    return false;
+
+    }
 }
