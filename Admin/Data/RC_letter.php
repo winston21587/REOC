@@ -1,5 +1,5 @@
 <?php
-  
+
 
 ?>
 
@@ -93,8 +93,8 @@
 
 <body>
   <h2>Generate Filled Research Ethics Review Form</h2>
-  <form action="generate_RC_letter.php" method="POST">
-    <label>Paper Title:</label>
+  <form action="generate_RC_letter.php" method="POST" target="_blank">
+    <label>Paper entitled:</label>
     <input type="text" name="title">
 
     <label>Review Type:</label>
@@ -155,7 +155,7 @@
     <label>Envelope Type:</label>
     <input type="text" name="envelope_type">
 
-    <button type="submit">Generate PDF</button>
+
 
     <div class="checkbox-group" >
     <h2>Recommended Actions:</h2>
@@ -164,7 +164,10 @@
     <label><input type="checkbox" name="Recommended_Actions[]" value="2"> For Payment at the University Cashier</label><br>
 
     </div>
+    <button type="submit" name="action" value="view">View PDF</button>
+    <button type="submit" name="action" value="mail">Send to Email</button>
   </form>
+
 
 </body>
 </html>

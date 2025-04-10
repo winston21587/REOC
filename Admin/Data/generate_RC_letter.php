@@ -1,6 +1,8 @@
 <?php
 require '../../vendor/autoload.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 use setasign\Fpdi\Fpdi;
 
 // Create new PDF instance
@@ -16,6 +18,8 @@ $pdf->useTemplate($tplId);
 $pdf->SetFont('Arial', '', 12);
 $pdf->SetTextColor(0, 0, 0);
 
+$action = $_POST['action'] ?? 'view';
+
 // Example user inputs (these would come from your form normally)
 $title = $_POST['title'] ?? "Sample Title";
 $reviewType = $_POST['review_type'] ?? "EXPEDITED";
@@ -23,6 +27,7 @@ $numSets = $_POST['num_sets'] ?? "2";
 $envelope = $_POST['envelope_type'] ?? "long brown";
 $protocolChecks = $_POST['ethics_review_1'] ?? []; 
 $consentChecks = $_POST['ethics_review_2'] ?? []; 
+$recommendedActions = $_POST['Recommended_Actions'] ?? [];
 
 
 $x = 12.3;
@@ -70,15 +75,57 @@ checkAndMark($pdf, $x, 207, '12', $consentChecks);
 checkAndMark($pdf, $x, 212.87, '13', $consentChecks);
 
 // Recommended Actions (values A and B, for example)
-// checkAndMark($pdf, 25, 274, 'A', $recommendedActions);
-// checkAndMark($pdf, 108, 274, 'B', $recommendedActions);
-$pdf->SetXY($x, 412.87);
-if (!empty($_POST)) {
-    $pdf->Write(0, print_r($_POST, true));
-} else {
-    $pdf->Write(0, 'No POST data received.');
+checkAndMark($pdf, 25, 274, '1', $recommendedActions);
+checkAndMark($pdf, 108, 274, '2', $recommendedActions);
+
+// Save the PDF file temporarily
+
+
+// ============================
+// Action: View the PDF
+// ============================
+if ($action === 'view') {
+    $pdf->Output('I', 'Filled_Result_Form.pdf');  // 'I' to display in browser
+
 }
 
 
-// Output the new PDF
-$pdf->Output('I', 'Filled_Result_Form.pdf');  // 'I' to display in browser
+if ($action === 'mail') {
+    $pdfPath = 'Recommendation_Letter.pdf';
+    $pdf->Output('F', $pdfPath);
+    $toEmail = 'tabotabowinston@gmail.com';  // Replace with form input if needed
+
+    $mail = new PHPMailer(true);
+
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'wbtester33@gmail.com'; // Replace with your email
+        $mail->Password = 'bljerhkjpgbkvjbv'; // Replace with your email password
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+
+        // Recipients
+        $mail->setFrom('wmsuREOC@gmail.com', 'Research Ethics Online Committee');
+        $mail->addAddress($toEmail);
+
+        // Attach PDF
+        $mail->addAttachment($pdfPath);
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Your Ethics Recommendation Letter PDF';
+        $mail->Body    = 'Attached is the completed ethics review form.';
+
+        $mail->send();
+        echo "✅ Email has been sent!";
+
+    } catch (Exception $e) {
+        echo "❌ Email failed. Error: {$mail->ErrorInfo}";
+    }
+
+    // Optionally delete the file after sending
+    unlink($pdfPath);
+}

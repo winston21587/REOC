@@ -100,7 +100,7 @@ $dataAPP = $admin->fetchAppData();
                                 <option value='Exempt' <?=  clean($data['type_of_review']) === 'Exempt' ? 'selected' : ''   ?>>Exempt</option>
                             </select>
                             </td>
-                            <td><button class="generate-recommendation" data-id="<?= $data['id']  ?>">Create</button></td>
+                            <td><button class="generate-recommendation"><a href="RC_letter.php?id=<?= $data['id'] ?>">Create</a>  </button></td>
                             <td>                
                                 <button class='toggle-btn' data-id='<?= clean($data['id']) ?> ' data-toggle='<?= clean($data['Toggle']) ?> '><?= 
                                     $data['Toggle'] == 1 ? "Exclude" : "Include" ?>
