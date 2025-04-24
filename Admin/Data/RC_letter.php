@@ -1,5 +1,16 @@
 <?php
+session_start();
+$id = $_GET['id'];
 
+require_once '../../class/Admin.php';
+$admin = new admin();
+
+$title = $admin->getResearchtitle($id);
+if ($title) {
+    $title = $title['title'];
+} else {
+    $title = "No title found";
+}
 
 ?>
 
@@ -95,7 +106,7 @@
   <h2>Generate Filled Research Ethics Review Form</h2>
   <form action="generate_RC_letter.php" method="POST" target="_blank">
     <label>Paper entitled:</label>
-    <input type="text" name="title">
+    <input type="text" name="title" value="<?= $title ?>">
 
     <label>Review Type:</label>
     <select name="review_type">
@@ -164,6 +175,8 @@
     <label><input type="checkbox" name="Recommended_Actions[]" value="2"> For Payment at the University Cashier</label><br>
 
     </div>
+    <label for="extraNotes">Extra Notes:</label>
+    <textarea name="extraNotes" id="extraNotes" cols="90" rows="7" style="resize: none;"></textarea>
     <button type="submit" name="action" value="view">View PDF</button>
     <button type="submit" name="action" value="mail">Send to Email</button>
   </form>

@@ -140,4 +140,40 @@ public function updateVM($content, $id) {
     return false;
 
     }
+
+
+    public function getTotalUsers(){
+        $query = "SELECT COUNT(*) as total_users FROM users WHERE email != '' AND email IS NOT NULL";
+        $stmt = $this->pdo->prepare($query);
+        if($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
+    public function getTotalResearch(){
+        $query = "SELECT COUNT(*) as total_research FROM Researcher_title_informations";
+        $stmt = $this->pdo->prepare($query);
+        if($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
+    public function getTotalTitleCompleted(){
+        $query = "SELECT COUNT(*) as total_completed FROM Researcher_title_informations WHERE status = 'Complete Submission'";
+        $stmt = $this->pdo->prepare($query);
+        if($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
+
+    public function getResearchtitle($id){
+        $query = "SELECT study_protocol_title as title FROM Researcher_title_informations WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        if($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
 }

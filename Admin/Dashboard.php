@@ -50,7 +50,7 @@ if (isset($_POST['logout'])) {
 require_once '../dbConnCode.php'; // Replace with your actual database connection file
 
 require_once '../class/Admin.php';
-
+$admin = new admin();
 $faculty_id = 1; // Replace with dynamic ID based on the schedule being edited
 
 // Query to fetch the current picture for the faculty
@@ -283,7 +283,7 @@ $collegeCounts = json_encode(array_column($collegeData, 'count'));
 </svg>
                 </div>
                 <div class="n-stat">
-                    <strong><span class="OutputNumber" >23131</span> Total Users</strong>
+                    <strong><span class="OutputNumber" ><?= $admin->getTotalUsers()['total_users'] ?></span> Total Users</strong>
                     <p>something something description</p>
                 </div>
             </div>
@@ -294,7 +294,7 @@ $collegeCounts = json_encode(array_column($collegeData, 'count'));
 </svg>
                 </div>
                 <div class="n-stat">
-                    <strong><span class="OutputNumber" >23131</span> Total Research's</strong>
+                    <strong><span class="OutputNumber" ><?= $admin->getTotalResearch()['total_research'] ?></span> Total Research's</strong>
                     <p>something something description</p>
                 </div>
             </div>
@@ -306,7 +306,7 @@ $collegeCounts = json_encode(array_column($collegeData, 'count'));
 </svg>
                 </div>
                 <div class="n-stat">
-                    <strong><span class="OutputNumber" >23131</span> Complete Submission</strong>
+                    <strong><span class="OutputNumber" ><?= $admin->getTotalTitleCompleted()['total_completed'] ?></span> Complete Submission</strong>
                     <p>something something description</p>
                 </div>
             </div>

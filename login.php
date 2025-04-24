@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION['role'] = $role;
                         $login_success = true;
                         if($role == 'Admin'){
-                            $redirect_page = 'adminHome.php';
+                            $redirect_page = 'Admin/Dashboard.php';
                         }elseif($role == 'Reviewer'){
                             $redirect_page = 'reviewerHome.php';
                         }else{

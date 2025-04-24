@@ -28,7 +28,7 @@ $envelope = $_POST['envelope_type'] ?? "long brown";
 $protocolChecks = $_POST['ethics_review_1'] ?? []; 
 $consentChecks = $_POST['ethics_review_2'] ?? []; 
 $recommendedActions = $_POST['Recommended_Actions'] ?? [];
-
+$xtra = $_POST['extraNotes'] ?? [];
 
 $x = 12.3;
 $check = 'X';
@@ -47,6 +47,9 @@ $pdf->Write(0, $numSets);
 
 $pdf->SetXY(20, 229); // Envelope type placement
 $pdf->Write(0, $envelope);
+
+$pdf->SetXY(15, 125); // Envelope type placement
+$pdf->MultiCell(180,5, $xtra);
 
 $pdf->SetFont('Arial', '', 15);
 // Now we insert the text over the PDF in fixed positions
@@ -120,7 +123,7 @@ if ($action === 'mail') {
         $mail->Body    = 'Attached is the completed ethics review form.';
 
         $mail->send();
-        echo "✅ Email has been sent!";
+        
 
     } catch (Exception $e) {
         echo "❌ Email failed. Error: {$mail->ErrorInfo}";
