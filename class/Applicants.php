@@ -5,7 +5,7 @@ include 'Database.php';
 class Applicants extends Database {
 
     public function getAllApplicants($userid) {
-        $query = "SELECT study_protocol_title,id
+        $query = "SELECT study_protocol_title,id,status
             FROM Researcher_title_informations 
             WHERE user_id = :user_id";
         $stmt = $this->pdo->prepare($query);

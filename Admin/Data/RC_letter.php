@@ -5,12 +5,8 @@ $id = $_GET['id'];
 require_once '../../class/Admin.php';
 $admin = new admin();
 
-$title = $admin->getResearchtitle($id);
-if ($title) {
-    $title = $title['title'];
-} else {
-    $title = "No title found";
-}
+$researchData = $admin->getResearchtitle($id);
+
 
 ?>
 
@@ -106,8 +102,9 @@ if ($title) {
   <h2>Generate Filled Research Ethics Review Form</h2>
   <form action="generate_RC_letter.php" method="POST" target="_blank">
     <label>Paper entitled:</label>
-    <input type="text" name="title" value="<?= $title ?>">
-
+    <input type="text" name="title" value="<?= $researchData['study_protocol_title'] ?>">
+    <input type="hidden" name="id" value="<?= $researchData['id'] ?>">
+    <input type="hidden" name="email" value="<?= $researchData['email'] ?>">
     <label>Review Type:</label>
     <select name="review_type">
       <option value="EXEMPTED">EXEMPTED</option>

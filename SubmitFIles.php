@@ -779,7 +779,7 @@ if (!empty($_FILES['other_files']['name'][0])) {
     }
     </script>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
         <div class="owl-carousel">
 
             <a href="#" class="gallery__photo">
@@ -838,7 +838,7 @@ if (!empty($_FILES['other_files']['name'][0])) {
         </div>
         <div class="separador"></div>
         <p class="footer__texto">RESEARCH ETHICS OVERSITE COMMITTEE - WMSU</p>
-    </footer>
+    </footer> -->
 
 
 

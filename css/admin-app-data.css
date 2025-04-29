@@ -2,3 +2,6 @@ main{
     overflow-x: scroll;
     align-items: flex-start;
 }
+.generate-recommendation{
+    cursor: pointer;
+}

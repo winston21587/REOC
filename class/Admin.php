@@ -168,12 +168,22 @@ public function updateVM($content, $id) {
     }
 
     public function getResearchtitle($id){
-        $query = "SELECT study_protocol_title as title FROM Researcher_title_informations WHERE id = :id";
+        $query = "SELECT a.*,b.email FROM Researcher_title_informations a 
+        LEFT JOIN users b ON a.user_id = b.id
+        WHERE a.id = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':id', $id);
         if($stmt->execute()){
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
         return false;
+    }
+
+    public function setStatus($id, $status){
+        $query = "UPDATE Researcher_title_informations SET status = :status WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
     }
 }

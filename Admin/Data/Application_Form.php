@@ -88,9 +88,17 @@ $dataAPP = $admin->fetchAppData();
                                     <option value='Submission of Revisions'>Submission of Revisions</option>
                                     <option value='Checking of Revisions'>Checking of Revisions</option>
                                     <option value='Issuance of Certificate'>Issuance of Certificate</option>
-                                    <option value='Complete Submission'>Complete Submission</option>
+                                    <option value='Submission Finalized'>Submission Finalized</option>
                                     <option value='Other'>Other</option> 
                                 </select>
+                                <?php if($data['status'] == "Issuance of Certificate"){
+                                    
+                                 echo "<button class='notif-btn' >Notify</button>";
+                                }else{ 
+                                    echo "<button class='notif-btn' disabled >Notified</button>";
+                                } 
+                                 
+                                 ?>
                                 <input type='text' class='status-input' data-id='<?= clean($data['id']) ?>' placeholder='Enter custom status' style='display:none;'>
                             </td>
                             <td>
@@ -126,6 +134,43 @@ $(document).ready(function() {
         "ordering": false,        // Enables sorting
         "info": true,            // Shows "Showing X of Y entries"
         "lengthMenu": [5, 10, 25, 50],  // Controls entries per page
+    });
+});
+
+document.querySelectorAll('.notif-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        var email = this.closest('tr').querySelector('.emailColumn').textContent; // Get the email from the same row
+        var id = this.closest('tr').querySelector('.status-dropdown').getAttribute('data-id'); // Get the ID from the dropdown
+
+        // Send an AJAX request to notify the user
+        fetch('/REOC/notify_user.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, id: id }) // Send the email and ID to the server
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Notification sent successfully.',
+                    icon: 'success'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to send notification.',
+                    icon: 'error'
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                title: 'Error',
+                text: 'An error occurred while sending the notification.',
+                icon: 'error'
+            });
+        });
     });
 });
 

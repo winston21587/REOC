@@ -29,7 +29,8 @@ $protocolChecks = $_POST['ethics_review_1'] ?? [];
 $consentChecks = $_POST['ethics_review_2'] ?? []; 
 $recommendedActions = $_POST['Recommended_Actions'] ?? [];
 $xtra = $_POST['extraNotes'] ?? [];
-
+$email = $_POST['email'] ?? "";
+$researcher_title_id = $_POST['id'] ?? "";
 $x = 12.3;
 $check = 'X';
 
@@ -96,7 +97,7 @@ if ($action === 'view') {
 if ($action === 'mail') {
     $pdfPath = 'Recommendation_Letter.pdf';
     $pdf->Output('F', $pdfPath);
-    $toEmail = 'tabotabowinston@gmail.com';  // Replace with form input if needed
+    // $toEmail = 'tabotabowinston@gmail.com';  // Replace with form input if needed
 
     $mail = new PHPMailer(true);
 
@@ -112,7 +113,7 @@ if ($action === 'mail') {
 
         // Recipients
         $mail->setFrom('wmsuREOC@gmail.com', 'Research Ethics Online Committee');
-        $mail->addAddress($toEmail);
+        $mail->addAddress($email);
 
         // Attach PDF
         $mail->addAttachment($pdfPath);
@@ -124,6 +125,12 @@ if ($action === 'mail') {
 
         $mail->send();
         
+
+        require_once '../../class/Admin.php';
+        include '../../class/clean.php';
+
+        $admin = new admin();
+        $admin->setStatus($researcher_title_id, 'Waiting For Revision');
 
     } catch (Exception $e) {
         echo "❌ Email failed. Error: {$mail->ErrorInfo}";
