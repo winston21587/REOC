@@ -87,29 +87,61 @@
     }
 
     .footer {
-      background-color: #343a40;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
+    background-color: #343a40;
+    color: white;
+    padding-top: 20px;
+}
 
-    .footer__redes-wrapper {
-      list-style: none;
-      padding: 0;
-    }
+.footer-gallery .row {
+    margin: 0;
+}
 
-    .footer__redes-wrapper li {
-      margin: 10px 0;
-    }
+.footer-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
 
-    .footer__link {
-      color: #fff;
-      text-decoration: none;
-    }
+.footer-img:hover {
+    opacity: 1;
+}
 
-    .footer__link:hover {
-      text-decoration: underline;
+.footer-info {
+    padding: 20px 0;
+}
+
+.footer-info p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.footer-divider {
+    width: 50px;
+    height: 2px;
+    background-color: white;
+    margin: 10px auto;
+}
+
+.footer-text {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+    .footer-img {
+        height: 150px;
     }
+    .footer-info p {
+        font-size: 14px;
+    }
+    .footer-text {
+        font-size: 16px;
+    }
+}
 
     @media screen and (max-width: 1440px) {
       .container {
@@ -292,56 +324,35 @@
     </div>
 
     <footer class="footer">
-      <div class="owl-carousel">
-        <a href="#" class="gallery__photo">
-          <img src="img/wmsu55.jpg" alt="" />
-        </a>
-        <a href="#" class="gallery__photo">
-          <img src="img/wmsu11.jpg" alt="" />
-        </a>
-        <a href="#" class="gallery__photo">
-          <img src="img/reoc11.jpg" alt="" />
-        </a>
-        <a href="#" class="gallery__photo">
-          <img src="img/wmsu22.jpg" alt="" />
-        </a>
-        <a href="#" class="gallery__photo">
-          <img src="img/reoc22.jpg" alt="" />
-        </a>
-        <a href="#" class="gallery__photo">
-          <img src="img/wmsu44.jpg" alt="" />
-        </a>
+  <div class="footer-gallery">
+    <div class="row no-gutters">
+      <div class="col">
+        <img src="img/wmsu55.jpg" alt="Gallery Image" class="footer-img">
       </div>
-      <div class="footer__redes">
-        <ul class="footer__redes-wrapper">
-          <li>
-            <a href="#" class="footer__link">
-              <i class=""></i>
-              Normal Road, Baliwasan, Z.C.
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer__link">
-              <i class=""></i>
-              09112464566
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer__link">
-              <i class=""></i>
-              wmsureoc@gmail.com
-            </a>
-          </li>
-          <li>
-            <a href="#" class="footer__link">
-              <i class="fab fa-phone-alt"></i>
-            </a>
-          </li>
-        </ul>
+      <div class="col">
+        <img src="img/wmsu11.jpg" alt="Gallery Image" class="footer-img">
       </div>
-      <div class="separador"></div>
-      <p class="footer__texto">RESEARCH ETHICS OVERSITE COMMITTEE - WMSU</p>
-    </footer>
+      <div class="col">
+        <img src="img/reoc11.jpg" alt="Gallery Image" class="footer-img">
+      </div>
+      <div class="col">
+        <img src="img/wmsu22.jpg" alt="Gallery Image" class="footer-img">
+      </div>
+      <div class="col">
+        <img src="img/reoc22.jpg" alt="Gallery Image" class="footer-img">
+      </div>
+      <div class="col">
+        <img src="img/wmsu44.jpg" alt="Gallery Image" class="footer-img">
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-info text-center mt-3">
+    <p>Normal Road, Baliwasan, Z.C. | 09112464566 | wmsureoc@gmail.com</p>
+    <div class="footer-divider"></div>
+    <p class="footer-text">RESEARCH ETHICS OVERSIGHT COMMITTEE – WMSU</p>
+  </div>
+</footer>
 
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
     <script src='https://unpkg.com/feather-icons'></script>

@@ -177,13 +177,37 @@
     .arrow.right {
       right: 30px;
     }
+   
+    @media (max-width: 768px) {
+      .nav-right {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+      .slide-content {
+        left: 5%;
+        padding: 10px;
+      }
+      .slide-content h2 {
+        font-size: 2rem;
+      }
+      .slide-content p {
+        font-size: 1rem;
+      }
+      .arrow {
+        display: none;
+      }
+    }
+
     .team-section {
       text-align: center;
       padding: 50px 20px;
-      background-color: #f8f8f8;
+      background-color:rgb(255, 255, 255);
     }
     .team-section h2 {
       margin-bottom: 30px;
+      font-size: 2rem;
     }
     .team-container {
       display: flex;
@@ -206,59 +230,158 @@
       border: 4px solid #b30505;
       object-fit: cover;
     }
-    .team-member h3 {
+    .team-member h3{
       margin-top: 15px;
-      font-size: 20px;
+      white-space: nowrap;
+      font-size: 22px !important;
     }
     .team-member p {
-      font-size: 14px;
+      font-size: 12px;
       color: gray;
-      margin: 5px 0;
+      margin: 7px 0;
     }
     .team-member .role {
       font-weight: bold;
+      margin-top: -2px;
       color: #007bff;
     }
-    .social-icons {
-      margin-top: 10px;
+
+    .msg-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 20px;
+        }
+        .msg2 {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h3 {
+            color: #990101 !important;
+            font-size: 2.5rem !important;
+            font-weight: 700 !important;
+            margin: 1rem 0;
+        }
+
+        p {
+            font-size: 1rem !important;
+            font-weight: 400 !important;
+            margin-bottom: 1rem;
+        }
+
+        .hr {
+            opacity: 25%;
+            margin: 1.5rem 0;
+        }
+
+        .str {
+            font-size: 1.2rem !important;
+        }
+        
+        @media (min-width: 768px) {
+            .msg-container {
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 40px 20px;
+            }
+            
+            .msg {
+                width: 60%;
+                padding-right: 40px;
+            }
+            
+            .msg2 {
+                width: 36%;
+                position: sticky;
+                top: 20px;
+            }
+        }
+
+ 
+
+    .reoc-join-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 60px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .reoc-join-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .reoc-join-image {
+    flex: 1 1 45%;
+    min-width: 300px;
+  }
+
+  .reoc-join-content {
+    flex: 1 1 45%;
+    min-width: 300px;
+  }
+
+  .reoc-join-title {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .reoc-join-title::before {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: #990101;
+    margin-bottom: 12px;
+  }
+
+  .reoc-join-text {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .reoc-join-btn {
+    display: inline-block;
+    background-color: #990101;
+    color: #fff;
+    padding: 12px 26px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+  }
+
+  @media (max-width: 992px) {
+    .reoc-join-wrapper {
+      padding: 40px 20px;
     }
-    .social-icons a {
-      display: inline-block;
-      margin: 5px;
-      text-decoration: none;
-      color: white;
-      background: #a70707;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 50%;
+  }
+  @media (max-width: 768px) {
+    .reoc-join-wrapper {
+      flex-direction: column;
       text-align: center;
+      padding: 30px 20px;
     }
-    .social-icons a i {
-      font-size: 16px;
-      margin-top: 7px;
+    .reoc-join-title::before {
+    width: 0px;
+  }
+    .reoc-join-image,
+    .reoc-join-content {
+      flex: 1 1 100%;
     }
-    @media (max-width: 768px) {
-      .nav-right {
-        display: none;
-      }
-      .hamburger {
-        display: block;
-      }
-      .slide-content {
-        left: 5%;
-        padding: 10px;
-      }
-      .slide-content h2 {
-        font-size: 2rem;
-      }
-      .slide-content p {
-        font-size: 1rem;
-      }
-      .arrow {
-        display: none;
-      }
-    }
+  }
   </style>
 </head>
 <body>
@@ -307,8 +430,35 @@
     <button class="arrow right" id="next"><i class="fas fa-chevron-right"></i></button>
   </div>
 
-  <section class="team-section fade-in">
-    <h2>Meet the Faculty Members</h2>
+<div class="msg-container">
+        <div class="msg">
+            <hr class="hr">
+            <h3>Mission</h3>
+            <p>WMSU REOC(CERC) safeguards the general welfare of human participants and animal subjects in the conduct of researches.</p>
+            
+            <hr class="hr">
+            <h3>Vision</h3>
+            <p>The Western Mindanao State University Research Ethics Oversight Committee (WMSU REOC) / College Research Ethics Committee (CERC) is an accredited board instituted to conduct ethics review in various fields of researches that involve human participants and animal subjects in the University and the region.</p>
+            
+            <hr class="hr">
+            <h3>Goals</h3>
+            <strong class="str">Ethical Review Excellence</strong>
+            <p>WMSU REOC is committed to conducting a high-quality and standardized ethical review process to safeguard the rights and welfare of research participants.</p>
+            
+            <strong class="str">Expert Multidisciplinary Review</strong>
+            <p>We establish and maintain a diverse pool of professional reviewers to ensure thorough and efficient evaluations through expedited and full review procedures.</p>
+            
+            <strong class="str">Commitment to Ethical Compliance</strong>
+            <p>We uphold strict adherence to ethical standards in the implementation of all research protocols.</p>
+            <hr class="hr">
+        </div>
+        
+        <img class="msg2" src="./img/msg2.png" alt="WMSU REOC Visual">
+    </div>
+</div>
+
+<section class="team-section fade-in">
+    <h2>MEET OUR FACULTY MEMBERS</h2>
     <br>
     <div class="team-container">
       <div class="team-member">
@@ -316,36 +466,81 @@
         <h3>Shrek</h3>
         <p class="role">Creative Leader</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>
+        
       </div>
       <div class="team-member">
         <img src="./img/shrek2.jpg" alt="Bob Greenfield">
         <h3>Lord Farquaad</h3>
         <p class="role">Programming Guru</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>
       </div>
       <div class="team-member">
         <img src="./img/shrek3.jpg" alt="Ann Richmond">
         <h3>Donkey</h3>
         <p class="role">Sales Manager</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>
       </div>
     </div>
   </section>
+
+<link rel="stylesheet" href="./css/faq.css">
+<script src="./js/faqrh.js"></script>
+
+<div class="faq-wrapper">
+<div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">How will I know if my research is for exemption? <span>+</span></div>
+            <div class="faq-answer">You will be notified through Gmail if your research is exempted from the review process. Keep an eye on your inbox for any official communications regarding your submission.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What types of research are typically exempt from review? <span>+</span></div>
+            <div class="faq-answer">Certain types of research, especially those involving minimal risk to participants, may be exempt from the full review process. Examples include studies using anonymous surveys, observational studies in public settings, or research involving publicly available data.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How can I submit for application? <span>+</span></div>
+            <div class="faq-answer">To submit your review application, ensure first that you have the hard copies of the necessary documents that can be downloaded through the downloadables tab.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How long does an expedited review take? <span>+</span></div>
+            <div class="faq-answer">Expedited reviews take approximately 15 days to be completed.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How will I know if my research has changed its status? <span>+</span></div>
+            <div class="faq-answer">You will be notified through Gmail within weeks after submission from the review process.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What should I do if I haven't received a notification about my research study? <span>+</span></div>
+            <div class="faq-answer">If you haven't received a notification, it's best to wait a little longer as the review process can take time. Check your inbox and spam folder.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How long does it usually take for a research paper to be reviewed? <span>+</span></div>
+            <div class="faq-answer">The time varies depending on several factors. Typically, it can take anywhere from a few weeks to several months.</div>
+        </div>
+
+    </div>
+</div>
+<div class="reoc-join-wrapper">
+  <div class="reoc-join-image">
+    <img src="./img/join.png" alt="Art Style Image">
+  </div>
+  <div class="reoc-join-content">
+    <h2 class="reoc-join-title">Join Us Now</h2>
+    <p class="reoc-join-text">
+      Why should you join REOC? As a premier school research facility, REOC offers you access to cutting-edge technology, expert mentorship, and a vibrant community passionate about innovation. Be part of groundbreaking projects and help shape the future of research and development.
+    </p>
+    <a href="signup.php" class="reoc-join-btn">Join Us</a>
+  </div>
+</div>
+
+<?php include('./footer/footer.php'); ?>
 
   <script>
     const slides = document.querySelectorAll('.slide');

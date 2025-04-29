@@ -31,6 +31,7 @@ if (isset($_GET['download'])) {
     
     .navbar {
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 1;
     }
     
     .dropdown-item > a {
@@ -112,6 +113,7 @@ if (isset($_GET['download'])) {
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="./instructions.php">Instructions</a></li>
         <li><a class="dropdown-item" href="view_faculty_members.php">Faculty Members</a></li>
+        <li><a class="dropdown-item" href="album.php">Album</a></li>
     </ul>
 </li>
           <li class="nav-item">
