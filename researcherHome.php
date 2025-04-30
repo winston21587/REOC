@@ -262,13 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 </div>
-
-
-<br>
-<br>
-
-<img src="./img/msg.png" alt="WMSU REOC Mission Visual" class="w-full h-auto max-h-64 object-contain rounded-lg shadow-sm transition-all duration-300 hover:scale-98">
-<div class="mission-vision-goals">
     <style>
 
         * { 
@@ -314,58 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
             opacity: 25%;
             margin: 1.5rem 0;
         }
-
-        .str {
-            font-size: 1.2rem !important;
-        }
-        
-        @media (min-width: 768px) {
-            .msg-container {
-                flex-direction: row;
-                align-items: flex-start;
-                padding: 40px 20px;
-            }
-            
-            .msg {
-                width: 60%;
-                padding-right: 40px;
-            }
-            
-            .msg2 {
-                width: 40%;
-                position: sticky;
-                top: 20px;
-            }
-        }
     </style>
- 
-<div class="msg-container">
-        <div class="msg">
-            <hr class="hr">
-            <h3>Mission</h3>
-            <p>WMSU REOC(CERC) safeguards the general welfare of human participants and animal subjects in the conduct of researches.</p>
-            
-            <hr class="hr">
-            <h3>Vision</h3>
-            <p>The Western Mindanao State University Research Ethics Oversight Committee (WMSU REOC) / College Research Ethics Committee (CERC) is an accredited board instituted to conduct ethics review in various fields of researches that involve human participants and animal subjects in the University and the region.</p>
-            
-            <hr class="hr">
-            <h3>Goals</h3>
-            <strong class="str">Ethical Review Excellence</strong>
-            <p>WMSU REOC is committed to conducting a high-quality and standardized ethical review process to safeguard the rights and welfare of research participants.</p>
-            
-            <strong class="str">Expert Multidisciplinary Review</strong>
-            <p>We establish and maintain a diverse pool of professional reviewers to ensure thorough and efficient evaluations through expedited and full review procedures.</p>
-            
-            <strong class="str">Commitment to Ethical Compliance</strong>
-            <p>We uphold strict adherence to ethical standards in the implementation of all research protocols.</p>
-            <hr class="hr">
-        </div>
-        
-        <img class="msg2" src="./img/msg2.png" alt="WMSU REOC Visual">
-    </div>
-</div>
-
 
 </div>
 <!-- Include Bootstrap (if not already included) -->
@@ -423,16 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
     padding: 0 5vw;
 }
 </style>
-
-
-
-
-
-
     </div>
-
- 
-
 
   <section class="divider"></section>
 <!-- newfaq -->
@@ -482,8 +415,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     </div>
 
-    
-
 <!-- newfaq -->
 <!-- faq temporary close <h1 class="vision1"> FREQUENTLY ASKED QUESTIONS</h1>
 
@@ -526,16 +457,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 </div>
 -->
-
-
-
-
-
-
-
-
-
-
  <!-- Office Schedule Section -->
  <div class="office-schedule">
  
@@ -591,24 +512,13 @@ if ($resultSchedule && $resultSchedule->num_rows > 0) {
     echo "</div>";
 }
 ?>
-
-
-
 </div>
-
 </div>
-
-
-
 
 
 <!-- Footer Section -->
-
-
 <!-- partial -->
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script><script  src="./script.js"></script>
-
-
 <footer class="footer">
   <div class="owl-carousel">
     <a href="#" class="gallery__photo">
@@ -630,14 +540,11 @@ if ($resultSchedule && $resultSchedule->num_rows > 0) {
       <img src="img/wmsu44.jpg" alt="" />
     </a>
   </div>
-
 </footer>
-
 
 <!-- partial -->
   <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://unpkg.com/feather-icons'></script><script  src="footer.js"></script>
-
 
 <!-- partial -->
 <script  src="./script.js"></script>
