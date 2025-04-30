@@ -100,6 +100,7 @@ header .navigation .navigation-items a:hover:before{
         flex-direction: column;         
         justify-content: center;   /* Centers horizontally */
         align-items: center;       /* Centers vertically */
+        text-align: center;
         }
        
          /* Calendar Styling */
@@ -266,4 +267,10 @@ header .navigation .navigation-items a:hover:before{
     font-size: 20px;
     color: #333;
     width: 25px;
+}
+.AppointmentList li{
+    gap: 10px;
+}
+.Files, .status{
+    margin-top: 15px;
 }

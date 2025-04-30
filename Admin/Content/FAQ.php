@@ -75,7 +75,7 @@ if (isset($_POST['logout'])) {
     <link rel="stylesheet" href="../../sidebar/sidebar.css">
     <link rel="stylesheet" href="../../css/admin.css">
     <link rel="stylesheet" href="../../css/admin-FAQ.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <!-- sweet alert -->
@@ -83,13 +83,13 @@ if (isset($_POST['logout'])) {
 <body>
     <?php if (isset($_SESSION['message'])): ?>
     <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: '<?= $_SESSION['message'] ?>',
-            timer: 2000,
-            showConfirmButton: false
-        });
+    Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: '<?= $_SESSION['message'] ?>',
+        timer: 2000,
+        showConfirmButton: false
+    });
     </script>
     <?php unset($_SESSION['message']);
      endif;  ?>
@@ -99,7 +99,7 @@ if (isset($_POST['logout'])) {
     <?php require '../../sidebar/sidebar.html' ?>
 
     <main id="content">
-        <h2>FAQ Manager</h2>
+        <h2 class="faqHead">FAQ Manager</h2>
         <div class="faq-container">
             <div class="faq-header">
                 <button class="faq-btn-add" onclick="openFaq()">Add FAQ</button>
@@ -131,7 +131,7 @@ if (isset($_POST['logout'])) {
                     <label for="question">Question:</label>
                     <input type="text" name="question" id="question" required>
                     <label for="answer">Answer:</label>
-                    <textarea name="answer" id="answer" required></textarea>
+                    <textarea name="answer" id="answer" required style="resize: none;" rows="5"></textarea>
                     <button type="submit" name="save_faq" id="faqSubmitButton">Confirm</button>
                 </form>
                 <button class="deleteBtn">Delete</button>
@@ -140,17 +140,19 @@ if (isset($_POST['logout'])) {
 
 
         <div class="deleteFaqComfirmation">
-                <div class="deleteFaqComfirmation-content">
-                    <span class="closeDeleteBtn" onclick="closeDeleteBtn()">&times;</span>
-                    <h2>Are you sure you want to delete this FAQ?</h2>
+            <div class="deleteFaqComfirmation-content">
+                <span class="closeDeleteBtn" onclick="closeDeleteBtn()">&times;</span>
+                <h2>Are you sure you want to delete this FAQ?</h2>
+                <div class="deleteBtnContainer">
                     <form method="POST">
                         <input type="hidden" name="faq_delete_inp" id="faq_delete_inp">
                         <button type="submit" name="delete_faq" class="confirmDeleteBtn">Yes</button>
                     </form>
                     <button class="cancelDeleteBtn" onclick="closeDeleteBtn()">No</button>
                 </div>
-
             </div>
+
+        </div>
     </main>
 </body>
 <script>
@@ -191,7 +193,7 @@ function openFaq(id = null, question = '', answer = '') {
         questionInput.value = question;
         answerInput.value = answer;
         modalTitle.textContent = "EDIT FAQ";
-        submitButton.textContent = "Update";    
+        submitButton.textContent = "Update";
         deleteBtn.style.display = 'block';
         deleteBtn.onclick = function() {
             faq_delete_inp = document.querySelector('#faq_delete_inp');
@@ -216,6 +218,7 @@ function closeFaq() {
     deleteFaqComfirmation.style.display = 'none';
     modal.style.display = 'none';
 }
+
 function closeDeleteBtn() {
     deleteFaqComfirmation = document.querySelector('.deleteFaqComfirmation');
     deleteFaqComfirmation.style.display = 'none';

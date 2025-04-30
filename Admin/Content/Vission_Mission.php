@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="mission-container">
                 <h3>MISSION</h3>
                 <form method="POST">
-                    <textarea name="mission" id="mission" cols="30" rows="10"><?= $vms[0]['content'] ?></textarea>
+                    <textarea  name="mission" id="mission" cols="30" rows="10"><?= $vms[0]['content'] ?></textarea>
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <button type="submit" name="save_mission">Save</button>
                 </form>
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="vision-container">
                 <h3>VISION</h3>
                 <form method="POST">
-                    <textarea name="vision" id="vision" cols="30" rows="10"><?= $vms[1]['content'] ?></textarea>
+                    <textarea  name="vision" id="vision" cols="30" rows="10"><?= $vms[1]['content'] ?></textarea>
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <button type="submit" name="save_vision">Save</button>
                 </form>
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="goals-container">
                 <h3>GOALS</h3>
                 <form method="POST">
-                    <textarea name="goals" id="goals" cols="30" rows="10"><?= $vms[2]['content'] ?></textarea>
+                    <textarea  name="goals" id="goals" cols="30" rows="10"><?= $vms[2]['content'] ?></textarea>
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <button type="submit" name="save_goals">Save</button>
                 </form>

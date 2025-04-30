@@ -2,9 +2,17 @@
     display: flex;
     gap: 15px;
     align-items: flex-start;
-    padding: auto;
+    padding: 20px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
 }
-
+.faqHead{
+    font-size: 40px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
 .edit-faq-icon {
     cursor: pointer;
     opacity: 0;  
@@ -34,10 +42,37 @@
 .faqModal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 20px;
+    padding-top: 0;
+    padding: 50px;
     border: 1px solid #888;
     width: 80%;
     max-width: 600px;
+}
+.faqModal-content form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.faqModal-content form input[type="text"]{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 16px;
+}
+#faqSubmitButton{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100px;
 }
 .closeFaq, .closeDeleteBtn{
     color: #aaa;
@@ -46,6 +81,17 @@
 }
 .deleteBtn{
     display: none;
+    background-color: #d7404a; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 .deleteFaqComfirmation{
     display: none;
@@ -65,4 +111,49 @@
     border: 1px solid #888;
     width: 80%;
     max-width: 600px;
+}
+.deleteBtnContainer{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+.confirmDeleteBtn, .cancelDeleteBtn{
+    background-color: #333; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.deleteFaqComfirmation-content form input[type="text"]{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.faq-btn-add{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.faq-container{
+    gap: 10px;
 }

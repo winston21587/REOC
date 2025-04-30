@@ -81,28 +81,28 @@ $dataAPP = $admin->fetchAppData();
                             <td  ><?= clean( $data['mobile_number'] ) ?></td>
                             <td>
                                 <select class='status-dropdown' data-id='<?= clean($data['id']) ?> '>
-                                    <option value=' <?= clean($data['status']) ?>' selected><?= clean($data['status']) ?></option>
-                                    <option value='For Initial Review'>For Initial Review</option>
-                                    <option value='Waiting for Revision'>Waiting for Revision</option>  
-                                    <option value='Panel Deliberation'>Panel Deliberation</option>
-                                    <option value='Submission of Revisions'>Submission of Revisions</option>
-                                    <option value='Checking of Revisions'>Checking of Revisions</option>
-                                    <option value='Issuance of Certificate'>Issuance of Certificate</option>
-                                    <option value='Submission Finalized'>Submission Finalized</option>
+                                    <option value=' <?= clean($data['status']) ?>' selected><?= ($data['status'] == 'Notifying') ? 'Issuance of Certificate' : clean($data['status'])  ?></option>
+                                    <?= (clean($data['status']) == 'For Initial Review' ) ?  "" :   "<option value='For Initial Review'>For Initial Review</option>"   ?>
+                                    <?= (clean($data['status']) == 'Waiting for Revision' ) ?  "" :   "<option value='Waiting for Revision'>Waiting for Revision</option>  "   ?>
+                                    <?= (clean($data['status']) == 'Panel Deliberation' ) ?  "" :   "<option value='Panel Deliberation'>Panel Deliberation</option>"   ?>
+                                    <?= (clean($data['status']) == 'Submission of Revisions' ) ?  "" :   "<option value='Submission of Revisions'>Submission of Revisions</option>"   ?>
+                                    <?= (clean($data['status']) == 'Checking of Revisions' ) ?  "" :   "<option value='Checking of Revisions'>Checking of Revisions</option>"   ?>
+                                    <?= (clean($data['status']) == 'Issuance of Certificate' || $data['status'] == 'Notifying'  ) ?  "" :   "<option value='Issuance of Certificate'>Issuance of Certificate</option>"   ?>
+                                    <?= (clean($data['status']) == 'Submission Of Final Research' ) ?  "" :   "<option value='Submission Of Final Research'>Submission Of Final Research</option>"   ?>
                                     <option value='Other'>Other</option> 
                                 </select>
                                 <?php if($data['status'] == "Issuance of Certificate"){
-                                    
-                                 echo "<button class='notif-btn' >Notify</button>";
-                                }else{ 
-                                    echo "<button class='notif-btn' disabled >Notified</button>";
-                                } 
+                                 echo "<button class='notif-btn' value='Notifying' data-id='".$data['id']."' >Notify</button>";
+                                }
+                                if($data['status'] == "Notifying"){
+                                    echo "<button disabled >Notified</button>";
+                                }
                                  
                                  ?>
                                 <input type='text' class='status-input' data-id='<?= clean($data['id']) ?>' placeholder='Enter custom status' style='display:none;'>
                             </td>
                             <td>
-                            <select class='type-review-dropdown' data-id='<?= clean(clean($data['id'])) ?> '>
+                            <select <?= ($data['status'] == 'For Initial Review') ? : 'disabled'  ?> class='type-review-dropdown' data-id='<?= clean(clean($data['id'])) ?> '>
                                 <option value='Full Review' <?=  clean($data['type_of_review']) === 'Full Review' ? 'selected' : ''   ?>>Full Review</option>
                                 <option value='Expedited' <?=  clean($data['type_of_review']) === 'Expedited' ? 'selected' : ''   ?>>Expedited</option>
                                 <option value='Exempt' <?=  clean($data['type_of_review']) === 'Exempt' ? 'selected' : ''   ?>>Exempt</option>
@@ -127,6 +127,8 @@ $dataAPP = $admin->fetchAppData();
 
 </body>
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+
 $(document).ready(function() {
     $('#myTable').DataTable({
         "paging": true,          // Enables pagination
@@ -139,38 +141,12 @@ $(document).ready(function() {
 
 document.querySelectorAll('.notif-btn').forEach(button => {
     button.addEventListener('click', function() {
-        var email = this.closest('tr').querySelector('.emailColumn').textContent; // Get the email from the same row
-        var id = this.closest('tr').querySelector('.status-dropdown').getAttribute('data-id'); // Get the ID from the dropdown
+        let status = this.value; // Get the text content of the button
+        let id = this.getAttribute('data-id'); // Get the data-id of the button
 
-        // Send an AJAX request to notify the user
-        fetch('/REOC/notify_user.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, id: id }) // Send the email and ID to the server
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    title: 'Success',
-                    text: 'Notification sent successfully.',
-                    icon: 'success'
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Failed to send notification.',
-                    icon: 'error'
-                });
-            }
-        })
-        .catch(error => {
-            Swal.fire({
-                title: 'Error',
-                text: 'An error occurred while sending the notification.',
-                icon: 'error'
-            });
-        });
+        updateStatus(id,status); // Save the selected status
+
+
     });
 });
 
@@ -417,7 +393,7 @@ $('.type-review-dropdown').change(function() {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
+
     document.querySelectorAll(".status-dropdown").forEach(function (dropdown) {
         dropdown.addEventListener("change", function () {
             let inputField = this.nextElementSibling; // Get the adjacent input field
@@ -476,7 +452,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-});
 
 
 
@@ -524,6 +499,9 @@ $(document).ready(function () {
             }
         });
     });
+});
+
+
 });
 
 </script>

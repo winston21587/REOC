@@ -159,7 +159,7 @@ public function updateVM($content, $id) {
         return false;
     }
     public function getTotalTitleCompleted(){
-        $query = "SELECT COUNT(*) as total_completed FROM Researcher_title_informations WHERE status = 'Complete Submission'";
+        $query = "SELECT COUNT(*) as total_completed FROM Researcher_title_informations WHERE status = 'Submission Of Final Research'";
         $stmt = $this->pdo->prepare($query);
         if($stmt->execute()){
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -185,5 +185,14 @@ public function updateVM($content, $id) {
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
+    }
+
+    public function getSchedule(){
+        $query = "SELECT * FROM consultant_availability";
+        $stmt = $this->pdo->prepare($query);
+        if($stmt->execute()){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return false;
     }
 }

@@ -103,7 +103,7 @@ $applicants = new Applicants();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REOC PORTAL</title>
+    <title>REOC APPLICATION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <script src="//cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
@@ -299,9 +299,6 @@ $applicants = new Applicants();
 <body>
 
 
-    </head>
-
-    <body>
 
         <!-- Header Section -->
 
@@ -330,18 +327,29 @@ $applicants = new Applicants();
         echo "<h3>Your Research Titles and Appointments:</h3>";
         echo "<ul class='AppointmentList'>";
         foreach ($titlesAndAppointments as $item) {
-          echo "<li><span class='title'>" . htmlspecialchars($item['study_protocol_title']) . "</span>";
+          echo "<li> 
+          <div>
+          <span class='title'>" . htmlspecialchars($item['study_protocol_title']) . "</span>";
           if(!empty($applicants->getAppointedDate($item['id']))){
           $dateOfAppointment = $applicants->getAppointedDate($item['id']);
             echo  "<span class='dateOfAppointment'> Appointed Date: "  . $dateOfAppointment['appointment_date'] . "</span>";
-            echo  "<span class='dateOfAppointment'> at " . time_format($dateOfAppointment['start_time']). ' - ' . time_format($dateOfAppointment['end_time']) . "</span>";
+            echo  "<span class='dateOfAppointment'> at " . time_format($dateOfAppointment['start_time']). ' - ' . time_format($dateOfAppointment['end_time']) . "</span> 
+            </div>";
         ?>
 
             <div class="Files">
-                <button data-id="<?= $item['id'] ?>" data-title="<?= $item['study_protocol_title'] ?>">View Files</button>
+                <button data-id="<?= $item['id'] ?>" data-title="<?= $item['study_protocol_title'] ?>">View
+                    Files</button>
             </div>
             <div class="status">
+                <?php if(htmlspecialchars($item['status']) == "Notifying"){ ?>
+                <div>
+                    <span>Your Certification is ready!</span>
+                    <p>please get your certificate at REOC office</p>
+                </div>
+                <?php }else{ ?>
                 <span class="status">Status: <?= htmlspecialchars($item['status']) ?></span>
+                <?php } ?>
             </div>
 
             <?php
@@ -457,7 +465,7 @@ $applicants = new Applicants();
             btn.on("click", function() {
                 modal.css("display", "flex");
                 const id = $(this).data("id");
-                modalTitle.text("Title: " + btnTitle + " (ID: " + id + ")");
+                modalTitle.text("Title: " + btnTitle );
                 $.ajax({
                     url: "getFiles.php",
                     type: "POST",
@@ -465,7 +473,7 @@ $applicants = new Applicants();
                         id: id
                     },
                     success: function(data) {
-                      console.log(data);
+                        console.log(data);
                         // const files = JSON.parse(data);
                         const files = data;
                         console.log(files); // Debugging line
@@ -474,7 +482,8 @@ $applicants = new Applicants();
                         if (files.length > 0) {
                             files.forEach(function(file) {
                                 fileList.append("<li><a href='" + file.file_path +
-                                    "' target='_blank'>" + file.filename + "</a></li>");
+                                    "' target='_blank'>" + file.filename +
+                                    "</a></li>");
                             });
                         } else {
                             fileList.append("<li>No files found.</li>");
