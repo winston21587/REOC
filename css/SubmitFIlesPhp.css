@@ -222,7 +222,7 @@ body {
 .login100-form1-title {
     width: 100%;
     position: relative;
-    z-index: 1;
+    z-index: 0;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;

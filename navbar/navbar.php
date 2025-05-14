@@ -112,15 +112,17 @@ if (isset($_GET['download'])) {
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="./instructions.php">Instructions</a></li>
-        <li><a class="dropdown-item" href="view_faculty_members.php">Faculty Members</a></li>
-        <li><a class="dropdown-item" href="album.php">Album</a></li>
+        <!-- <li><a class="dropdown-item" href="view_faculty_members.php">Faculty Members</a></li>
+        <li><a class="dropdown-item" href="album.php">Album</a></li> -->
     </ul>
 </li>
           <li class="nav-item">
-            <form method="POST" action="researcherHome.php" class="d-flex align-items-center">
-              <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
-              <button type="submit" name="logout" class="btn btn-danger ms-lg-2">Logout</button>
-            </form>
+            <!-- <form method="POST" action="/REOC/index.php" class="d-flex align-items-center">
+              <input type="hidden" name="csrf_token" value="<?php // echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+            </form> -->
+              <button class="btn btn-danger ms-lg-2"> 
+        <a style="text-decoration: none; color: white;" href="/REOC/">Logout</a>
+                 </button>
           </li>
         </ul>
       </div>

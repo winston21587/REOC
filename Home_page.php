@@ -1,4 +1,43 @@
 <?php include 'Website Loading Screen/loader.php'; ?> <!-- call these for website loading animation -->
+<?php
+// Database connection
+require 'dbConnCode.php'; // Replace with your database connection file
+
+// Fetch mission, vision, and goals from the database
+$query = "SELECT statement_type, content FROM vision_mission";
+$result = $conn->query($query);
+
+$vms = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $vms[strtolower($row['statement_type'])] = $row['content']; // Use lowercase keys for consistency
+    }
+}
+
+// Default values if no data is found
+$mission = $vms['mission'] ?? 'Mission content not available.';
+$vision = $vms['vision'] ?? 'Vision content not available.';
+$goals = $vms['goals'] ?? 'Goals content not available.';
+
+
+
+// Fetch FAQs from the database
+$query = "SELECT question, answer FROM faq";
+$result = $conn->query($query);
+
+$faqs = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $faqs[] = [
+            'question' => $row['question'],
+            'answer' => $row['answer']
+        ];
+    }
+}
+
+
+?>
+
 <link rel="stylesheet" href="Website Loading Screen/loader.css"> <!-- call these for website loading animation -->
 <script src="Website Loading Screen/loader.js"></script> <!-- call these for website loading animation -->
 <!DOCTYPE html>
@@ -394,7 +433,7 @@
     </div>
     <div class="nav-right">
       <a href="signup.php">Don't have an account?</a>
-      <button onclick="location.href='login.php'" type="button">Login</button>
+      <button onclick="location.href='Signup.php'" type="button">Sign Up</button>
     </div>
     <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
   </nav>
@@ -431,33 +470,25 @@
   </div>
 
 <div class="msg-container">
-        <div class="msg">
-            <hr class="hr">
-            <h3>Mission</h3>
-            <p>WMSU REOC(CERC) safeguards the general welfare of human participants and animal subjects in the conduct of researches.</p>
-            
-            <hr class="hr">
-            <h3>Vision</h3>
-            <p>The Western Mindanao State University Research Ethics Oversight Committee (WMSU REOC) / College Research Ethics Committee (CERC) is an accredited board instituted to conduct ethics review in various fields of researches that involve human participants and animal subjects in the University and the region.</p>
-            
-            <hr class="hr">
-            <h3>Goals</h3>
-            <strong class="str">Ethical Review Excellence</strong>
-            <p>WMSU REOC is committed to conducting a high-quality and standardized ethical review process to safeguard the rights and welfare of research participants.</p>
-            
-            <strong class="str">Expert Multidisciplinary Review</strong>
-            <p>We establish and maintain a diverse pool of professional reviewers to ensure thorough and efficient evaluations through expedited and full review procedures.</p>
-            
-            <strong class="str">Commitment to Ethical Compliance</strong>
-            <p>We uphold strict adherence to ethical standards in the implementation of all research protocols.</p>
-            <hr class="hr">
-        </div>
+<div class="msg">
+    <hr class="hr">
+    <h3>Mission</h3>
+    <p><?= htmlspecialchars($mission) ?></p>
+    
+    <hr class="hr">
+    <h3>Vision</h3>
+    <p><?= htmlspecialchars($vision) ?></p>
+    
+    <hr class="hr">
+    <h3>Goals</h3>
+    <p><?= htmlspecialchars($goals) ?></p>
+</div>
         
         <img class="msg2" src="./img/msg2.png" alt="WMSU REOC Visual">
     </div>
 </div>
 
-<section class="team-section fade-in">
+<!-- <section class="team-section fade-in">
     <h2>MEET OUR FACULTY MEMBERS</h2>
     <br>
     <div class="team-container">
@@ -481,12 +512,12 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       </div>
     </div>
-  </section>
+  </section> -->
 
 <link rel="stylesheet" href="./css/faq.css">
 <script src="./js/faqrh.js"></script>
 
-<div class="faq-wrapper">
+<!-- <div class="faq-wrapper">
 <div class="faq-container">
         <h2>Frequently Asked Questions</h2>
 
@@ -526,7 +557,20 @@
         </div>
 
     </div>
+</div> -->
+
+<div class="faq-wrapper">
+    <div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+        <?php foreach ($faqs as $faq): ?>
+            <div class="faq-item">
+                <div class="faq-question"><?= htmlspecialchars($faq['question']) ?> <span>+</span></div>
+                <div class="faq-answer"><?= htmlspecialchars($faq['answer']) ?></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </div>
+
 <div class="reoc-join-wrapper">
   <div class="reoc-join-image">
     <img src="./img/join.png" alt="Art Style Image">

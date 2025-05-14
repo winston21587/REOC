@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }elseif($role == 'Reviewer'){
                             $redirect_page = 'reviewerHome.php';
                         }else{
-                            $redirect_page = 'researcherHome.php';
+                            $redirect_page = 'viewApplications.php';
                         }
                     }
 

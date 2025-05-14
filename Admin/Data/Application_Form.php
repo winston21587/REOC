@@ -88,7 +88,7 @@ $dataAPP = $admin->fetchAppData();
                                     <?= (clean($data['status']) == 'Submission of Revisions' ) ?  "" :   "<option value='Submission of Revisions'>Submission of Revisions</option>"   ?>
                                     <?= (clean($data['status']) == 'Checking of Revisions' ) ?  "" :   "<option value='Checking of Revisions'>Checking of Revisions</option>"   ?>
                                     <?= (clean($data['status']) == 'Issuance of Certificate' || $data['status'] == 'Notifying'  ) ?  "" :   "<option value='Issuance of Certificate'>Issuance of Certificate</option>"   ?>
-                                    <?= (clean($data['status']) == 'Submission Of Final Research' ) ?  "" :   "<option value='Submission Of Final Research'>Submission Of Final Research</option>"   ?>
+                                    <?= (clean($data['status']) == 'Submission Finalized' ) ?  "" :   "<option value='Submission Finalized'>Submission Finalized</option>"   ?>
                                     <option value='Other'>Other</option> 
                                 </select>
                                 <?php if($data['status'] == "Issuance of Certificate"){
@@ -102,7 +102,7 @@ $dataAPP = $admin->fetchAppData();
                                 <input type='text' class='status-input' data-id='<?= clean($data['id']) ?>' placeholder='Enter custom status' style='display:none;'>
                             </td>
                             <td>
-                            <select <?= ($data['status'] == 'For Initial Review') ? : 'disabled'  ?> class='type-review-dropdown' data-id='<?= clean(clean($data['id'])) ?> '>
+                            <select  class='type-review-dropdown' data-id='<?= clean(clean($data['id'])) ?> '>
                                 <option value='Full Review' <?=  clean($data['type_of_review']) === 'Full Review' ? 'selected' : ''   ?>>Full Review</option>
                                 <option value='Expedited' <?=  clean($data['type_of_review']) === 'Expedited' ? 'selected' : ''   ?>>Expedited</option>
                                 <option value='Exempt' <?=  clean($data['type_of_review']) === 'Exempt' ? 'selected' : ''   ?>>Exempt</option>
@@ -310,12 +310,13 @@ $('.type-review-dropdown').change(function() {
 
                         // Determine which PHP file to call based on review type
                         if (reviewType === 'Exempt') {
-                            certEndpoint = `generate_cert_exempt.php?user_id=${userId}&date=${selectedDate}`;
-                            coverLetterEndpoint = `generate_cover_letter_exempt.php?user_id=${userId}&date=${selectedDate}`;
+                            certEndpoint = `/REOC/generate_cert_exempt.php?user_id=${userId}&date=${selectedDate}`;
+                            coverLetterEndpoint = `/REOC/generate_cover_letter_exempt.php?user_id=${userId}&date=${selectedDate}`;
                         } else if (reviewType === 'Full Review' || reviewType === 'Expedited') {
-                            certEndpoint = `generate_REC_FLorEXP.php?user_id=${userId}&date=${selectedDate}`;
-                            coverLetterEndpoint = `generate_cover_letter_researchEthics.php?user_id=${userId}&date=${selectedDate}`;
+                            certEndpoint = `/REOC/generate_REC_FLorEXP.php?user_id=${userId}&date=${selectedDate}`;
+                            coverLetterEndpoint = `/REOC/generate_cover_letter_researchEthics.php?user_id=${userId}&date=${selectedDate}`;
                         } else {
+
                             // Show SweetAlert for invalid review type
                             Swal.fire({
                                 title: 'Not Eligible',
