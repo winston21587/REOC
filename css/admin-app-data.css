@@ -42,3 +42,14 @@ a{
     text-decoration: none;
     color: white;
 }
+h2{
+    margin-top: 2rem;
+}
+.filter-container{
+    width: 100%;
+    display: flex;  
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

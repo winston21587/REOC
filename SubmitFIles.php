@@ -172,7 +172,7 @@ if (strpos($research_category, '&#39;') !== false) {
         
 
 
-$upload_dir = 'uploads/';  
+$upload_dir = '/REOC/uploads/';  
 $allowed_extensions = ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg']; // Allowed file types
 $max_file_size = 20 * 1024 * 1024; // 20MB
 

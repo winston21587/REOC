@@ -105,17 +105,16 @@
     <div class="footer-background">
         <div class="footer-content">
             <h2>WMSUReoc</h2>
-            <p>Location: 2nd Floor, Research Center, Western Mindanao State University, Normal Road, Baliwasan, Zamboanga City</p>
-            <p>Email: <a href="mailto:reoc@wmsu.edu.ph">reoc@wmsu.edu.ph</a></p>
-            <p>Number: <a href="tel:+639976323622">0997 632 3622</a></p>
+            <p>Location: <?= getValue($cmsData, "footer_location") ?></p>
+            <p>Email: <a><?= getValue($cmsData, "footer_email") ?></a></p>
+            <p>Number: <a><?= getValue($cmsData, "footer_contact") ?></a></p>
         </div>
     </div>
     <div class="footer-bottom">
         <div class="social-icons">
-            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            <a href="<?= getValue($cmsData, "footer_link_fb") ?>" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="<?= getValue($cmsData, "footer_link_twitter") ?>" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="<?= getValue($cmsData, "footer_link_instagram") ?>" class="social-icon"><i class="fab fa-instagram"></i></a>
         </div>
     </div>
 </footer>

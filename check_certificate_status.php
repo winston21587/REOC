@@ -10,10 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['rti_id'])) {
     $stmt->bind_param('i', $rti_id);
     $stmt->execute();
     $result = $stmt->get_result();
-
     if ($result->num_rows > 0) {
         $certificates = [];
-        $basePath = 'pdfs/'; // Use relative path from your PHP directory
+        $basePath = '/REOC/pdfs/'; // Use relative path from your PHP directory
 
         while ($row = $result->fetch_assoc()) {
             $certificates[] = [

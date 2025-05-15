@@ -21,7 +21,7 @@ if (empty($_SESSION['csrf_token'])) {
 
 $admin = new admin();
 
-$dataAPP = $admin->fetchAppData();
+$dataAPP = $admin->fetchExcludeAppData();
 
 
 ?>
@@ -47,23 +47,7 @@ $dataAPP = $admin->fetchAppData();
     <?php require '../../sidebar/sidebar.html' ?>
 
     <main class="main-content">
-        <h2>Application Forms</h2>
-        <div class="filter-container">
-            <label>
-                Filter by Status:
-                <select id="statusFilter">
-                    <option value="">All</option>
-                    <option value="Complete Submission">Complete Submission</option>
-                    <option value="For Initial Review">For Initial Review</option>
-                    <option value="Waiting for Revision">Waiting for Revision</option>
-                    <option value="Panel Deliberation">Panel Deliberation</option>
-                    <option value="Submission of Revisions">Submission of Revisions</option>
-                    <option value="Checking of Revisions">Checking of Revisions</option>
-                    <option value="Issuance of Certificate">Issuance of Certificate</option>
-                    <option value="Submission Finalized">Submission Finalized</option>
-                </select>
-            </label>
-        </div>
+        <h2>Excluded Forms</h2>
         <div>
             <table id="myTable" class="display" style="width:2550px">
                 <thead>
@@ -169,27 +153,6 @@ document.addEventListener("DOMContentLoaded", function() {
             "lengthMenu": [5, 10, 25, 50], // Controls entries per page
         });
 
-        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-            var selectedStatus = $('#statusFilter').val()
-        .trim(); // Get the selected status from the filter dropdown
-            var rowNode = table.row(dataIndex).node(); // Get the DOM node for the current row
-            var statusDropdown = $(rowNode).find(
-            '.status-dropdown'); // Find the <select> element in the "Status" column
-            var status = statusDropdown.val() ? statusDropdown.val().trim() :
-            ""; // Get and trim the selected value from the dropdown
-
-            console.log('Selected Status:', selectedStatus, 'Row Status:', status); // Debugging
-
-            if (selectedStatus === "" || status === selectedStatus) {
-                return true; // Show the row if it matches the filter or if no filter is selected
-            }
-            return false; // Hide the row if it doesn't match the filter
-        });
-        $('#statusFilter').on('change', function() {
-            // console.log('Filter changed' + status + " :status");
-            table.draw();
-
-        });
     });
 
 
@@ -208,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.view-btn').forEach(button => {
         button.addEventListener('click', function() {
             var researcherTitleId = this.getAttribute(
-                'data-id'); // Get the researcher_title_id from the button data-id
+            'data-id'); // Get the researcher_title_id from the button data-id
 
             // Send an AJAX request to fetch the involved researchers for the selected title
             fetch('/REOC/fetch_researchers.php', {
@@ -258,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener('click', function() {
             // console.log('beep');
             var researcherTitleId = this.getAttribute(
-                'data-id'); // Get the researcher_title_id from the button data-id
+            'data-id'); // Get the researcher_title_id from the button data-id
 
             fetch('/REOC/fetch_files.php', {
                     method: 'POST',
@@ -360,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         let certificateList = data.certificates
                             .map(cert =>
                                 `<li><a href="${cert.file_url}" target="_blank">${cert.file_name}</a> (Generated at: ${cert.generated_at}, Type: ${cert.file_type})</li>`
-                            )
+                                )
                             .join('');
 
                         Swal.fire({

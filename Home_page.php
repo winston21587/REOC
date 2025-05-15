@@ -2,7 +2,7 @@
 <?php
 // Database connection
 require 'dbConnCode.php'; // Replace with your database connection file
-
+require 'class/Admin.php'; // Include the Admin class for fetching data
 // Fetch mission, vision, and goals from the database
 $query = "SELECT statement_type, content FROM vision_mission";
 $result = $conn->query($query);
@@ -35,6 +35,18 @@ if ($result->num_rows > 0) {
     }
 }
 
+    $admin = new admin();
+    $cmsData = $admin->getcmsData();
+
+
+    function getValue($cmsData, $type) {
+    foreach ($cmsData as $row) {
+        if ($row['type'] === $type) {
+            return $row['content']; // Return the matching row
+        }
+    }
+    return null; // Return null if no match is found
+}
 
 ?>
 
@@ -432,14 +444,14 @@ if ($result->num_rows > 0) {
       <h1>WMSUReoc</h1>
     </div>
     <div class="nav-right">
-      <a href="signup.php">Don't have an account?</a>
-      <button onclick="location.href='Signup.php'" type="button">Sign Up</button>
+      <a href="login.php">have an account?</a>
+      <button onclick="location.href='login.php'" type="button">Login</button>
     </div>
     <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
   </nav>
   
   <div class="mobile-menu" id="mobileMenu">
-    <a href="signup.php">Don't have an account?</a>
+    <a href="login.php"> have an account?</a>
     <button onclick="location.href='login.php'" type="button">Login</button>
   </div>
   
@@ -447,22 +459,22 @@ if ($result->num_rows > 0) {
     <div class="slide active" style="background-image: url('./img/reocpic.jpg');">
       <div class="overlay"></div>
       <div class="slide-content">
-        <h2>Welcome to REOC: Where Research Meets Collaboration</h2>
-        <p>At REOC, we’re creating a space where students, faculty, and researchers come together to innovate, share knowledge, and grow. Whether you're looking to collaborate on research projects, share valuable resources, or connect with peers, REOC is your go-to hub for academic success. Join our thriving community today and be a part of something bigger.</p>
+        <h2><?= getValue($cmsData, "Page_1_head") ?></h2>
+        <p><?= getValue($cmsData, "Page_1_text") ?></p>
       </div>
     </div>
     <div class="slide" style="background-image: url('./img/reoc2.jpg');">
       <div class="overlay"></div>
       <div class="slide-content">
-        <h2>Collaborate, Share, Achieve</h2>
-        <p>The power of collaboration lies in the exchange of ideas. REOC makes it easy for students to pass materials, participate in discussions, and contribute to ongoing research projects. From sharing research papers to organizing study sessions, everything you need to stay connected and productive is just a click away.The power of collaboration lies in the exchange of ideas. REOC makes it easy for students to pass materials, participate in discussions, and contribute to ongoing research projects. From sharing research papers to organizing study sessions, everything you need to stay connected and productive is just a click away.</p>
+        <h2><?= getValue($cmsData, "Page_2_head") ?></h2>
+        <p><?= getValue($cmsData, "Page_2_text") ?></p>
       </div>
     </div>
     <div class="slide" style="background-image: url('./img/reoc3.jpg');">
       <div class="overlay"></div>
       <div class="slide-content">
-        <h2>Effortless Meeting & Event Coordination</h2>
-        <p>Tired of juggling schedules and missing important events? REOC streamlines the process of meeting organization. Plan study groups, research sessions, or school events with ease. Our intuitive platform lets you set dates, send invitations, and manage attendance—all in one place. Stay on top of your academic goals without the hassle.</p>
+        <h2><?= getValue($cmsData, "Page_3_head") ?></h2>
+        <p><?= getValue($cmsData, "Page_3_text") ?></p>
       </div>
     </div>
     <button class="arrow left" id="prev"><i class="fas fa-chevron-left"></i></button>
@@ -576,11 +588,9 @@ if ($result->num_rows > 0) {
     <img src="./img/join.png" alt="Art Style Image">
   </div>
   <div class="reoc-join-content">
-    <h2 class="reoc-join-title">Join Us Now</h2>
-    <p class="reoc-join-text">
-      Why should you join REOC? As a premier school research facility, REOC offers you access to cutting-edge technology, expert mentorship, and a vibrant community passionate about innovation. Be part of groundbreaking projects and help shape the future of research and development.
-    </p>
-    <a href="signup.php" class="reoc-join-btn">Join Us</a>
+    <h2 class="reoc-join-title">Join Us Now</h2>  
+    <p class="reoc-join-text"><?= getValue($cmsData, "Join_Us_text") ?>    </p>
+    <a href="signup.php" class="reoc-join-btn">Join Us</a>  
   </div>
 </div>
 
