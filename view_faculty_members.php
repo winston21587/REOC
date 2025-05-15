@@ -5,305 +5,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Faculty & Team Showcase</title>
+  <meta charset="UTF-8">
+  <title>WMSU Faculty Researchers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --font-main: 'Segoe UI', sans-serif;
+      --text-color: #111;
+      --subtext-color: #555;
+      --card-bg: #fff;
+      --shadow: rgba(0, 0, 0, 0.08);
+      --gradient-bg: linear-gradient(to bottom, #fdfbfb, #e6ebf5, #d8e4f0);
     }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
-      line-height: 1.6;
+
+    .faculty-section {
+      font-family: var(--font-main);
+      background: var(--gradient-bg);
+      color: var(--text-color);
+      padding-top: 80px;
     }
-    .hero {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 20px;
-      background-color: #f0f0f0;
+
+    .faculty-header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      max-width: 900px;
+      margin: auto;
     }
-    .hero-container {
-      display: flex;
-      width: 90%;
-      max-width: 1200px;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .hero-text {
-      flex: 1;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .hero-text h1 {
-      font-size: 48px;
+
+    .faculty-header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
       margin-bottom: 20px;
     }
-    .hero-text p {
-      font-size: 18px;
-      margin-bottom: 10px;
+
+    .faculty-header p {
+      font-size: 1.1rem;
+      color: var(--subtext-color);
+      line-height: 1.6;
     }
-    .hero-image {
-      flex: 1;
-      background: #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .main-title {
-      text-align: center;
-      margin: 40px 0 20px 0;
-    }
-    .main-title h2 {
-      font-size: 36px;
-    }
+
     .faculty-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      padding: 0 20px 40px 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      padding: 0 20px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
     }
+
     .faculty-card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      text-align: center;
-      padding: 15px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.5s ease both;
     }
-    .faculty-card img {
+
+    .faculty-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .faculty-image {
       width: 100%;
-      height: auto;
-      aspect-ratio: 1/1;
+      height: 240px;
       object-fit: cover;
-      margin-bottom: 10px;
+      display: block;
     }
-    .faculty-card h3 {
-      font-size: 20px;
-      margin-top: 10px;
+
+    .faculty-info {
+      padding: 16px;
     }
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+
+    .faculty-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 6px;
     }
-    .overlay.show {
-      opacity: 1;
-      visibility: visible;
+
+    .faculty-title {
+      font-size: 0.95rem;
+      color: var(--subtext-color);
     }
-    .overlay-content {
-      position: relative;
-      max-width: 500px;
-      background-color: #fff;
-      padding: 20px;
-      text-align: center;
-      border-radius: 4px;
-      animation: scaleIn 0.3s ease forwards;
-    }
-    @keyframes scaleIn {
+
+    @keyframes fadeInUp {
       from {
-        transform: scale(0.8);
-        opacity: 0.5;
+        opacity: 0;
+        transform: translateY(20px);
       }
       to {
-        transform: scale(1);
         opacity: 1;
+        transform: translateY(0);
       }
     }
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 24px;
-      cursor: pointer;
-    }
-    .overlay-content img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 15px;
-    }
-    .overlay-content h2 {
-      margin-bottom: 10px;
-    }
-    .overlay-content p {
-      line-height: 1.5;
-    }
-  
-    @media (max-width: 768px) {
-      .hero-container {
-        flex-direction: column;
+
+    @media (max-width: 600px) {
+      .faculty-header h1 {
+        font-size: 2rem;
       }
-      .hero-text, .hero-image {
-        flex: none;
-        width: 100%;
+
+      .faculty-header p {
+        font-size: 1rem;
       }
-      .faculty-grid {
-        grid-template-columns: 1fr 1fr;
+
+      .faculty-image {
+        height: 180px;
       }
-    }
-    @media (max-width: 480px) {
-      .faculty-grid {
-        grid-template-columns: 1fr;
+
+      .faculty-info {
+        padding: 12px;
       }
-      .hero-text h1 {
-        font-size: 36px;
+
+      .faculty-name {
+        font-size: 1rem;
+      }
+
+      .faculty-title {
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
-  <section class="hero">
-    <div class="hero-container">
-      <div class="hero-text">
-        <h1>Inspiring Faculty & Team</h1>
-        <p>
-          Welcome to our institution where excellence in education meets innovation.
-        </p>
-        <p>
-          Our dedicated faculty and team members are here to guide and inspire you.
-        </p>
-      </div>
-      <div class="hero-image">
-        <img src="./img/reoc33.jpg" alt="Faculty Introduction" />
-      </div>
-    </div>
-  </section>
-  
-  <section class="main-title">
-    <h2></h2>
-  </section>
 
-  <section class="faculty-grid">
-    
-    <div class="faculty-card" 
-         data-name="John Doe"
-         data-description="John is a seasoned professor of Mathematics with over 20 years of teaching experience.">
-      <img src="./img/faculty-ph.jpg" alt="John Doe" />
-      <h3>John Doe</h3>
-    </div>
-    
-    <div class="faculty-card" 
-         data-name="Jane Smith"
-         data-description="Jane specializes in English Literature and has authored several acclaimed publications.">
-      <img src="./img/faculty-ph.jpg" alt="Jane Smith" />
-      <h3>Jane Smith</h3>
-    </div>
-    
-    <div class="faculty-card" 
-         data-name="Alice Johnson"
-         data-description="Alice's expertise in Computer Science has inspired many innovative projects.">
-      <img src="./img/faculty-ph.jpg" alt="Alice Johnson" />
-      <h3>Alice Johnson</h3>
-    </div>
-    
-    <div class="faculty-card" 
-         data-name="Bob Brown"
-         data-description="Bob is known for his engaging lectures in History and Social Studies.">
-      <img src="./img/faculty-ph.jpg" alt="Bob Brown" />
-      <h3>Bob Brown</h3>
-    </div>
-    
-    <div class="faculty-card" 
-         data-name="Carol White"
-         data-description="Carol teaches Biology with a focus on environmental science and conservation.">
-      <img src="./img/faculty-ph.jpg" alt="Carol White" />
-      <h3>Carol White</h3>
-    </div>
-    
-    <div class="faculty-card" 
-         data-name="David Black"
-         data-description="David is a physics expert with an innovative approach to teaching complex concepts.">
-      <img src="./img/faculty-ph.jpg" alt="David Black" />
-      <h3>David Black</h3>
-    </div>
-    
-    <div class="faculty-card" 
-         data-name="Emily Green"
-         data-description="Emily brings a creative flair to the art department with her modern techniques.">
-      <img src="./img/faculty-ph.jpg" alt="Emily Green" />
-      <h3>Emily Green</h3>
-    </div>
-    
-    <div class="faculty-card" 
-         data-name="Frank Blue"
-         data-description="Frank's expertise in Economics makes him a favorite among students for his insightful lectures.">
-      <img src="./img/faculty-ph.jpg" alt="Frank Blue" />
-      <h3>Frank Blue</h3>
-    </div>
-    
-    <div class="faculty-card" 
-         data-name="Grace Red"
-         data-description="Grace's innovative approach to Chemistry captivates her students and fosters discovery.">
-      <img src="./img/faculty-ph.jpg" alt="Grace Red" />
-      <h3>Grace Red</h3>
-    </div>
-  </section>
-  
-  <div id="overlay" class="overlay">
-    <div class="overlay-content">
-      <span id="closeOverlay" class="close">&times;</span>
-      <img id="overlayImage" src="" alt="Faculty Member" />
-      <h2 id="overlayName"></h2>
-      <p id="overlayDescription"></p>
-    </div>
+  <div class="faculty-section">
+    <section class="faculty-header">
+      <h1>Meet the WMSU Faculty Researchers</h1>
+      <p>Western Mindanao State University takes pride in its dedicated faculty researchers who drive innovation, lead transformative studies, and champion the pursuit of academic excellence for the region and beyond.</p>
+    </section>
+
+    <section class="faculty-grid">
+      <div class="faculty-card">
+        <img src="placeholder.svg" alt="Dr. Maria Santos" class="faculty-image">
+        <div class="faculty-info">
+          <div class="faculty-name">Dr. Maria Santos</div>
+          <div class="faculty-title">Lead Researcher, Health Sciences</div>
+        </div>
+      </div>
+      <div class="faculty-card">
+        <img src="placeholder.svg" alt="Dr. James Castillo" class="faculty-image">
+        <div class="faculty-info">
+          <div class="faculty-name">Dr. James Castillo</div>
+          <div class="faculty-title">Senior Researcher, Environmental Studies</div>
+        </div>
+      </div>
+      <div class="faculty-card">
+        <img src="placeholder.svg" alt="Prof. Angela Reyes" class="faculty-image">
+        <div class="faculty-info">
+          <div class="faculty-name">Prof. Angela Reyes</div>
+          <div class="faculty-title">Researcher, Educational Development</div>
+        </div>
+      </div>
+      <div class="faculty-card">
+        <img src="placeholder.svg" alt="Dr. Carlos Lim" class="faculty-image">
+        <div class="faculty-info">
+          <div class="faculty-name">Dr. Carlos Lim</div>
+          <div class="faculty-title">Director, Agricultural Research</div>
+        </div>
+      </div>
+      <div class="faculty-card">
+        <img src="placeholder.svg" alt="Engr. Lea Mercado" class="faculty-image">
+        <div class="faculty-info">
+          <div class="faculty-name">Engr. Lea Mercado</div>
+          <div class="faculty-title">Researcher, Engineering Innovations</div>
+        </div>
+      </div>
+      <div class="faculty-card">
+        <img src="placeholder.svg" alt="Dr. Ramon Cruz" class="faculty-image">
+        <div class="faculty-info">
+          <div class="faculty-name">Dr. Ramon Cruz</div>
+          <div class="faculty-title">Research Fellow, Marine Biology</div>
+        </div>
+      </div>
+    </section>
   </div>
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const facultyCards = document.querySelectorAll(".faculty-card");
-      const overlay = document.getElementById("overlay");
-      const closeOverlay = document.getElementById("closeOverlay");
-      const overlayImage = document.getElementById("overlayImage");
-      const overlayName = document.getElementById("overlayName");
-      const overlayDescription = document.getElementById("overlayDescription");
-    
-      facultyCards.forEach(card => {
-        card.addEventListener("click", () => {
-          const name = card.getAttribute("data-name");
-          const description = card.getAttribute("data-description");
-          const image = card.querySelector("img").src;
-    
-          overlayName.textContent = name;
-          overlayDescription.textContent = description;
-          overlayImage.src = image;
-    
-          overlay.classList.add("show");
-        });
-      });
-    
-      closeOverlay.addEventListener("click", () => {
-        overlay.classList.remove("show");
-      });
-    
-      overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) {
-          overlay.classList.remove("show");
-        }
-      });
-    });
-  </script>
+
 </body>
 </html>
