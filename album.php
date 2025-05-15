@@ -79,7 +79,6 @@
     }
 
     .modal button {
-      position: absolute;
       background: rgba(255,255,255,0.9);
       border: none;
       padding: 0.5rem;
@@ -126,6 +125,98 @@
         max-height: 70%;
       }
     }
+
+    .pagination-bar {
+      position: absolute;
+      left: 0; right: 0; bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      z-index: 10;
+    }
+    .pagination-bar button, .pagination-bar span {
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #333;
+      margin: 0 1px;
+      padding: 3px 8px; 
+      border-radius: 5px;
+      font-size: 0.95rem; 
+      cursor: pointer;
+      transition: border 0.2s, background 0.2s;
+    }
+    .pagination-bar button.active-page {
+      border: 2px solid #333;
+      background: #f5f5f5;
+      font-weight: bold;
+      cursor: default;
+    }
+    .pagination-bar button:disabled {
+      color: #aaa;
+      border-color: #eee;
+      background: #fafafa;
+      cursor: not-allowed;
+    }
+    .pagination-bar span {
+      border: none;
+      background: none;
+      color: #888;
+      padding: 0 6px;
+      cursor: default;
+    }
+
+    .modal .close-btn,
+    .modal .nav-arrow,
+    .modal .fullscreen-btn {
+      position: absolute;
+      /* ...other styles... */
+    }
+
+    .view-all-grid {
+      position: fixed; 
+      left: 0; right: 0; top: 0; bottom: 0;
+      background: rgba(0,0,0,0.97);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      z-index: 2000; 
+      padding: 2rem 1rem 1rem 1rem;
+      overflow-y: auto;
+    }
+    .view-all-grid .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 16px;
+      width: 100%;
+      max-width: 800px;
+      margin-top: 3rem;
+    }
+    .view-all-grid img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border 0.2s;
+    }
+    .view-all-grid img:hover {
+      border: 2px solid #333;
+    }
+    .view-all-grid .close-viewall {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 16px;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 2010;
+    }
   </style>
 </head>
 <body>
@@ -133,8 +224,8 @@
   <div class="container">
     <h2>Gallery</h2>
     <div class="gallery-grid" id="galleryGrid">
-      <!-- JS will inject folders here -->
     </div>
+    <div id="viewAllGrid" class="view-all-grid" style="display:none;"></div>
   </div>
 
   <div class="modal" id="imageModal">
@@ -154,6 +245,7 @@
       <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
     <img id="modalImage" src="" alt=""/>
+    <div id="pagination" class="pagination-bar"></div>
     <button class="nav-arrow next" onclick="nextImage()" aria-label="Next">
       
       <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
@@ -214,11 +306,122 @@
       galleryGrid.appendChild(card);
     });
 
+    function renderPagination() {
+      const pagination = document.getElementById('pagination');
+      if (!pagination) return;
+      pagination.innerHTML = '';
+      if (currentImages.length <= 1) {
+        pagination.style.display = 'none';
+        document.getElementById('thumbnails').style.display = 'none';
+        document.getElementById('viewAllGrid').style.display = 'none';
+        return;
+      }
+      pagination.style.display = 'flex';
+
+      // --- View All Button ---
+      const viewAllBtn = document.createElement('button');
+      viewAllBtn.textContent = 'View All';
+      viewAllBtn.style.marginRight = '10px';
+      viewAllBtn.onclick = () => {
+        showViewAllGrid();
+      };
+      pagination.appendChild(viewAllBtn);
+
+      const total = currentImages.length;
+      const maxPagesToShow = 5;
+      let pages = [];
+
+      if (total <= maxPagesToShow) {
+        for (let i = 0; i < total; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(0);
+        let start = Math.max(1, currentIndex - 1);
+        let end = Math.min(total - 2, currentIndex + 1);
+        if (currentIndex <= 2) {
+          start = 1;
+          end = Math.min(total - 2, maxPagesToShow - 2);
+        } else if (currentIndex >= total - 3) {
+          start = Math.max(1, total - (maxPagesToShow - 1));
+          end = total - 2;
+        }
+        if (start > 1) pages.push('...');
+        for (let i = start; i <= end; i++) {
+          pages.push(i);
+        }
+        if (end < total - 2) pages.push('...');
+        if (total > 1) pages.push(total - 1);
+      }
+
+      // Previous button
+      const prevBtn = document.createElement('button');
+      prevBtn.textContent = '‹ Previous';
+      prevBtn.disabled = currentIndex === 0;
+      prevBtn.onclick = () => { prevImage(); };
+      pagination.appendChild(prevBtn);
+
+      // Page buttons
+      pages.forEach(p => {
+        if (p === '...') {
+          const span = document.createElement('span');
+          span.textContent = '...';
+          pagination.appendChild(span);
+        } else {
+          const btn = document.createElement('button');
+          btn.textContent = (p + 1).toString();
+          if (p === currentIndex) {
+            btn.classList.add('active-page');
+            btn.disabled = true;
+          }
+          btn.onclick = () => jumpToImage(p);
+          pagination.appendChild(btn);
+        }
+      });
+
+      // Next button
+      const nextBtn = document.createElement('button');
+      nextBtn.textContent = 'Next ›';
+      nextBtn.disabled = currentIndex === total - 1;
+      nextBtn.onclick = () => { nextImage(); };
+      pagination.appendChild(nextBtn);
+    }
+
+    function showViewAllGrid() {
+      const gridContainer = document.getElementById('viewAllGrid');
+      gridContainer.innerHTML = `
+        <button class="close-viewall" onclick="hideViewAllGrid()">Close</button>
+        <div class="grid"></div>
+      `;
+      const grid = gridContainer.querySelector('.grid');
+      currentImages.forEach((img, idx) => {
+        const thumb = document.createElement('img');
+        thumb.src = img;
+        thumb.onclick = () => {
+          jumpToImage(idx);
+          hideViewAllGrid();
+        };
+        grid.appendChild(thumb);
+      });
+      gridContainer.style.display = 'flex';
+    }
+
+    function hideViewAllGrid() {
+      document.getElementById('viewAllGrid').style.display = 'none';
+    }
+
+    function jumpToImage(idx) {
+      currentIndex = idx;
+      modalImage.src = currentImages[currentIndex];
+      renderPagination();
+    }
+
     function openModal(images, startIdx) {
       currentImages = images;
       currentIndex  = startIdx;
       modalImage.src = currentImages[currentIndex];
       imageModal.classList.add('active');
+      renderPagination();
     }
 
     function closeModal() {
@@ -227,16 +430,20 @@
       if (document.fullscreenElement) {
         document.exitFullscreen();
       }
+      const pagination = document.getElementById('pagination');
+      if (pagination) pagination.innerHTML = '';
     }
 
     function prevImage() {
       currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
       modalImage.src = currentImages[currentIndex];
+      renderPagination();
     }
 
     function nextImage() {
       currentIndex = (currentIndex + 1) % currentImages.length;
       modalImage.src = currentImages[currentIndex];
+      renderPagination();
     }
 
     function toggleFullScreen() {
@@ -256,3 +463,4 @@
   </script>
 </body>
 </html>
+
