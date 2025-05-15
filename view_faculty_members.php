@@ -22,7 +22,7 @@
       font-family: var(--font-main);
       background: var(--gradient-bg);
       color: var(--text-color);
-      padding-top: 80px;
+      padding-top: 1px;
     }
 
     .faculty-header {
