@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"], $_POST["status"
     $status = $_POST["status"];
 
     // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("UPDATE Researcher_title_informations SET status = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE researcher_title_informations SET status = ? WHERE id = ?");
     $stmt->bind_param("si", $status, $id);
 
     if ($stmt->execute()) {

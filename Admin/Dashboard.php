@@ -65,7 +65,7 @@ $stmt->close();
 $schedule_id = 1; // Replace with dynamic ID based on the schedule being edited
 
 // Query to fetch the current picture for the schedule
-$query = "SELECT `picture` FROM `Schedule` WHERE `id` = ?";
+$query = "SELECT `picture` FROM `schedule` WHERE `id` = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $schedule_id); // Bind the schedule_id dynamically
 $stmt->execute();
@@ -75,9 +75,9 @@ $stmt->close();
 
 // Fetch available months dynamically based on uploaded_at
 $query = "
-    SELECT DISTINCT DATE_FORMAT(uploaded_at, '%Y-%m-01') AS month FROM Researcher_title_informations
+    SELECT DISTINCT DATE_FORMAT(uploaded_at, '%Y-%m-01') AS month FROM researcher_title_informations
     UNION 
-    SELECT DISTINCT DATE_FORMAT(uploaded_at, '%Y-%m-01') AS month FROM ResearcherTitleInfo_NoUser
+    SELECT DISTINCT DATE_FORMAT(uploaded_at, '%Y-%m-01') AS month FROM researchertitleinfo_nouser
     ORDER BY month DESC";
 $result = $conn->query($query);
 $availableMonths = [];
@@ -98,10 +98,10 @@ if (!empty($availableMonths)) {
 $collegeDataQuery = "
     SELECT college, COUNT(*) AS count 
     FROM (
-        SELECT college, uploaded_at FROM Researcher_title_informations 
+        SELECT college, uploaded_at FROM researcher_title_informations 
         WHERE status = 'Complete Submission' AND Toggle = 1
         UNION ALL
-        SELECT college, uploaded_at FROM ResearcherTitleInfo_NoUser 
+        SELECT college, uploaded_at FROM researchertitleinfo_nouser 
         WHERE status = 'Complete Submission' AND Toggle = 1
     ) AS combined
     WHERE DATE_FORMAT(uploaded_at, '%Y-%m') = DATE_FORMAT('$selectedMonth', '%Y-%m') 
@@ -122,13 +122,13 @@ $exemptDataQuery = "
     SELECT research_category, COUNT(*) AS count 
     FROM (
         SELECT research_category, uploaded_at 
-        FROM Researcher_title_informations 
+        FROM researcher_title_informations 
         WHERE status = 'Complete Submission' AND type_of_review = 'Exempt'AND Toggle = 1
         
         UNION ALL
         
         SELECT research_category, uploaded_at 
-        FROM ResearcherTitleInfo_NoUser 
+        FROM researchertitleinfo_nouser 
         WHERE status = 'Complete Submission' AND type_of_review = 'Exempt' AND Toggle = 1
     ) AS combined
     WHERE DATE_FORMAT(uploaded_at, '%Y-%m') = DATE_FORMAT('$selectedMonth', '%Y-%m') 
@@ -149,14 +149,14 @@ $expeditedDataQuery = "
     SELECT research_category, COUNT(*) AS count 
     FROM (
         SELECT research_category, uploaded_at 
-        FROM Researcher_title_informations 
+        FROM researcher_title_informations 
         WHERE status = 'Complete Submission' 
         AND type_of_review = 'Expedited' AND Toggle = 1
         
         UNION ALL
         
         SELECT research_category, uploaded_at 
-        FROM ResearcherTitleInfo_NoUser 
+        FROM researchertitleinfo_nouser 
         WHERE status = 'Complete Submission' AND Toggle = 1 
         AND type_of_review = 'Expedited'
     ) AS combined
@@ -178,13 +178,13 @@ $fullReviewDataQuery = "
     SELECT research_category, COUNT(*) AS count 
     FROM (
         SELECT research_category, uploaded_at 
-        FROM Researcher_title_informations 
+        FROM researcher_title_informations 
         WHERE status = 'Complete Submission' AND type_of_review = 'Full Review' AND Toggle = 1
         
         UNION ALL
         
         SELECT research_category, uploaded_at 
-        FROM ResearcherTitleInfo_NoUser 
+        FROM researchertitleinfo_nouser 
         WHERE status = 'Complete Submission' AND type_of_review = 'Full Review' AND Toggle = 1 
     ) AS combined
     WHERE DATE_FORMAT(uploaded_at, '%Y-%m') = DATE_FORMAT('$selectedMonth', '%Y-%m') 
@@ -202,12 +202,12 @@ while ($row = $fullReviewDataResult->fetch_assoc()) {
 $query = "
     SELECT research_category, COUNT(*) as count 
     FROM (
-        SELECT research_category, uploaded_at FROM Researcher_title_informations 
+        SELECT research_category, uploaded_at FROM researcher_title_informations 
         WHERE status = 'Complete Submission' AND Toggle = 1
         
         UNION ALL
         
-        SELECT research_category, uploaded_at FROM ResearcherTitleInfo_NoUser 
+        SELECT research_category, uploaded_at FROM researchertitleinfo_nouser 
         WHERE status = 'Complete Submission' AND Toggle = 1
     ) AS combined 
     WHERE DATE_FORMAT(uploaded_at, '%Y-%m') = DATE_FORMAT('$selectedMonth', '%Y-%m')

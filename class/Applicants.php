@@ -6,7 +6,7 @@ class Applicants extends Database {
 
     public function getAllApplicants($userid) {
         $query = "SELECT study_protocol_title,id,status
-            FROM Researcher_title_informations 
+            FROM researcher_title_informations
             WHERE user_id = :user_id";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':user_id', $userid);

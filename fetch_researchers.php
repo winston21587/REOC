@@ -11,7 +11,7 @@ if (isset($data['researcher_title_id'])) {
     // Fetch researchers involved in the selected title
     $query = "
         SELECT first_name, last_name, middle_initial, suffix
-        FROM Researcher_involved
+        FROM researcher_involved
         WHERE researcher_title_id = ?
     ";
     $stmt = $conn->prepare($query);

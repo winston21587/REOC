@@ -20,7 +20,7 @@ public function fetchPic($id){
 }
 
 public function fetchCurrentPic($id){
-    $query = 'SELECT picture FROM Schedule WHERE id = :id';
+    $query = 'SELECT picture FROM schedule WHERE id = :id';
     $stmt = $this->pdo->prepare($query);
     $stmt->bindParam(':id', $id);
     if( $stmt->execute()){
@@ -30,7 +30,7 @@ public function fetchCurrentPic($id){
 }
 
 public function FetchavailableMonth(){
-    $query = " SELECT DISTINCT DATE_FORMAT(uploaded_at, '%Y-%m-01') AS month FROM Researcher_title_informations
+    $query = " SELECT DISTINCT DATE_FORMAT(uploaded_at, '%Y-%m-01') AS month FROM researcher_title_informations
     UNION 
     SELECT DISTINCT DATE_FORMAT(uploaded_at, '%Y-%m-01') AS month FROM ResearcherTitleInfo_NoUser
     ORDER BY month DESC ";
@@ -125,7 +125,7 @@ public function updateVM($content, $id) {
             a.appointment_date,
             rp.mobile_number,
             u.email
-            FROM Researcher_title_informations AS rti
+            FROM researcher_title_informations AS rti
             LEFT JOIN appointments AS a ON rti.id = a.researcher_title_id  -- Change user_id to researcher_title_id
             LEFT JOIN researcher_profiles AS rp ON rti.user_id = rp.user_id
             LEFT JOIN users AS u ON rti.user_id = u.id
@@ -158,7 +158,7 @@ public function updateVM($content, $id) {
             a.appointment_date,
             rp.mobile_number,
             u.email
-            FROM Researcher_title_informations AS rti
+            FROM researcher_title_informations AS rti
             LEFT JOIN appointments AS a ON rti.id = a.researcher_title_id  -- Change user_id to researcher_title_id
             LEFT JOIN researcher_profiles AS rp ON rti.user_id = rp.user_id
             LEFT JOIN users AS u ON rti.user_id = u.id
@@ -185,7 +185,7 @@ public function updateVM($content, $id) {
         return false;
     }
     public function getTotalResearch(){
-        $query = "SELECT COUNT(*) as total_research FROM Researcher_title_informations";
+        $query = "SELECT COUNT(*) as total_research FROM researcher_title_informations";
         $stmt = $this->pdo->prepare($query);
         if($stmt->execute()){
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -193,7 +193,7 @@ public function updateVM($content, $id) {
         return false;
     }
     public function getTotalTitleCompleted(){
-        $query = "SELECT COUNT(*) as total_completed FROM Researcher_title_informations WHERE status = 'Submission Of Final Research'";
+        $query = "SELECT COUNT(*) as total_completed FROM researcher_title_informations WHERE status = 'Submission Of Final Research'";
         $stmt = $this->pdo->prepare($query);
         if($stmt->execute()){
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -202,7 +202,7 @@ public function updateVM($content, $id) {
     }
 
     public function getResearchtitle($id){
-        $query = "SELECT a.*,b.email FROM Researcher_title_informations a 
+        $query = "SELECT a.*,b.email FROM researcher_title_informations a 
         LEFT JOIN users b ON a.user_id = b.id
         WHERE a.id = :id";
         $stmt = $this->pdo->prepare($query);
@@ -214,7 +214,7 @@ public function updateVM($content, $id) {
     }
 
     public function setStatus($id, $status){
-        $query = "UPDATE Researcher_title_informations SET status = :status WHERE id = :id";
+        $query = "UPDATE researcher_title_informations SET status = :status WHERE id = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':id', $id);

@@ -41,7 +41,43 @@ $dataAPP = $admin->fetchAppData();
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 </head>
+
+<style>
+    /* Style for DataTable print and action buttons */
+button.dt-button, .dt-button {
+    background: #fff !important;
+    color: #333 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    padding: 5px 14px !important;
+    font-size: 13px !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s, color 0.2s;
+    margin: 2px 4px;
+    margin-right: 20px;
+}
+
+button.dt-button:hover, .dt-button:hover,
+button.dt-button:focus, .dt-button:focus {
+    border-color: #888 !important;
+    color: #007bff !important;
+    outline: none !important;
+    background: #f7f7f7 !important;
+}
+
+/* Add spacing between DataTables buttons and the search box */
+div.dt-buttons {
+    margin-right: 20px;
+}
+
+div.dataTables_filter {
+    margin-left: 20px;
+}
+</style>
 
 <body>
     <?php require '../../sidebar/sidebar.html' ?>
@@ -140,7 +176,7 @@ $dataAPP = $admin->fetchAppData();
                         <td>
                             <button class='toggle-btn' data-id='<?= clean($data['id']) ?> '
                                 data-toggle='<?= clean($data['Toggle']) ?> '><?= 
-                                    $data['Toggle'] == 1 ? "Exclude" : "Include" ?>
+                                    $data['Toggle'] == 1 ? "Complete" : "Undo" ?>
                             </button>
                         </td>
                         <td><button class="generate-btn" data-id="<?= $data['id']  ?>"
@@ -167,6 +203,16 @@ document.addEventListener("DOMContentLoaded", function() {
             "ordering": true, // Enables sorting
             "info": true, // Shows "Showing X of Y entries"
             "lengthMenu": [5, 10, 25, 50], // Controls entries per page
+             dom: 'Bfrtip', // Add this to enable buttons
+        buttons: [
+            {
+                extend: 'print',
+                text: 'Print Selected Columns',
+                exportOptions: {
+                    columns: [0, 2, 3, 4, 5, 7] // zero-based indexes of your desired columns
+                }
+            }
+        ]
         });
 
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
@@ -194,16 +240,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    document.querySelectorAll('.notif-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            let status = this.value; // Get the text content of the button
-            let id = this.getAttribute('data-id'); // Get the data-id of the button
+document.querySelectorAll('.notif-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        let status = this.value; // Get the text content of the button
+        let id = this.getAttribute('data-id'); // Get the data-id of the button
 
-            updateStatus(id, status); // Save the selected status
-
-
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Notify this researcher?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, notify',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateStatus(id, status); // Save the selected status
+            }
         });
     });
+});
 
     document.querySelectorAll('.view-btn').forEach(button => {
         button.addEventListener('click', function() {
@@ -557,12 +612,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     $(document).ready(function() {
-        $(".toggle-btn").click(function() {
-            var button = $(this);
-            var researchId = button.data("id");
-            var currentToggle = button.data("toggle");
-            var newToggle = currentToggle == 1 ? 0 : 1; // Toggle value
 
+      // ...existing code...
+$(".toggle-btn").click(function() {
+    var button = $(this);
+    var researchId = button.data("id");
+    var currentToggle = button.data("toggle");
+    var newToggle = currentToggle == 1 ? 0 : 1; // Toggle value
+
+    // Show confirmation popup
+    Swal.fire({
+        title: 'Are you sure?',
+        text: newToggle == 1 ? "Include this research again?" : "Complete this research?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 url: "/REOC/update_toggle.php",
                 type: "POST",
@@ -578,10 +645,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         Swal.fire({
                             icon: "success",
                             title: "Updated!",
-                            text: newToggle == 1 ? "Now Including." :
-                                "Now Excluding.",
+                            text: newToggle == 1 ? "Now Including." : "Now Excluding.",
                             timer: 1500,
                             showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload(); // Refresh the page after alert
                         });
                     } else {
                         Swal.fire({
@@ -603,7 +671,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     });
                 }
             });
-        });
+        }
+    });
+});
+
     });
 
 

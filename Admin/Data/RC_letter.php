@@ -17,6 +17,23 @@ $researchData = $admin->getResearchtitle($id);
   <title>Fill Review Form</title>
 </head>
 <style>
+  #checkAllBtn {
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 7px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+#checkAllBtn:hover, #checkAllBtn:focus {
+    border-color: #888;
+    color: #007bff;
+    outline: none;
+}
   body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
@@ -112,6 +129,8 @@ $researchData = $admin->getResearchtitle($id);
       <option value="FULL REVIEW">FULL REVIEW</option>
     </select>
     <div class="checkbox-group">
+          <button type="button" id="checkAllBtn" style="margin-bottom:15px;">Check All</button>
+
     <h2>In the Protocol/Proposal:</h2>
     
     <label><input type="checkbox" name="ethics_review_1[]" value="1"> Anonymity/Confidentiality of the data</label><br>
@@ -181,3 +200,16 @@ $researchData = $admin->getResearchtitle($id);
 
 </body>
 </html>
+<script>
+document.getElementById('checkAllBtn').addEventListener('click', function() {
+    // Get all checkboxes inside the form
+    const form = this.closest('form');
+    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    // Check if all are already checked
+    const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+    // Toggle all
+    checkboxes.forEach(cb => cb.checked = !allChecked);
+    // Change button text accordingly
+    this.textContent = allChecked ? 'Check All' : 'Uncheck All';
+});
+</script>

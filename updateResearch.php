@@ -3,7 +3,7 @@ require_once 'dbConnCode.php';
 
 // Initialize a message variable for SweetAlert
 $message = '';
-$redirectUrl = 'admin_applicationforms.php'; // URL to redirect after SweetAlert
+$redirectUrl = 'https://reoc.great-site.net/REOC/Admin/Data/Application_Form.php'; // URL to redirect after SweetAlert
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Retrieve form data
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Prepare SQL query to update the Researcher_title_informations table
-    $updateQuery = "UPDATE Researcher_title_informations
+    $updateQuery = "UPDATE researcher_title_informations
                     SET study_protocol_title = ?, college = ?, research_category = ?, adviser_name = ?
                     WHERE id = ?";
     
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               
 
                 // Prepare query to update researchers involved
-                $updateResearcherQuery = "UPDATE Researcher_involved
+                $updateResearcherQuery = "UPDATE researcher_involved
                                           SET first_name = ?, middle_initial = ?, last_name = ?
                                           WHERE id = ?";
                 
@@ -51,11 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $certificateStatuses = $_POST['certificate_status'] ?? [];
 
         // Directory where the files are stored
-        $uploadDir = 'C:/xampp/htdocs/REOC/pdfs/';
+        $uploadDir = '/REOC/pdfs/';
         if (isset($_FILES['replace_certificate']['tmp_name']) && is_array($_FILES['replace_certificate']['tmp_name'])) {
         foreach ($certificateStatuses as $certificateId => $status) {
             // Update the status in the database
-            $updateStatusQuery = "UPDATE Certificate_generated SET status = ? WHERE id = ?";
+            $updateStatusQuery = "UPDATE certificate_generated SET status = ? WHERE id = ?";
             $stmt = $conn->prepare($updateStatusQuery);
             $stmt->bind_param("si", $status, $certificateId);
             $stmt->execute();
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $uploadPath = $uploadDir . basename($newFileName); // Full path for the new file
     
                 // Retrieve the old file name from the database
-                $oldFileQuery = "SELECT file_path FROM Certificate_generated WHERE id = ?";
+                $oldFileQuery = "SELECT file_path FROM certificate_generated WHERE id = ?";
                 $stmt = $conn->prepare($oldFileQuery);
                 $stmt->bind_param("i", $certificateId);
                 $stmt->execute();
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Move the new uploaded file to the desired directory
                 if (move_uploaded_file($tmpName, $uploadPath)) {
                     // Update the database with the new file name (not full path)
-                    $updateCertificateQuery = "UPDATE Certificate_generated SET file_path = ? WHERE id = ?";
+                    $updateCertificateQuery = "UPDATE certificate_generated SET file_path = ? WHERE id = ?";
                     $stmt = $conn->prepare($updateCertificateQuery);
                     $stmt->bind_param("si", $newFileName, $certificateId); // Save only the file name
                     $stmt->execute();

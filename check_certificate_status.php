@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['rti_id'])) {
     $rti_id = intval($_GET['rti_id']); // Sanitize the input
 
     // Query to get all certificates for the given rti_id
-    $query = "SELECT * FROM Certificate_generated WHERE rti_id = ?";
+    $query = "SELECT * FROM certificate_generated WHERE rti_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $rti_id);
     $stmt->execute();

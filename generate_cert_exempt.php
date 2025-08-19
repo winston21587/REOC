@@ -42,7 +42,7 @@ $selected_date = $_GET['date'];
 $researcher_title_id =$user_id;
 try {
     $conn->begin_transaction();
-    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM Researcher_involved WHERE researcher_title_id = ?");
+    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM researcher_involved WHERE researcher_title_id = ?");
     $stmt->bind_param("i", $researcher_title_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -53,7 +53,7 @@ try {
     $stmt->close();
 
      // Fetch the research title
-$stmt = $conn->prepare("SELECT study_protocol_title FROM Researcher_title_informations WHERE id = ?");
+$stmt = $conn->prepare("SELECT study_protocol_title FROM researcher_title_informations WHERE id = ?");
 $stmt->bind_param("i", $researcher_title_id);
 $stmt->execute();
 $stmt->bind_result($study_protocol_title);
@@ -172,7 +172,7 @@ $pdf->SetXY(64, 238.39); // Set position
 $pdf->writeHTMLCell(0, 0, 63.50, 238.39, $dateIssued, 0, 1, 0, true, 'L', true);
 
 // Fetch the research category
-$stmt = $conn->prepare("SELECT research_category FROM Researcher_title_informations WHERE id = ?");
+$stmt = $conn->prepare("SELECT research_category FROM researcher_title_informations WHERE id = ?");
 $stmt->bind_param("i", $researcher_title_id);
 $stmt->execute();
 $stmt->bind_result($research_category);
@@ -272,12 +272,12 @@ $pdf->Cell($signature_width, 10, $signature, 0, 1, 'C'); // Print the signature 
 
 
 
-    $outputPath = 'C:/xampp/htdocs/REOC/pdfs/Certificate_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';
+    $outputPath = 'https://reoc.great-site.net/REOC/pdfs/Certificate_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';
     $outputPathsl = 'Certificate_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';
 
 
     // Insert into the Certificate_generated table
-$stmt = $conn->prepare("INSERT INTO Certificate_generated (rti_id, file_path, file_type, status) VALUES (?, ?, ?, ?)");
+$stmt = $conn->prepare("INSERT INTO certificate_generated (rti_id, file_path, file_type, status) VALUES (?, ?, ?, ?)");
 $file_type = 'Certificate of Exemption'; // Set file type
 $status = 'Hide'; // Default status
 $stmt->bind_param("isss", $researcher_title_id, $outputPathsl, $file_type, $status);

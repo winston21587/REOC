@@ -121,7 +121,7 @@ if (isset($_GET['download'])) {
               <input type="hidden" name="csrf_token" value="<?php // echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
             </form> -->
               <button class="btn btn-danger ms-lg-2"> 
-        <a style="text-decoration: none; color: white;" href="/REOC/">Logout</a>
+        <a style="text-decoration: none; color: white;" href="/REOC/logout.php">Logout</a>
                  </button>
           </li>
         </ul>

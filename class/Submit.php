@@ -33,7 +33,7 @@ class Submit extends Database{
     }
     public function researchTitleInfo($user_id, $study_protocol_title, $college, $research_category, $adviser_name){
 
-        $query = "INSERT INTO Researcher_title_informations(user_id, study_protocol_title, college, research_category, adviser_name)
+        $query = "INSERT INTO researcher_title_informations(user_id, study_protocol_title, college, research_category, adviser_name)
          VALUES (:user_id, :study_protocol_title, :college, :research_category, :adviser_name)";
         $stmt = $this->pdo->prepare($query);
 
@@ -47,7 +47,7 @@ class Submit extends Database{
     }
 
     public function researchInvolved($researcher_title_id, $first_name, $last_name, $middle_initial){
-        $query = 'INSERT INTO Researcher_involved (researcher_title_id, first_name, last_name, middle_initial ) VALUES
+        $query = 'INSERT INTO researcher_involved (researcher_title_id, first_name, last_name, middle_initial ) VALUES
          (:researcher_title_id, :first_name, :last_name, :middle_initial )';
          $stmt = $this->pdo->prepare($query);
 

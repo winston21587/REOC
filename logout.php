@@ -16,5 +16,3 @@
     session_destroy();
     header("location:/REOC/login.php");
     exit();
-
-

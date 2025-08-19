@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Fetch the record for the specified ID
-    $query = "SELECT * FROM Researcher_title_informations WHERE id = ?";
+    $query = "SELECT * FROM researcher_title_informations WHERE id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -34,7 +34,7 @@ if (isset($_GET['id'])) {
     // Fetch researchers involved in the selected title
     $researchersQuery = "
         SELECT id, first_name, last_name, middle_initial
-        FROM Researcher_involved
+        FROM researcher_involved
         WHERE researcher_title_id = ?
     ";
     $researchersStmt = $conn->prepare($researchersQuery);
@@ -46,7 +46,7 @@ if (isset($_GET['id'])) {
         $researchers[] = $researcher;
     }
      // Fetch certificates linked to this ID
-     $certificatesQuery = "SELECT * FROM Certificate_generated WHERE rti_id = ?";
+     $certificatesQuery = "SELECT * FROM certificate_generated WHERE rti_id = ?";
      $certificatesStmt = $conn->prepare($certificatesQuery);
      $certificatesStmt->bind_param("i", $id);
      $certificatesStmt->execute();
@@ -228,7 +228,7 @@ if (isset($_GET['id'])) {
           <div>
               <p>
                   Certificate File Name: <?php echo htmlspecialchars($certificate['file_path']); ?>
-                  <a href="<?php echo 'http://localhost/REOC/pdfs/' . htmlspecialchars(basename($certificate['file_path'])); ?>"
+                  <a href="<?php echo '/REOC/pdfs/' . htmlspecialchars(basename($certificate['file_path'])); ?>"
                       download>
                       Download
                   </a>

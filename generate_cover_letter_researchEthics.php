@@ -168,7 +168,7 @@ if (!isset($_GET['user_id']) || empty($_GET['user_id'])) {
 
 try {
     $conn->begin_transaction();
-    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM Researcher_involved WHERE researcher_title_id = ?");
+    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM researcher_involved WHERE researcher_title_id = ?");
     $stmt->bind_param("i", $researcher_title_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -213,7 +213,7 @@ try {
         }
     }
     $conn->begin_transaction();
-    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM Researcher_involved WHERE researcher_title_id = ?");
+    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM researcher_involved WHERE researcher_title_id = ?");
     $stmt->bind_param("i", $researcher_title_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -321,11 +321,11 @@ $pdf->Cell($signature_width, 10, $signature, 0, 1, 'C');
 
 $conn->commit(); // Commit the transaction
     // Save the new PDF
-    $outputPath = 'C:/xampp/htdocs/REOC/pdfs/Cover Letter_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';
+    $outputPath = 'https://reoc.great-site.net/REOC/pdfs/Cover Letter_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';
     $pdf->Output($outputPath, 'F');
  // Insert the path into the Certificate_generated table
  $outputPathsql= 'Cover Letter_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';
- $stmt = $conn->prepare("INSERT INTO Certificate_generated (rti_id, file_path, file_type, status) VALUES (?, ?, ?, ?)");
+ $stmt = $conn->prepare("INSERT INTO certificate_generated (rti_id, file_path, file_type, status) VALUES (?, ?, ?, ?)");
  $file_type = 'Cover Letter'; // Set file type
  $status = 'Hide'; // Default status
  $stmt->bind_param("isss", $researcher_title_id, $outputPathsql, $file_type, $status);

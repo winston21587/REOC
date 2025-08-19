@@ -43,7 +43,7 @@ $pdf->useTemplate($tplId, 0, 0, 210, 297);
 $pdf->SetFont('Arial', 'B', 14);
 
 // Fetch the study protocol title
-$stmt = $conn->prepare("SELECT study_protocol_title FROM Researcher_title_informations WHERE id = ?");
+$stmt = $conn->prepare("SELECT study_protocol_title FROM researcher_title_informations WHERE id = ?");
 $stmt->bind_param("i", $researcher_title_id);
 $stmt->execute();
 $stmt->bind_result($study_protocol_title);
@@ -84,7 +84,7 @@ if (!empty(trim($currentLine))) {
     $pdf->Write(10, $currentLine);
 }
 // Fetch the research category
-$stmt = $conn->prepare("SELECT research_category FROM Researcher_title_informations WHERE id = ?");
+$stmt = $conn->prepare("SELECT research_category FROM researcher_title_informations WHERE id = ?");
 $stmt->bind_param("i", $researcher_title_id);
 $stmt->execute();
 $stmt->bind_result($research_category);
@@ -176,7 +176,7 @@ if (!isset($_GET['user_id']) || empty($_GET['user_id'])) {
 
 try {
     $conn->begin_transaction();
-    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM Researcher_involved WHERE researcher_title_id = ?");
+    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM researcher_involved WHERE researcher_title_id = ?");
     $stmt->bind_param("i", $researcher_title_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -222,7 +222,7 @@ try {
     }
     
     $conn->begin_transaction();
-    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM Researcher_involved WHERE researcher_title_id = ?");
+    $stmt = $conn->prepare("SELECT first_name, last_name, middle_initial, suffix FROM researcher_involved WHERE researcher_title_id = ?");
     $stmt->bind_param("i", $researcher_title_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -331,7 +331,7 @@ $pdf->Cell($signature_width, 10, $signature, 0, 1, 'C');
 
 
     // Save the new PDF
-    $outputPath = 'C:/xampp/htdocs/REOC/pdfs/Cover Letter_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';
+    $outputPath = 'https://reoc.great-site.net/REOC/pdfs/Cover Letter_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';
     $pdf->Output($outputPath, 'F');
 
     $outputPathsql= 'Cover Letter_' . $researcher_title_id .  $finalCode . '_' . date('Y-m-d') . '.pdf';

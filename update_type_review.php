@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($_POST['id']);
     $type_of_review = $_POST['type_of_review'];
 
-    $stmt = $conn->prepare("UPDATE Researcher_title_informations SET type_of_review = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE researcher_title_informations SET type_of_review = ? WHERE id = ?");
     $stmt->bind_param("si", $type_of_review, $id);
 
     // Prepare response array
